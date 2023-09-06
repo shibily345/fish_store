@@ -24,6 +24,8 @@ class ProductInfoController extends GetxController {
   int get inCartItemCount => _inCartItemCount;
   int _totelQuantity = 0;
   int get totelQuantity => _totelQuantity;
+  bool _exist = false;
+  bool get exist => _exist;
   double _totPrice = 0;
   double get totPrice => _totPrice;
 
@@ -98,9 +100,8 @@ class ProductInfoController extends GetxController {
     _feQuantity = 0;
     _inCartItemCount = 0;
     _cart = cart;
-    var exist = false;
-
-    exist = _cart.existInCart(product);
+   // exist = false;
+    _exist = _cart.existInCart(product);
     print(exist.toString() + ".............................");
     if (exist) {
       _inCartItemCount = _cart.getQuantity(product);
@@ -113,7 +114,7 @@ class ProductInfoController extends GetxController {
       _cart.addItem(product, _totelQuantity, _quantity, _maleQuantity,
           feQuantity, totPrice);
       _totelQuantity = 0;
-      _cart.item.forEach((key, value) {
+      _cart.items.forEach((key, value) {
         print('the id is.....................' +
             value.id.toString() +
             "             the quntity is          " +

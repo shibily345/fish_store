@@ -2,6 +2,7 @@ import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
+import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
 import 'package:betta_store/presentation/helps/widgets/containers.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -26,18 +27,23 @@ class ShopCartPage extends StatelessWidget {
                     color: Colors.amber,
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
-                Container(
-                  width: 140.w,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.w),
-                    color: Colors.amber,
-                  ),
-                  child: Center(
-                    child: textWidget(
-                        text: "Check Out",
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600),
+                InkWell(
+                  onTap: () {
+                    cartCon.addToHistory();
+                  },
+                  child: Container(
+                    width: 140.w,
+                    height: 50.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.w),
+                      color: Colors.amber,
+                    ),
+                    child: Center(
+                      child: textWidget(
+                          text: "Check Out",
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                 )
               ],
@@ -144,40 +150,46 @@ class ShopCartPage extends StatelessWidget {
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold),
                           ),
-                          carts.getItems[index].pquantity! > 0
+                          carts.getItems[index].pquantity != null &&
+                                  carts.getItems[index].pquantity! > 0
                               ? SizedBox(
                                   width: 20.w,
                                   height: 20.h,
                                   child: Image.asset(
                                       "assets/fishesexample/pair.png"))
                               : Container(),
-                          carts.getItems[index].pquantity! > 0
+                          carts.getItems[index].pquantity != null &&
+                                  carts.getItems[index].pquantity! > 0
                               ? textWidget(
                                   color: Colors.white,
                                   text:
                                       " : ${carts.getItems[index].pquantity!} ")
                               : Container(),
-                          carts.getItems[index].mquantity! > 0
+                          carts.getItems[index].mquantity != null &&
+                                  carts.getItems[index].mquantity! > 0
                               ? SizedBox(
                                   width: 20.w,
                                   height: 20.h,
                                   child: Image.asset(
                                       "assets/fishesexample/male.png"))
                               : Container(),
-                          carts.getItems[index].mquantity! > 0
+                          carts.getItems[index].mquantity != null &&
+                                  carts.getItems[index].mquantity! > 0
                               ? textWidget(
                                   color: Colors.white,
                                   text:
                                       " : ${carts.getItems[index].mquantity!} ")
                               : Container(),
-                          carts.getItems[index].fquantity! > 0
+                          carts.getItems[index].fquantity != null &&
+                                  carts.getItems[index].fquantity! > 0
                               ? SizedBox(
                                   width: 20.w,
                                   height: 20.h,
                                   child: Image.asset(
                                       "assets/fishesexample/female.png"))
                               : Container(),
-                          carts.getItems[index].fquantity! > 0
+                          carts.getItems[index].fquantity != null &&
+                                  carts.getItems[index].fquantity! > 0
                               ? textWidget(
                                   color: Colors.white,
                                   text:

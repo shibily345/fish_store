@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class BlurContainer extends StatelessWidget {
   const BlurContainer({
     this.radius = 15,
+    this.padding = EdgeInsets.zero,
     Key? key,
     required this.child,
     required this.width,
     required this.height,
   }) : super(key: key);
+  final EdgeInsets padding;
   final double radius;
   final Widget child;
   final double width;
@@ -18,6 +20,7 @@ class BlurContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: padding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
       ),

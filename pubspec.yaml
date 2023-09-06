@@ -42,10 +42,11 @@ dependencies:
   get_it: ^7.6.0
   google_fonts: ^5.1.0
   iconsax: ^0.0.8
+  intl: ^0.18.1
   item_count_number_button: ^1.9.2
   marquee: ^2.2.3
   persistent_bottom_nav_bar: ^5.0.2
-  shared_preferences: ^2.2.0
+  shared_preferences: 2.0.11
   smooth_page_indicator: ^1.1.0
   video_player: ^2.7.0
 

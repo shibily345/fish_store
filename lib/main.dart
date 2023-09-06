@@ -1,6 +1,7 @@
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
+import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
 import 'package:betta_store/infrastructure/helper/dependencies.dart' as dep;
 import 'package:betta_store/presentation/home/home.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
@@ -14,8 +15,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'utils/theme/theme.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   dep.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  Get.put(prefs);
+
   runApp(const MyApp());
 }
 
@@ -25,10 +29,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Get.put(() => CartController(cartRepo: Get.find<CartRepository>()));
+    Get.find<CartController>().getCartData();
     return ScreenUtilInit(
         designSize: const Size(411.4, 843.4),
         builder: (_, child) {
-          //Get.put(() => SharedPreferences());
           return GetBuilder<ProductInfoController>(builder: (_) {
             return GetMaterialApp(
               debugShowCheckedModeBanner: false,

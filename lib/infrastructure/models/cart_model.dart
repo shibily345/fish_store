@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:betta_store/infrastructure/models/fish_detile_model.dart';
 
 class CartModel {
@@ -40,7 +37,11 @@ class CartModel {
     fquantity = json['quantity'];
     isExisted = json['isExisted'];
     time = json['time'];
-    product = ProductModel.fromJson(json['product']);
+    if (json['product'] != null && json['product'] is Map<String, dynamic>) {
+      product = ProductModel.fromJson(json['product']);
+    } else {
+      print("Still error--------------------");
+    }
   }
   Map<String, dynamic> toJson() {
     return {

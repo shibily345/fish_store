@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> init() async {
-  final sharedPreferences = SharedPreferences.getInstance;
+  final sharedPreferences = await SharedPreferences.getInstance;
   Get.lazyPut(() => sharedPreferences);
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
   Get.lazyPut(() => ApiClint(appBaseUrl: AppConstents.BASE_URL));

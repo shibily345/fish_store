@@ -26,6 +26,7 @@ class _StoreViewState extends State<StoreView> {
       return productInfo.isLoaded
           ? TabBarView(controller: widget.tabcontroller, children: [
               GridView.builder(
+                padding: EdgeInsets.zero,
                 itemCount: productInfo.productInfoList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Number of columns

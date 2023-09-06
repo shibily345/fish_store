@@ -8,4 +8,6 @@ class AppConstents {
   static const String Betta_Fish_URI = "/api/v1/products/betta";
   static const String UPLOAD_URL = "/uploads/";
   static const String TOKEN = "DBtoken";
+  static const String Cart_list = "cart-list";
+  static const String Cart_history_list = "cart-history-list";
 }

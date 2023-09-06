@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
+import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
+import 'package:betta_store/infrastructure/helper/dependencies.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
 import 'package:bottom_bar_matu/components/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +20,16 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> _loadResources() async {
+    init();
     await Get.find<ProductInfoController>().getProductInfoList();
+    Get.find<CartController>();
+    Get.find<CartRepository>();
   }
 
   @override
   void initState() {
     super.initState();
-
+    _loadResources();
     Timer(Duration(seconds: 3), () => Get.offAllNamed(AppRouts.getinitial()));
   }
 

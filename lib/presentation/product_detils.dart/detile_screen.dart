@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
+import 'package:betta_store/infrastructure/helper/dependencies.dart';
 import 'package:betta_store/presentation/home/Shop/shop_cart.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
 import 'package:counter_button/counter_button.dart';
@@ -17,6 +18,7 @@ import 'package:betta_store/presentation/helps/widgets/containers.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
 import 'package:betta_store/presentation/product_detils.dart/detile_slides.dart';
 import 'package:betta_store/utils/theme/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../infrastructure/controller/product_info_controller.dart';
 
@@ -32,6 +34,12 @@ class FishDetilsPage extends StatefulWidget {
 }
 
 class _FishDetilsPageState extends State<FishDetilsPage> {
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
   final ScrollController _scrollController = ScrollController();
   bool _expanded = false;
   bool _ownExpanded = false;
@@ -168,11 +176,11 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
             bottom: 20,
             left: 15,
             child: GestureDetector(
-              onTap: productInfo.inCartItemCount < 1
-                  ? _toggleExpanded
-                  : () {
+              onTap: productInfo.exist
+                  ? () {
                       Get.toNamed(AppRouts.cartPage);
-                    },
+                    }
+                  : _toggleExpanded,
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 200),
                 height: _expanded ? 280.0.h : 50.0,
@@ -194,10 +202,9 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                           radius: 25,
                           child: IconButton(
                               onPressed: () {
+                                print(productInfo.exist);
                                 productInfo.addItem(product);
-                                productInfo.inCartItemCount < 1
-                                    ? _toggleExpanded()
-                                    : ();
+                                productInfo.exist ? () : _toggleExpanded();
                               },
                               icon: Icon(
                                 color: secondaryColor10DarkTheme,
@@ -209,9 +216,9 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                       )
                     : Center(
                         child: textWidget(
-                            text: productInfo.inCartItemCount < 1
-                                ? "Put in bag"
-                                : "Check it out ",
+                            text: productInfo.exist
+                                ? "Check it out "
+                                : "Put in bag",
                             fontSize: 15,
                             fontWeight: FontWeight.w600)),
               ),
