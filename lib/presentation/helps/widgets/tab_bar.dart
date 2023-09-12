@@ -23,7 +23,7 @@ class TabBarWidget extends StatelessWidget {
         children: [
           TabBar(
               isScrollable: true,
-              labelColor: Colors.white,
+              labelColor: Theme.of(context).indicatorColor,
               labelPadding: EdgeInsets.symmetric(horizontal: 25),
               //  indicatorPadding: EdgeInsets.symmetric(horizontal: 2),
               indicatorColor: Colors.transparent,
@@ -31,20 +31,27 @@ class TabBarWidget extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.tab,
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.white)),
+                  border: Border.all(color: Theme.of(context).indicatorColor)),
               controller: _tabcontroller,
               tabs: [
                 Tab(
-                  child: textWidget(text: "All", color: Colors.white),
+                  child: textWidget(
+                      text: "All", color: Theme.of(context).indicatorColor),
                 ),
                 Tab(
-                  child: textWidget(text: "Half Moon", color: Colors.white),
+                  child: textWidget(
+                      text: "Half Moon",
+                      color: Theme.of(context).indicatorColor),
                 ),
                 Tab(
-                  child: textWidget(text: "Plakarts", color: Colors.white),
+                  child: textWidget(
+                      text: "Plakarts",
+                      color: Theme.of(context).indicatorColor),
                 ),
                 Tab(
-                  child: textWidget(text: "CrownTail", color: Colors.white),
+                  child: textWidget(
+                      text: "CrownTail",
+                      color: Theme.of(context).indicatorColor),
                 ),
               ]),
         ],
@@ -133,7 +140,7 @@ class TabViewWidget extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(
                       Iconsax.heart,
-                      color: Colors.white,
+                      color: Theme.of(context).indicatorColor,
                     ),
                     highlightColor: Colors.red,
                   ),

@@ -128,4 +128,9 @@ class CartController extends GetxController {
   void knowcarts() {
     cartRepo.getCartList();
   }
+
+  void clearCartHistory() {
+    cartRepo.clearOrderHistory();
+    update();
+  }
 }

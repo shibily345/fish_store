@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:betta_store/presentation/helps/widgets/bottom_nav_bar.dart';
 import 'package:betta_store/presentation/helps/widgets/containers.dart';
+import 'package:betta_store/presentation/helps/widgets/spaces.dart';
 import 'package:betta_store/presentation/helps/widgets/tab_bar.dart';
 import 'package:betta_store/presentation/home/storeView.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,16 +21,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
-final List<String> fishes = [
-  'assets/fishesexample/1.png',
-  'assets/fishesexample/3.png',
-  'assets/fishesexample/6.png',
-  'assets/fishesexample/7.png',
-  'assets/fishesexample/8.png',
-  'assets/fishesexample/9.png',
-  'assets/fishesexample/10.png',
-];
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
@@ -55,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabcontroller = TabController(length: 4, vsync: this);
+    TabController _tabcontroller = TabController(length: 5, vsync: this);
 
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool rotated = MediaQuery.of(context).size.height < screenWidth;
@@ -79,7 +70,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           icon: Icon(Iconsax.menu_1),
                         ),
                         expandedHeight: 225.h,
-                        backgroundColor: secondaryColor80DarkTheme,
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
                         elevation: 0,
                         pinned: true,
                         toolbarHeight: 65.h,
@@ -95,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                         bottom: TabBar(
                             isScrollable: true,
-                            labelColor: Colors.white,
+                            labelColor: const Color.fromARGB(255, 0, 0, 0),
                             labelPadding:
                                 EdgeInsets.symmetric(horizontal: 25.w),
                             //  indicatorPadding: EdgeInsets.symmetric(horizontal: 2),
@@ -104,32 +96,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             indicatorSize: TabBarIndicatorSize.tab,
                             indicator: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20.h),
-                                border: Border.all(color: Colors.white)),
+                                border: Border.all(color: primaryColor)),
                             controller: _tabcontroller,
                             tabs: [
                               Tab(
                                 child: textWidget(
-                                  text: "All",
-                                  color: Colors.white,
+                                  text: "Bettas",
+                                  color: primaryColor,
                                   fontSize: 14,
                                 ),
                               ),
                               Tab(
                                 child: textWidget(
-                                    text: "Half Moon",
-                                    color: Colors.white,
+                                    text: "Plants",
+                                    color: primaryColor,
                                     fontSize: 14),
                               ),
                               Tab(
                                 child: textWidget(
-                                    text: "Plakarts",
-                                    color: Colors.white,
+                                    text: "Fishes",
+                                    color: primaryColor,
                                     fontSize: 14),
                               ),
                               Tab(
                                 child: textWidget(
-                                    text: "CrownTail",
-                                    color: Colors.white,
+                                    text: "Items",
+                                    color: primaryColor,
+                                    fontSize: 14),
+                              ),
+                              Tab(
+                                child: textWidget(
+                                    text: "Feeds",
+                                    color: primaryColor,
                                     fontSize: 14),
                               ),
                             ]),
@@ -144,23 +142,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   height: 220,
                                   width: Get.width,
                                   decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.blue,
-                                        Colors.green
-                                      ], // List of colors in the gradient
-                                      begin: Alignment
-                                          .topLeft, // Starting point of the gradient
-                                      end: Alignment
-                                          .bottomRight, // Ending point of the gradient
-                                      stops: [
-                                        0.0,
-                                        1.0
-                                      ], // Stops for each color in the gradient
-                                      // You can also use `TileMode` to control how the gradient is repeated
-                                      tileMode: TileMode
-                                          .clamp, // This will repeat the gradient to fill the container
-                                    ),
+                                    border: Border.all(
+                                        color: Theme.of(context).primaryColor),
+                                    // gradient: LinearGradient(
+                                    //   colors: [
+                                    //     const Color.fromARGB(255, 243, 222, 33),
+                                    //     Color.fromARGB(255, 184, 154, 0)
+                                    //   ], // List of colors in the gradient
+                                    //   begin: Alignment
+                                    //       .topLeft, // Starting point of the gradient
+                                    //   end: Alignment
+                                    //       .bottomRight, // Ending point of the gradient
+                                    //   stops: [
+                                    //     0.0,
+                                    //     1.0
+                                    //   ], // Stops for each color in the gradient
+                                    //   // You can also use `TileMode` to control how the gradient is repeated
+                                    //   tileMode: TileMode
+                                    //       .clamp, // This will repeat the gradient to fill the container
+                                    // ),
                                     borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(30),
                                       bottomRight: Radius.circular(30),
@@ -206,29 +206,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                               padding: EdgeInsets.all(2.0.h),
                                               // margin: EdgeInsets.zero,
                                               decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                   20.0,
                                                 ),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    const Color.fromARGB(
-                                                        255, 253, 253, 253),
-                                                    const Color.fromARGB(
-                                                        255, 183, 183, 183)
-                                                  ], // List of colors in the gradient
-                                                  begin: Alignment
-                                                      .topLeft, // Starting point of the gradient
-                                                  end: Alignment
-                                                      .bottomRight, // Ending point of the gradient
-                                                  stops: [
-                                                    0.0,
-                                                    1.0
-                                                  ], // Stops for each color in the gradient
-                                                  // You can also use `TileMode` to control how the gradient is repeated
-                                                  tileMode: TileMode
-                                                      .clamp, // This will repeat the gradient to fill the container
-                                                ),
+                                                // gradient: LinearGradient(
+                                                //   colors: [
+                                                //     const Color.fromARGB(
+                                                //         255, 253, 253, 253),
+                                                //     const Color.fromARGB(
+                                                //         255, 183, 183, 183)
+                                                //   ], // List of colors in the gradient
+                                                //   begin: Alignment
+                                                //       .topLeft, // Starting point of the gradient
+                                                //   end: Alignment
+                                                //       .bottomRight, // Ending point of the gradient
+                                                //   stops: [
+                                                //     0.0,
+                                                //     1.0
+                                                //   ], // Stops for each color in the gradient
+                                                //   // You can also use `TileMode` to control how the gradient is repeated
+                                                //   tileMode: TileMode
+                                                //       .clamp, // This will repeat the gradient to fill the container
+                                                // ),
                                                 boxShadow: const [
                                                   BoxShadow(
                                                     color: Colors.black26,
@@ -249,9 +252,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                         .colorScheme
                                                         .secondary,
                                                   ),
-                                                  SizedBox(
-                                                    width: 10.w,
-                                                  ),
+                                                  smallwidth,
                                                 ],
                                               ),
                                             ),

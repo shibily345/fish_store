@@ -3,16 +3,20 @@ import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
 import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
 import 'package:betta_store/infrastructure/helper/dependencies.dart' as dep;
+import 'package:betta_store/presentation/auth/sign_in_page.dart';
+import 'package:betta_store/presentation/auth/sign_up_page.dart';
 import 'package:betta_store/presentation/home/home.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
+import 'package:betta_store/presentation/onBoarding/on_boarding.dart';
 import 'package:betta_store/splash/splash_screen.dart';
+import 'package:betta_store/utils/theme/light_theme.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'utils/theme/theme.dart';
+import 'utils/theme/dark_theme.dart';
 
 void main() async {
   dep.init();
@@ -36,10 +40,12 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return GetBuilder<ProductInfoController>(builder: (_) {
             return GetMaterialApp(
+              themeMode: ThemeMode.system,
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
-              theme: darkTheme(context),
-              //  home: SplashScreen(),
+              theme: lightTheme(context),
+              darkTheme: darkTheme(context),
+              // home: OnBoarding(),
               initialRoute: AppRouts.getSplash(),
               getPages: AppRouts.routs,
             );

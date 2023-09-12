@@ -19,7 +19,7 @@ import 'package:betta_store/utils/theme/constants.dart';
 import '../../core/constents.dart';
 
 class DetailSlides extends StatelessWidget {
-  ProductModel productInfo;
+  dynamic productInfo;
   int index;
 
   DetailSlides({
@@ -32,7 +32,7 @@ class DetailSlides extends StatelessWidget {
   Widget build(BuildContext context) {
     final PageController controller = PageController(initialPage: 0);
     final List<Widget> pageContents = [
-      buildPageView1(1),
+      buildPageView1(1, context),
       buildPageView2(2),
       buildPageView3(3),
     ];
@@ -68,7 +68,7 @@ class DetailSlides extends StatelessWidget {
     );
   }
 
-  Widget buildPageView1(int position) {
+  Widget buildPageView1(int position, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 28.h, left: 18.w, right: 18.w),
       child: Column(
@@ -82,7 +82,7 @@ class DetailSlides extends StatelessWidget {
                 height: 500.h,
                 width: Get.width,
                 decoration: BoxDecoration(
-                    color: secondaryColor60DarkTheme,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(30.h),
                     image: DecorationImage(
                         image: AssetImage('assets/fishesexample/fishbg1.png'),
@@ -192,7 +192,7 @@ class DetailSlides extends StatelessWidget {
                               textWidget(
                                 text: '3.6',
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: Theme.of(context).indicatorColor,
                               ),
                               RatingBar.builder(
                                 ignoreGestures: true,

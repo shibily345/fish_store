@@ -1,3 +1,4 @@
+import 'package:betta_store/presentation/helps/widgets/spaces.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -17,7 +18,7 @@ class AnimatedGridView extends StatelessWidget {
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).indicatorColor,
                   borderRadius: BorderRadius.circular(16.0),
                   // boxShadow: [
                   //   BoxShadow(
@@ -42,9 +43,7 @@ class AnimatedGridView extends StatelessWidget {
                             bottomLeft: Radius.circular(20)),
                       ),
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
+                    smallSpace,
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

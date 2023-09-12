@@ -68,4 +68,9 @@ class CartRepository {
     cart = [];
     sharedPreferences.remove(AppConstents.Cart_list);
   }
+
+  void clearOrderHistory() {
+    removeCart();
+    sharedPreferences.remove(AppConstents.Cart_history_list);
+  }
 }

@@ -30,13 +30,25 @@ class CartHistory extends StatelessWidget {
     List<int> itemsPerOrder = cartOrderTimeToList();
     List<int> orderTimes = cartOrderTimeToList();
     var listCounter = 0;
+    Widget timeWidget(int index) {
+      var outputDate = DateTime.now().toString();
+      if (index < getCartHistoryList.length) {
+        DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss")
+            .parse(getCartHistoryList[listCounter].time!);
+        var inputDate = DateTime.parse(parseDate.toString());
+        var outputFormat = DateFormat("EEE, MM/dd/yyyy hh:mm a");
+        outputDate = outputFormat.format(inputDate);
+      }
+      return textWidget(
+          text: outputDate, color: Theme.of(context).indicatorColor);
+    }
 
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: textWidget(
               text: "My orders ",
-              color: Colors.white,
+              color: Theme.of(context).indicatorColor,
               fontSize: 16,
               fontWeight: FontWeight.bold),
         ),
@@ -55,18 +67,7 @@ class CartHistory extends StatelessWidget {
                       Container(
                           height: 40.h,
                           width: 200.w,
-                          child: (() {
-                            DateTime parseDate =
-                                DateFormat("yyyy-MM-dd HH:mm:ss").parse(
-                                    getCartHistoryList[listCounter].time!);
-                            var inputDate =
-                                DateTime.parse(parseDate.toString());
-                            var outputFormat =
-                                DateFormat("EEE, MM/dd/yyyy hh:mm a");
-                            var outputDate = outputFormat.format(inputDate);
-                            return textWidget(
-                                text: outputDate, color: Colors.white);
-                          }())),
+                          child: timeWidget(listCounter)),
                       Column(
                         children: [
                           Wrap(
@@ -86,7 +87,12 @@ class CartHistory extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            // print(getCartHistoryList[
+                                            //             listCounter - 1]
+                                            //         .pquantity! +
+                                            //     1);
+                                          },
                                           child: BlurContainer(
                                               child: Image.network(
                                                 AppConstents.BASE_URL +
@@ -112,7 +118,8 @@ class CartHistory extends StatelessWidget {
                                                     listCounter - 1]
                                                 .name!,
                                             fontSize: 15,
-                                            color: Colors.white,
+                                            color: Theme.of(context)
+                                                .indicatorColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -175,7 +182,8 @@ class CartHistory extends StatelessWidget {
                                                         .pquantity! >
                                                     0
                                             ? textWidget(
-                                                color: Colors.white,
+                                                color: Theme.of(context)
+                                                    .indicatorColor,
                                                 text:
                                                     " : ${getCartHistoryList[listCounter - 1].pquantity!} ")
                                             : Container(),
@@ -200,7 +208,8 @@ class CartHistory extends StatelessWidget {
                                                         .mquantity! >
                                                     0
                                             ? textWidget(
-                                                color: Colors.white,
+                                                color: Theme.of(context)
+                                                    .indicatorColor,
                                                 text:
                                                     " : ${getCartHistoryList[listCounter - 1].mquantity!} ")
                                             : Container(),
@@ -225,7 +234,8 @@ class CartHistory extends StatelessWidget {
                                                         .fquantity! >
                                                     0
                                             ? textWidget(
-                                                color: Colors.white,
+                                                color: Theme.of(context)
+                                                    .indicatorColor,
                                                 text:
                                                     " : ${getCartHistoryList[listCounter - 1].fquantity!} ")
                                             : Container(),

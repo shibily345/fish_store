@@ -7,6 +7,6 @@ class ProductInfoRepo extends GetxService {
 
   ProductInfoRepo({required this.apiClint});
   Future<Response> getProductList() async {
-    return await apiClint.getData(AppConstents.PRODUCT_URI);
+    return await apiClint.getData(AppConstents.Betta_Fish_URI);
   }
 }

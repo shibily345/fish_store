@@ -5,13 +5,20 @@ import 'constants.dart';
 
 ThemeData darkTheme(BuildContext context) {
   return ThemeData(
-    scaffoldBackgroundColor: Color(0xFF001C30),
-    textTheme: const TextTheme(
-      labelLarge: lableTextStyle,
-      labelMedium: lableTextStyle,
-      labelSmall: lableTextStyle,
-      bodyMedium: TextStyle(color: secondaryColor40DarkTheme),
-    ),
+    primaryColorDark: const Color.fromARGB(255, 0, 0, 0),
+    primaryColor: Colors.amber,
+    primarySwatch: Colors.amber,
+    indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+    splashColor: const Color.fromARGB(79, 0, 0, 0),
+    shadowColor: const Color.fromARGB(32, 131, 128, 128),
+    scaffoldBackgroundColor: const Color.fromARGB(255, 42, 42, 42),
+    // textTheme: const TextTheme(
+    //   labelLarge: lableTextStyle,
+    //   labelMedium: lableTextStyle,
+    //   labelSmall: lableTextStyle,
+    //   bodyMedium: TextStyle(color: secondaryColor40DarkTheme),
+    // ),
+
     appBarTheme: const AppBarTheme(
       centerTitle: false,
       backgroundColor: Colors.transparent,

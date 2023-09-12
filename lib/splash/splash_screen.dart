@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/infrastructure/controller/items_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
+import 'package:betta_store/infrastructure/controller/feeds_info_controller.dart';
+import 'package:betta_store/infrastructure/controller/other_fish_info_controller.dart';
+import 'package:betta_store/infrastructure/controller/plants_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
 import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
 import 'package:betta_store/infrastructure/helper/dependencies.dart';
@@ -22,6 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _loadResources() async {
     init();
     await Get.find<ProductInfoController>().getProductInfoList();
+    await Get.find<PlantsInfoController>().getPlantsInfoList();
+    await Get.find<OtherFishInfoController>().getOtherFishInfoList();
+    await Get.find<FeedsInfoController>().getfeedsInfoList();
+    await Get.find<ItemsInfoController>().getItemsInfoList();
     Get.find<CartController>();
     Get.find<CartRepository>();
   }

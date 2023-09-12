@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:betta_store/presentation/helps/widgets/containers.dart';
 import 'package:betta_store/presentation/home/Shop/shop_cart.dart';
 import 'package:betta_store/presentation/home/breeders/breeders_page.dart';
+import 'package:betta_store/presentation/home/home_screen%20copy.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
 import 'package:betta_store/presentation/home/profile/profile_page.dart';
 import 'package:betta_store/utils/theme/constants.dart';
@@ -24,12 +25,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late PersistentTabController _controller;
   int _currentIndex = 0;
-  List pages = [
-    HomeScreen(),
-    BreedersPage(),
-    ShopCartPage(),
-    ProfilePage(),
-  ];
+
   void onTapNav(int index) {
     setState(() {
       _currentIndex = index;
@@ -58,26 +54,26 @@ class _HomeState extends State<Home> {
         icon: Icon(Iconsax.home),
         title: ("Home"),
         activeColorPrimary: secondaryColor20DarkTheme,
-        inactiveColorPrimary: secondaryColor80DarkTheme,
+        inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Iconsax.shop),
         title: ("Shop"),
         activeColorPrimary: secondaryColor20DarkTheme,
-        inactiveColorPrimary: secondaryColor80DarkTheme,
+        inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
       PersistentBottomNavBarItem(
         activeColorSecondary: secondaryColor20DarkTheme,
         icon: Icon(Iconsax.shopping_cart),
         title: ("Cart"),
         activeColorPrimary: secondaryColor20DarkTheme,
-        inactiveColorPrimary: secondaryColor80DarkTheme,
+        inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Iconsax.personalcard),
         title: ("Profile"),
         activeColorPrimary: secondaryColor20DarkTheme,
-        inactiveColorPrimary: secondaryColor80DarkTheme,
+        inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
     ];
   }
@@ -90,7 +86,8 @@ class _HomeState extends State<Home> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: secondaryColor60DarkTheme, // Default is Colors.white.
+      backgroundColor:
+          secondaryColor60DarkTheme, // Default is Theme.of(context).indicatorColor.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
@@ -98,8 +95,8 @@ class _HomeState extends State<Home> {
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
+        //  borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Colors.transparent,
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
@@ -116,7 +113,7 @@ class _HomeState extends State<Home> {
       ),
       navBarHeight: 70,
       navBarStyle:
-          NavBarStyle.style12, // Choose the nav bar style with this property.
+          NavBarStyle.style1, // Choose the nav bar style with this property.
     );
   }
 /*

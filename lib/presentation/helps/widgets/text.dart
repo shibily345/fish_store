@@ -17,7 +17,8 @@ Widget textWidget(
     style: GoogleFonts.poppins(
         fontSize: ScreenUtil().setSp(fontSize),
         fontWeight: fontWeight,
-        color: color),
+        color: color,
+        decoration: TextDecoration.none),
   );
 }
 
@@ -61,7 +62,7 @@ class RichTextWidget extends StatelessWidget {
       text: TextSpan(
           style: TextStyle(
             fontSize: 15.0,
-            color: Colors.white,
+            color: Theme.of(context).indicatorColor,
           ),
           children: texts),
     );
