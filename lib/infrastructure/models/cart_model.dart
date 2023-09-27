@@ -39,9 +39,7 @@ class CartModel {
     time = json['time'];
     if (json['product'] != null && json['product'] is Map<String, dynamic>) {
       product = ProductModel.fromJson(json['product']);
-    } else {
-      print("Still error--------------------");
-    }
+    } else {}
   }
   Map<String, dynamic> toJson() {
     return {

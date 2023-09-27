@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/other_fish_info_controller.dart';
-import 'package:betta_store/infrastructure/helper/dependencies.dart';
+import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/presentation/home/Shop/shop_cart.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
 import 'package:counter_button/counter_button.dart';
@@ -60,8 +60,10 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var product =
-        Get.find<OtherFishInfoController>().otherFishInfoList[widget.pageId];
+    var product = Get.find<OtherFishInfoController>()
+        .otherFishInfoList
+        .firstWhere((p) => p.id == widget.pageId);
+
     Get.find<OtherFishInfoController>().initNew(
       Get.find<CartController>(),
       product,
@@ -81,7 +83,7 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                   SliverAppBar.large(
                     leading: IconButton(
                       onPressed: () {},
-                      icon: Icon(Iconsax.menu_1),
+                      icon: const Icon(Iconsax.menu_1),
                     ),
                     expandedHeight: 655.h,
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -120,7 +122,7 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                             child: textWidget(
                                 text: product.name!,
                                 fontSize: 16,
-                                color: Colors.white),
+                                color: Theme.of(context).indicatorColor),
                           ),
                         ),
                       ),
@@ -135,42 +137,44 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                     //  crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BlurContainer(
+                          width: Get.width.w,
+                          height: 100.h,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RichTextWidget(texts: [
-                                TextSpan(text: 'Pair : \n       \n'),
+                                const TextSpan(text: 'Pair : \n       \n'),
                                 TextSpan(
                                     text: '₹ ${product.price!}',
-                                    style: TextStyle(fontSize: 20))
+                                    style: const TextStyle(fontSize: 20))
                               ]),
-                              RichTextWidget(texts: [
+                              RichTextWidget(texts: const [
                                 TextSpan(text: 'Male : \n       \n'),
                                 TextSpan(
                                     text: '₹ 200',
                                     style: TextStyle(fontSize: 20))
                               ]),
-                              RichTextWidget(texts: [
+                              RichTextWidget(texts: const [
                                 TextSpan(text: 'Female : \n       \n'),
                                 TextSpan(
                                     text: '₹ 100',
                                     style: TextStyle(fontSize: 20))
                               ])
                             ],
-                          ),
-                          width: Get.width.w,
-                          height: 100.h),
+                          )),
                       SizedBox(
                         height: 20.w,
                       ),
-                      textWidget(text: '@devine_Bettas', color: Colors.white),
+                      textWidget(
+                          text: '@devine_Bettas',
+                          color: Theme.of(context).indicatorColor),
                       SizedBox(
                         height: 60.w,
                       ),
                       textWidget(
                           maxline: 20,
                           text: product.description!,
-                          color: Colors.white),
+                          color: Theme.of(context).indicatorColor),
                     ],
                   ))),
         ),
@@ -192,7 +196,7 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                         }
                       : _toggleExpanded,
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     height: _expanded ? 280.0.h : 50.0,
                     width: _expanded ? 190.0.w : 190.0.w,
                     decoration: BoxDecoration(
@@ -207,7 +211,7 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(40.h)),
                     child: _expanded
-                        ? Container(
+                        ? SizedBox(
                             height: 290.h,
                             width: 180.w,
                             child: ListView(
@@ -228,7 +232,7 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                                             color: secondaryColor60DarkTheme,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 15,
                                       ),
                                       IconButton(
@@ -365,7 +369,7 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                                                     ? ()
                                                     : _toggleExpanded();
                                               },
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 color:
                                                     secondaryColor80DarkTheme,
                                                 Iconsax.login_1,
@@ -376,7 +380,7 @@ class _OtherFishDetilsPageState extends State<OtherFishDetilsPage> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                               ],

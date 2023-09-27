@@ -21,7 +21,7 @@ class OnBoarding extends StatelessWidget {
                     width: Get.width,
                     height: 700.h,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
+                      image: const DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage('assets/ui_elementsbgon/1.png')),
                       borderRadius: BorderRadius.circular(30),
@@ -33,7 +33,7 @@ class OnBoarding extends StatelessWidget {
                   child: CircleAvatar(
                     maxRadius: 30.w,
                     backgroundColor: primaryColor,
-                    child: Icon(Iconsax.arrow_right),
+                    child: const Icon(Iconsax.arrow_right),
                   ),
                 )
               ],

@@ -1,9 +1,9 @@
 import 'dart:ui';
 
+import 'package:betta_store/presentation/booking/address_page.dart';
 import 'package:betta_store/presentation/helps/widgets/containers.dart';
 import 'package:betta_store/presentation/home/Shop/shop_cart.dart';
 import 'package:betta_store/presentation/home/breeders/breeders_page.dart';
-import 'package:betta_store/presentation/home/home_screen%20copy.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
 import 'package:betta_store/presentation/home/profile/profile_page.dart';
 import 'package:betta_store/utils/theme/constants.dart';
@@ -41,38 +41,38 @@ class _HomeState extends State<Home> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
-      BreedersPage(),
-      ShopCartPage(),
-      ProfilePage(),
+      const HomeScreen(),
+      const BreedersPage(),
+      const ShopCartPage(),
+      const ProfilePage(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Iconsax.home),
+        icon: const Icon(Iconsax.home),
         title: ("Home"),
-        activeColorPrimary: secondaryColor20DarkTheme,
+        activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Iconsax.shop),
+        icon: const Icon(Iconsax.shop),
         title: ("Shop"),
-        activeColorPrimary: secondaryColor20DarkTheme,
+        activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
       PersistentBottomNavBarItem(
-        activeColorSecondary: secondaryColor20DarkTheme,
-        icon: Icon(Iconsax.shopping_cart),
+        activeColorSecondary: Theme.of(context).primaryColor,
+        icon: const Icon(Iconsax.shopping_cart),
         title: ("Cart"),
-        activeColorPrimary: secondaryColor20DarkTheme,
+        activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Iconsax.personalcard),
+        icon: const Icon(Iconsax.personalcard),
         title: ("Profile"),
-        activeColorPrimary: secondaryColor20DarkTheme,
+        activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: secondaryColor40DarkTheme,
       ),
     ];
@@ -86,26 +86,26 @@ class _HomeState extends State<Home> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor:
-          secondaryColor60DarkTheme, // Default is Theme.of(context).indicatorColor.
+      backgroundColor: Theme.of(context)
+          .scaffoldBackgroundColor, // Default is Theme.of(context).indicatorColor.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
       stateManagement: true, // Default is true.
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: NavBarDecoration(
+      decoration: const NavBarDecoration(
         //  borderRadius: BorderRadius.circular(10.0),
         colorBehindNavBar: Colors.transparent,
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
+      itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
+      screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,

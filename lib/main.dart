@@ -1,14 +1,11 @@
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
+import 'package:betta_store/infrastructure/controller/feeds_info_controller.dart';
+import 'package:betta_store/infrastructure/controller/items_info_controller.dart';
+import 'package:betta_store/infrastructure/controller/other_fish_info_controller.dart';
+import 'package:betta_store/infrastructure/controller/plants_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
-import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
-import 'package:betta_store/infrastructure/helper/dependencies.dart' as dep;
-import 'package:betta_store/presentation/auth/sign_in_page.dart';
-import 'package:betta_store/presentation/auth/sign_up_page.dart';
-import 'package:betta_store/presentation/home/home.dart';
-import 'package:betta_store/presentation/home/home_screen.dart';
-import 'package:betta_store/presentation/onBoarding/on_boarding.dart';
-import 'package:betta_store/splash/splash_screen.dart';
+import 'package:betta_store/core/dependencies.dart' as dep;
 import 'package:betta_store/utils/theme/light_theme.dart';
 
 import 'package:flutter/material.dart';
@@ -39,16 +36,24 @@ class MyApp extends StatelessWidget {
         designSize: const Size(411.4, 843.4),
         builder: (_, child) {
           return GetBuilder<ProductInfoController>(builder: (_) {
-            return GetMaterialApp(
-              themeMode: ThemeMode.system,
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              theme: lightTheme(context),
-              darkTheme: darkTheme(context),
-              // home: OnBoarding(),
-              initialRoute: AppRouts.getSplash(),
-              getPages: AppRouts.routs,
-            );
+            return GetBuilder<PlantsInfoController>(builder: (_) {
+              return GetBuilder<OtherFishInfoController>(builder: (_) {
+                return GetBuilder<ItemsInfoController>(builder: (_) {
+                  return GetBuilder<FeedsInfoController>(builder: (_) {
+                    return GetMaterialApp(
+                      themeMode: ThemeMode.system,
+                      debugShowCheckedModeBanner: false,
+                      title: 'Flutter Demo',
+                      theme: lightTheme(context),
+                      darkTheme: darkTheme(context),
+                      // home: OnBoarding(),
+                      initialRoute: AppRouts.getSplash(),
+                      getPages: AppRouts.routs,
+                    );
+                  });
+                });
+              });
+            });
           });
         });
   }

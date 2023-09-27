@@ -30,22 +30,45 @@ class DetailSlides extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String url = productInfo.video != ""
+        ? AppConstents.BASE_URL + AppConstents.UPLOAD_URL + productInfo.video!
+        : "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4";
     final PageController controller = PageController(initialPage: 0);
     final List<Widget> pageContents = [
       buildPageView1(1, context),
-      buildPageView2(2),
-      buildPageView3(3),
+      Padding(
+        padding: EdgeInsets.only(top: 28.h, left: 18.w, right: 18.w),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 80.h,
+            ),
+            Container(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              height: 500.h,
+              width: Get.width,
+              decoration: BoxDecoration(
+                color: secondaryColor60DarkTheme,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: VideoPlayView(
+                url: url,
+              ),
+            )
+          ],
+        ),
+      ),
     ];
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 620.h,
           width: Get.width,
           child: PageView.builder(
               controller: controller,
-              itemCount: 3,
+              itemCount: 2,
               itemBuilder: (context, position) {
-                return Container(
+                return SizedBox(
                     height: 300.h,
                     width: Get.width,
                     child: pageContents[position]);
@@ -54,7 +77,7 @@ class DetailSlides extends StatelessWidget {
         SmoothPageIndicator(
           controller: controller,
           count: pageContents.length,
-          effect: SlideEffect(
+          effect: const SlideEffect(
               spacing: 8.0,
               radius: 4.0,
               dotWidth: 24.0,
@@ -84,7 +107,7 @@ class DetailSlides extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(30.h),
-                    image: DecorationImage(
+                    image: const DecorationImage(
                         image: AssetImage('assets/fishesexample/fishbg1.png'),
                         fit: BoxFit.cover)),
               ),
@@ -104,6 +127,8 @@ class DetailSlides extends StatelessWidget {
                         ),
                         BlurContainer(
                           radius: 30.h,
+                          width: 350.w,
+                          height: 320.h,
                           child: Image.network(
                             AppConstents.BASE_URL +
                                 AppConstents.UPLOAD_URL +
@@ -111,8 +136,6 @@ class DetailSlides extends StatelessWidget {
                             width: 290.w,
                             height: 290.h,
                           ),
-                          width: 350.w,
-                          height: 320.h,
                         ),
                       ],
                     ),
@@ -124,13 +147,15 @@ class DetailSlides extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       BlurContainer(
+                          width: 110.w,
+                          height: 90.h,
                           child: Column(
                             children: [
                               textWidget(
                                   text: 'Age : ',
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold),
-                              RichTextWidget(texts: [
+                              RichTextWidget(texts: const [
                                 TextSpan(
                                     text: ' 3 \n',
                                     style: TextStyle(
@@ -143,13 +168,13 @@ class DetailSlides extends StatelessWidget {
                                     ))
                               ])
                             ],
-                          ),
-                          width: 110.w,
-                          height: 90.h),
+                          )),
                       SizedBox(
                         width: 10.w,
                       ),
                       BlurContainer(
+                          width: 110.w,
+                          height: 90.h,
                           child: Column(
                             children: [
                               SizedBox(
@@ -166,20 +191,20 @@ class DetailSlides extends StatelessWidget {
                                       height: 1.4.h,
                                       fontSize: 25,
                                     )),
-                                TextSpan(
+                                const TextSpan(
                                     text: 'Great',
                                     style: TextStyle(
                                       fontSize: 15,
                                     ))
                               ])
                             ],
-                          ),
-                          width: 110.w,
-                          height: 90.h),
+                          )),
                       SizedBox(
                         width: 10.w,
                       ),
                       BlurContainer(
+                          width: 110.w,
+                          height: 90.h,
                           child: Column(
                             children: [
                               SizedBox(
@@ -202,7 +227,7 @@ class DetailSlides extends StatelessWidget {
                                 allowHalfRating: true,
                                 itemCount: 5,
                                 itemSize: 12.0,
-                                itemBuilder: (context, _) => Icon(
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                   size: 3,
@@ -213,9 +238,7 @@ class DetailSlides extends StatelessWidget {
                                 },
                               ),
                             ],
-                          ),
-                          width: 110.w,
-                          height: 90.h),
+                          )),
                     ],
                   ))
             ],
@@ -224,58 +247,6 @@ class DetailSlides extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget buildPageView2(int position) {
-  return Padding(
-    padding: EdgeInsets.only(top: 28.h, left: 18.w, right: 18.w),
-    child: Column(
-      children: [
-        SizedBox(
-          height: 80.h,
-        ),
-        GetBuilder<ProductInfoController>(builder: (productInfo) {
-          return Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            height: 500.h,
-            width: Get.width,
-            decoration: BoxDecoration(
-              color: secondaryColor60DarkTheme,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: VideoPlayView(
-              url: 'assets/fishesexample/egVideo.mp4',
-            ),
-          );
-        })
-      ],
-    ),
-  );
-}
-
-Widget buildPageView3(int position) {
-  return Padding(
-    padding: EdgeInsets.only(top: 28.h, left: 18, right: 18.w),
-    child: Column(
-      children: [
-        SizedBox(
-          height: 80.h,
-        ),
-        GetBuilder<ProductInfoController>(builder: (productInfo) {
-          return Container(
-            height: 500.h,
-            width: Get.width,
-            decoration: BoxDecoration(
-                color: secondaryColor60DarkTheme,
-                borderRadius: BorderRadius.circular(30),
-                image: DecorationImage(
-                    image: AssetImage('assets/fishesexample/fishbg1.png'),
-                    fit: BoxFit.cover)),
-          );
-        })
-      ],
-    ),
-  );
 }
 
 class VideoPlayView extends StatefulWidget {
@@ -295,8 +266,8 @@ class _VideoPlayViewState extends State<VideoPlayView> {
   @override
   void initState() {
     super.initState();
-
-    _vpController = VideoPlayerController.asset(widget.url);
+    print("${widget.url}................................fffffffffffff");
+    _vpController = VideoPlayerController.networkUrl(Uri.parse(widget.url));
 
     _chewieController = ChewieController(
       zoomAndPan: true,
@@ -307,12 +278,13 @@ class _VideoPlayViewState extends State<VideoPlayView> {
       videoPlayerController: _vpController,
       aspectRatio: 2 / 3,
     );
-    @override
-    void dispose() {
-      _vpController.dispose();
-      _chewieController.dispose();
-      super.dispose();
-    }
+  }
+
+  @override
+  void dispose() {
+    _vpController.dispose();
+    _chewieController.dispose();
+    super.dispose();
   }
 
   @override

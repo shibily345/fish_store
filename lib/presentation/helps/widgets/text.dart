@@ -13,9 +13,9 @@ Widget textWidget(
   return Text(
     maxLines: maxline,
     text,
-    overflow: TextOverflow.ellipsis,
+    overflow: overFlow,
     style: GoogleFonts.poppins(
-        fontSize: ScreenUtil().setSp(fontSize),
+        fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
         decoration: TextDecoration.none),

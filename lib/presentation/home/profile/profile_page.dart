@@ -1,11 +1,14 @@
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/infrastructure/controller/address_Info_controller.dart';
 import 'package:betta_store/infrastructure/controller/auth_controller.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/presentation/helps/widgets/containers.dart';
 import 'package:betta_store/presentation/helps/widgets/loading.dart';
 import 'package:betta_store/presentation/helps/widgets/spaces.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
+import 'package:betta_store/presentation/home/breeders/breeders_page.dart';
 import 'package:betta_store/presentation/home/profile/my_orders_page.dart';
+import 'package:betta_store/presentation/home/profile/my_shop/my_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -103,7 +106,7 @@ class ProfilePage extends StatelessWidget {
                                   profileItem(
                                     tile: ListTile(
                                       onTap: () {
-                                        //Get.to(() => CartHistory());
+                                        Get.to(() => MyShop());
                                       },
                                       leading: Icon(
                                         Iconsax.shop_add,
@@ -137,7 +140,8 @@ class ProfilePage extends StatelessWidget {
                                   profileItem(
                                     tile: ListTile(
                                       onTap: () {
-                                        //Get.to(() => CartHistory());
+                                        Get.to(() => BreedersPage());
+                                        //Get.toNamed(AppRouts.getAddressPage());
                                       },
                                       leading: Icon(
                                         Iconsax.setting,
@@ -160,6 +164,8 @@ class ProfilePage extends StatelessWidget {
                                         Get.find<CartController>()
                                             .clearCartHistory();
                                         Get.toNamed(AppRouts.getSplash());
+                                        Get.find<AddressInfoController>()
+                                            .clearAddressList();
                                       },
                                       leading: Icon(
                                         Iconsax.logout,

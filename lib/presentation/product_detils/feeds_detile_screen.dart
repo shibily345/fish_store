@@ -6,7 +6,7 @@ import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/feeds_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/plants_info_controller.dart';
-import 'package:betta_store/infrastructure/helper/dependencies.dart';
+import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/presentation/home/Shop/shop_cart.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
 import 'package:counter_button/counter_button.dart';
@@ -62,7 +62,9 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    var product = Get.find<FeedsInfoController>().feedsInfoList[widget.pageId];
+    var product = Get.find<FeedsInfoController>()
+        .feedsInfoList
+        .firstWhere((p) => p.id == widget.pageId);
     Get.find<FeedsInfoController>().initNew(
       Get.find<CartController>(),
       product,
@@ -82,7 +84,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                   SliverAppBar.large(
                     leading: IconButton(
                       onPressed: () {},
-                      icon: Icon(Iconsax.menu_1),
+                      icon: const Icon(Iconsax.menu_1),
                     ),
                     expandedHeight: 465.h,
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -143,7 +145,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                                 maxline: 2,
                                 text: product.name!,
                                 fontSize: 16,
-                                color: Colors.white),
+                                color: Theme.of(context).indicatorColor),
                           ),
                         ),
                       ),
@@ -158,24 +160,24 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                     //  crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BlurContainer(
+                          width: Get.width.w,
+                          height: 100.h,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RichTextWidget(texts: [
-                                TextSpan(text: 'Price : \n       \n'),
+                                const TextSpan(text: 'Price : \n       \n'),
                                 TextSpan(
                                     text: '₹ ${product.price!}.0',
-                                    style: TextStyle(fontSize: 20)),
+                                    style: const TextStyle(fontSize: 20)),
                               ]),
                               textWidget(
                                   maxline: 3,
                                   text:
                                       ' @devine_Bettas  \n  \ndelivery in 2-7 days',
-                                  color: Colors.white),
+                                  color: Theme.of(context).indicatorColor),
                             ],
-                          ),
-                          width: Get.width.w,
-                          height: 100.h),
+                          )),
                       SizedBox(
                         height: 20.w,
                       ),
@@ -185,7 +187,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                       textWidget(
                           maxline: 20,
                           text: product.description!,
-                          color: Colors.white),
+                          color: Theme.of(context).indicatorColor),
                     ],
                   ))),
         ),
@@ -205,7 +207,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                         }
                       : _toggleExpanded,
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     height: _expanded ? 180.0.h : 50.0,
                     width: _expanded ? 190.0.w : 190.0.w,
                     decoration: BoxDecoration(
@@ -220,7 +222,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(40.h)),
                     child: _expanded
-                        ? Container(
+                        ? SizedBox(
                             height: 290.h,
                             width: 180.w,
                             child: ListView(
@@ -241,7 +243,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                                             color: secondaryColor60DarkTheme,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 15,
                                       ),
                                       IconButton(
@@ -291,7 +293,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                                                     ? ()
                                                     : _toggleExpanded();
                                               },
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 color:
                                                     secondaryColor80DarkTheme,
                                                 Iconsax.login_1,
@@ -302,7 +304,7 @@ class _FeedsDetailPageState extends State<FeedsDetailPage> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                               ],

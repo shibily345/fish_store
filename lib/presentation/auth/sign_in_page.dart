@@ -40,7 +40,7 @@ class _SignInPageState extends State<SignInPage> {
             print("success...");
             Get.toNamed(AppRouts.getSplash());
           } else {
-            print(phone + "--------" + password);
+            print("$phone--------$password");
             showCustumeSnackBar(status.message);
           }
         });
@@ -61,7 +61,7 @@ class _SignInPageState extends State<SignInPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: Center(
-                    child: Container(
+                    child: SizedBox(
                       width: 200,
                       height: 150,
                       //decoration: BoxDecoration(
@@ -112,7 +112,7 @@ class _SignInPageState extends State<SignInPage> {
                             Icons.phone,
                             color: Theme.of(context).primaryColorDark,
                           ),
-                          errorStyle: TextStyle(fontSize: 18.0),
+                          errorStyle: const TextStyle(fontSize: 18.0),
                           border: InputBorder.none),
                     ),
                   ),
@@ -139,11 +139,11 @@ class _SignInPageState extends State<SignInPage> {
                               color: Theme.of(context).indicatorColor),
                           hintText: 'Enter Password',
                           labelText: 'Password',
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock_outline_rounded,
                             color: Colors.grey,
                           ),
-                          errorStyle: TextStyle(fontSize: 18.0),
+                          errorStyle: const TextStyle(fontSize: 18.0),
                           border: InputBorder.none),
                     ),
                   ),
@@ -152,11 +152,21 @@ class _SignInPageState extends State<SignInPage> {
                 Center(
                     child: Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: Container(
+                  child: SizedBox(
+                    // margin: EdgeInsets.fromLTRB(200, 20, 50, 0),
+                    width: MediaQuery.of(context).size.width * 0.4,
+
+                    height: 50,
                     // margin: EdgeInsets.fromLTRB(200, 20, 50, 0),
                     child: GetBuilder<AuthController>(
                       builder: (auth) {
                         return MaterialButton(
+                          onPressed: () {
+                            _login(auth);
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          color: Theme.of(context).primaryColor,
                           child: !auth.isLoading
                               ? textWidget(
                                   text: "Login",
@@ -167,24 +177,14 @@ class _SignInPageState extends State<SignInPage> {
                                   strokeWidth: 2.w,
                                   color: Theme.of(context).primaryColorDark,
                                 )),
-                          onPressed: () {
-                            _login(auth);
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          color: Theme.of(context).primaryColor,
                         );
                       },
                     ),
-
-                    width: MediaQuery.of(context).size.width * 0.4,
-
-                    height: 50,
                   ),
                 )),
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Center(
                         child: InkWell(
                       onTap: () {

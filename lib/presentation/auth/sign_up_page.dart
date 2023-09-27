@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -29,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLightTheme = Theme.of(context).brightness == Brightness.light;
     void _registration() {
       var authController = Get.find<AuthController>();
       String name = nameController.text.trim();
@@ -73,10 +75,10 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     return Scaffold(body: GetBuilder<AuthController>(
-      builder: (_authController) {
+      builder: (authController) {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(12.0.w),
             child: Form(
                 key: _formkey,
                 child: Column(
@@ -87,48 +89,32 @@ class _SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Center(
-                        child: Container(
-                          width: 200,
-                          height: 150,
+                        child: SizedBox(
+                          width: 300,
+                          height: 170,
                           //decoration: BoxDecoration(
                           //borderRadius: BorderRadius.circular(40),
                           //border: Border.all(color: Colors.blueGrey)),
                           child: Image.asset(
-                              'assets/bstore logos/fullLogoWhite.png'),
+                            color: Theme.of(context).indicatorColor,
+                            'assets/bstore logos/fullLogoWhite.png',
+                          ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: EdgeInsets.all(10.0.w),
                       child: BlurContainer(
                         width: Get.width,
-                        height: 60,
+                        height: 50.h,
                         child: TextFormField(
-                          style: TextStyle(color: Colors.amberAccent),
+                          style: TextStyle(
+                              color: Theme.of(context).indicatorColor),
                           controller: nameController,
-                          // validator: ((value) {
-                          //   if (value == null || value.isEmpty) {
-                          //     return 'please enter some text';
-                          //   } else if (value.length < 5) {
-                          //     return 'Enter atleast 5 Charecter';
-                          //   }
-
-                          //   return null;
-                          // }),
-                          // validator: MultiValidator([
-                          //   RequiredValidator(
-                          //       errorText: 'Enter User name / Store name'),
-                          //   MinLengthValidator(3,
-                          //       errorText: 'Minimum 3 charecter filled name'),
-                          // ]),
-
                           decoration: InputDecoration(
                               hintStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              labelStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              hintText: 'Enter Name',
-                              labelText: 'User name / Store name',
+                                  color: Theme.of(context).primaryColorLight),
+                              hintText: 'User / Store Name',
                               prefixIcon: Icon(
                                 Icons.person,
                                 color: Theme.of(context).indicatorColor,
@@ -138,27 +124,19 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: EdgeInsets.all(10.0.w),
                       child: BlurContainer(
                         width: Get.width,
-                        height: 60,
+                        height: 50.h,
                         child: TextFormField(
                           style: TextStyle(
                               color: Theme.of(context).indicatorColor),
                           controller: mobileController,
-                          // validator: MultiValidator([
-                          //   RequiredValidator(errorText: 'Enter mobile number'),
-                          //   // PatternValidator(r'(^[0,9]{10}$)',
-                          //   //     errorText: 'enter vaid mobile number'),
-                          // ]),
                           decoration: InputDecoration(
                               hintStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              labelStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
+                                  color: Theme.of(context).primaryColorLight),
                               hintText: 'Mobile',
-                              labelText: 'Mobile',
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.phone,
                                 color: Colors.grey,
                               ),
@@ -168,26 +146,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: EdgeInsets.all(10.0.w),
                       child: BlurContainer(
                         width: Get.width,
-                        height: 60,
+                        height: 50.h,
                         child: TextFormField(
                           style: TextStyle(
                               color: Theme.of(context).indicatorColor),
                           controller: emailController,
-                          // validator: MultiValidator([
-                          //   RequiredValidator(errorText: 'Enter email address'),
-                          //   EmailValidator(
-                          //       errorText: 'Please correct email filled'),
-                          // ]),
                           decoration: InputDecoration(
                               hintStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              labelStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
+                                  color: Theme.of(context).primaryColorLight),
                               hintText: 'Email',
-                              labelText: 'Email',
                               prefixIcon: Icon(
                                 Icons.email,
                                 color: Theme.of(context).indicatorColor,
@@ -197,29 +167,20 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: EdgeInsets.all(10.0.w),
                       child: BlurContainer(
                         width: Get.width,
-                        height: 60,
+                        height: 50.h,
                         child: TextFormField(
                           style: TextStyle(
                               color: Theme.of(context).indicatorColor),
                           obscureText: true,
                           controller: passwordController,
-                          // validator: MultiValidator([
-                          //   RequiredValidator(errorText: 'Enter Password'),
-                          //   MinLengthValidator(3,
-                          //       errorText:
-                          //           'Last name should be atleast 3 charater'),
-                          // ]),
                           decoration: InputDecoration(
                               hintStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              labelStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              hintText: 'Enter Password',
-                              labelText: 'Password',
-                              prefixIcon: Icon(
+                                  color: Theme.of(context).primaryColorLight),
+                              hintText: ' Password',
+                              prefixIcon: const Icon(
                                 Icons.lock_outline_rounded,
                                 color: Colors.grey,
                               ),
@@ -228,29 +189,21 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: EdgeInsets.all(10.0.w),
                       child: BlurContainer(
                         width: Get.width,
-                        height: 60,
+                        height: 50.h,
                         child: TextFormField(
+                          textAlign: TextAlign.start,
                           style: TextStyle(
                               color: Theme.of(context).indicatorColor),
                           obscureText: true,
                           controller: confirmPasswordController,
-                          // validator: MultiValidator([
-                          //   RequiredValidator(errorText: 'Enter Password'),
-                          //   MinLengthValidator(3,
-                          //       errorText:
-                          //           'Last name should be atleast 3 charater'),
-                          // ]),
                           decoration: InputDecoration(
                               hintStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              labelStyle: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                              hintText: 'Enter Password',
-                              labelText: 'Confirm Password',
-                              prefixIcon: Icon(
+                                  color: Theme.of(context).primaryColorLight),
+                              hintText: 'Confirm Password',
+                              prefixIcon: const Icon(
                                 Icons.lock_outline_rounded,
                                 color: Colors.grey,
                               ),
@@ -261,16 +214,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
                     Center(
                         child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Container(
+                      padding: EdgeInsets.only(top: 20.0.w),
+                      child: SizedBox(
+                        // margin: EdgeInsets.fromLTRB(200, 20, 50, 0),
+                        width: MediaQuery.of(context).size.width * 0.4,
+
+                        height: 50,
                         // margin: EdgeInsets.fromLTRB(200, 20, 50, 0),
                         child: MaterialButton(
-                          child: !_authController.isLoading
-                              ? textWidget(
-                                  text: 'Sign Up',
-                                  color: Theme.of(context).primaryColorDark,
-                                  fontSize: 16)
-                              : Center(child: CircularProgressIndicator()),
                           onPressed: () {
                             _registration();
                             // if (_formkey.currentState!.validate()) {
@@ -280,16 +231,20 @@ class _SignUpPageState extends State<SignUpPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40)),
                           color: Theme.of(context).primaryColor,
+                          child: !authController.isLoading
+                              ? textWidget(
+                                  text: 'Sign Up',
+                                  color: Theme.of(context).primaryColorDark,
+                                  fontSize: 16)
+                              : Center(
+                                  child: Lottie.asset(
+                                      'assets/ui_elementsbgon/animation_lmeiawsk.json')),
                         ),
-
-                        width: MediaQuery.of(context).size.width * 0.4,
-
-                        height: 50,
                       ),
                     )),
                     Center(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 5),
                         child: Center(
                             child: InkWell(
                           onTap: () {
@@ -305,7 +260,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     // Center(
                     //   child: Container(
-                    //     padding: EdgeInsets.only(top: 60),
+                    //     padding: EdgeInsets.only(top: 50.h),
                     //     child: Text(
                     //       'SIGN IN',
                     //       style: TextStyle(

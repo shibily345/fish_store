@@ -3,8 +3,6 @@ import 'package:betta_store/infrastructure/data/repository/items_info_repo.dart'
 import 'package:betta_store/infrastructure/data/repository/items_info_repo.dart';
 import 'package:betta_store/infrastructure/models/cart_model.dart';
 import 'package:betta_store/infrastructure/models/fish_detile_model.dart';
-import 'package:betta_store/infrastructure/models/items_detile_model.dart';
-import 'package:betta_store/infrastructure/models/plant_detile_model.dart';
 import 'package:get/get.dart';
 
 class ItemsInfoController extends GetxController {
@@ -34,7 +32,7 @@ class ItemsInfoController extends GetxController {
       print(
           "Got It .items hoooi.......................................................................................................");
       _itemsInfoList = [];
-      _itemsInfoList.addAll(ItemsInfo.fromJson(response.body).aquaItems);
+      _itemsInfoList.addAll(ProductInfoModel.fromJson(response.body).products);
       _isLoded = true;
       print(_itemsInfoList);
       update();
@@ -71,26 +69,25 @@ class ItemsInfoController extends GetxController {
 
   void initNew(
     CartController cart,
-    ItemsModel items,
+    ProductModel items,
   ) {
     _totelQuantity = 0;
     _quantity = 0;
 
     _inCartItemCount = 0;
     _cart = cart;
-    // exist = false;
-    // _exist = _cart.existInCart(items);
-    // print(exist.toString() + ".............................");
-    // if (exist) {
-    //   _inCartItemCount = _cart.getQuantity(items);
-    // }
+
+    _exist = _cart.existInCart(items);
+    print(exist.toString() + ".............................");
+    if (exist) {
+      _inCartItemCount = _cart.getQuantity(items);
+    }
     print(_inCartItemCount.toString() + ".............................");
   }
 
-  void addItem(PlantModel items) {
+  void addItem(ProductModel items) {
     if (totelQuantity > 0) {
-      // _cart.addItem(items, _totelQuantity, _quantity, _maleQuantity,
-      //     feQuantity, totPrice);
+      _cart.addItem(items, _totelQuantity, _quantity, 0, 0, totPrice);
       _totelQuantity = 0;
       _cart.items.forEach((key, value) {});
     } else {

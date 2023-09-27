@@ -2,7 +2,7 @@ import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/data/repository/feeds_info_repo.dart';
 import 'package:betta_store/infrastructure/data/repository/feeds_info_repo.dart';
 import 'package:betta_store/infrastructure/models/cart_model.dart';
-import 'package:betta_store/infrastructure/models/feeds_detile_model.dart';
+import 'package:betta_store/infrastructure/models/fish_detile_model.dart';
 import 'package:get/get.dart';
 
 class FeedsInfoController extends GetxController {
@@ -32,7 +32,7 @@ class FeedsInfoController extends GetxController {
       print(
           "Got It .feeds hoooi.......................................................................................................");
       _feedsInfoList = [];
-      _feedsInfoList.addAll(FeedsInfo.fromJson(response.body).feeds);
+      _feedsInfoList.addAll(ProductInfoModel.fromJson(response.body).products);
       _isLoded = true;
       print(_feedsInfoList);
       update();
@@ -69,7 +69,7 @@ class FeedsInfoController extends GetxController {
 
   void initNew(
     CartController cart,
-    FeedsModel feeds,
+    ProductModel feeds,
   ) {
     _totelQuantity = 0;
     _quantity = 0;
@@ -77,18 +77,17 @@ class FeedsInfoController extends GetxController {
     _inCartItemCount = 0;
     _cart = cart;
     // exist = false;
-    // _exist = _cart.existInCart(feeds);
-    // print(exist.toString() + ".............................");
-    // if (exist) {
-    //   _inCartItemCount = _cart.getQuantity(feeds);
-    // }
+    _exist = _cart.existInCart(feeds);
+    print(exist.toString() + ".............................");
+    if (exist) {
+      _inCartItemCount = _cart.getQuantity(feeds);
+    }
     print(_inCartItemCount.toString() + ".............................");
   }
 
-  void addItem(FeedsModel feeds) {
+  void addItem(ProductModel feeds) {
     if (totelQuantity > 0) {
-      // _cart.addItem(feeds, _totelQuantity, _quantity, _maleQuantity,
-      //     feQuantity, totPrice);
+      _cart.addItem(feeds, _totelQuantity, _quantity, 0, 0, totPrice);
       _totelQuantity = 0;
       _cart.items.forEach((key, value) {});
     } else {

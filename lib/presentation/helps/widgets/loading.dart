@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 class CustomeLoader extends StatelessWidget {
-  const CustomeLoader({super.key});
+  final bool isloading;
+  const CustomeLoader({super.key, this.isloading = false});
 
   @override
   Widget build(BuildContext context) {

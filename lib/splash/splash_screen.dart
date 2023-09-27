@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/infrastructure/controller/auth_controller.dart';
 import 'package:betta_store/infrastructure/controller/items_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/feeds_info_controller.dart';
@@ -8,7 +9,7 @@ import 'package:betta_store/infrastructure/controller/other_fish_info_controller
 import 'package:betta_store/infrastructure/controller/plants_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
 import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
-import 'package:betta_store/infrastructure/helper/dependencies.dart';
+import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
 import 'package:bottom_bar_matu/components/colors.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> _loadResources() async {
-    init();
     await Get.find<ProductInfoController>().getProductInfoList();
     await Get.find<PlantsInfoController>().getPlantsInfoList();
     await Get.find<OtherFishInfoController>().getOtherFishInfoList();
@@ -37,8 +37,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
+    Get.lazyPut(() => ProductInfoController(productInfoRepo: Get.find()));
+    Get.lazyPut(() => PlantsInfoController(plantsInfoRepo: Get.find()));
+    Get.lazyPut(() => OtherFishInfoController(otherFishInfoRepo: Get.find()));
+    Get.lazyPut(() => ItemsInfoController(itemsInfoRepo: Get.find()));
+    Get.lazyPut(() => FeedsInfoController(feedsInfoRepo: Get.find()));
     _loadResources();
-    Timer(Duration(seconds: 3), () => Get.offAllNamed(AppRouts.getinitial()));
+    Timer(const Duration(seconds: 3),
+        () => Get.offAllNamed(AppRouts.getinitial()));
   }
 
   @override
@@ -47,16 +54,17 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           Positioned(
-            bottom: 380,
-            left: 120,
+            bottom: 380.h,
+            left: 120.w,
             child: Image.asset(
+              color: Theme.of(context).indicatorColor,
               "assets/bstore logos/fullLogoWhite.png",
               width: 160.w,
             ),
           ),
           Positioned(
-            bottom: 40,
-            left: 150,
+            bottom: 40.h,
+            left: 150.w,
             child: Column(
               children: [
                 textWidget(
@@ -65,6 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   fontSize: ScreenUtil().setSp(16),
                 ),
                 Image.asset(
+                  color: Theme.of(context).indicatorColor,
                   "assets/bstore logos/sflogo.png",
                   width: 120.w,
                 ),

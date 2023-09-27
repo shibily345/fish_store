@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlay extends StatefulWidget {
-  const VideoPlay({super.key});
-
+  VideoPlay({super.key, required this.url});
+  String url;
   @override
   State<VideoPlay> createState() => _VideoPlayState();
 }
 
 class _VideoPlayState extends State<VideoPlay> {
   late VideoPlayerController controller;
+  void _playVideo({int index = 0, bool init = false}) {
+    controller = VideoPlayerController.networkUrl(Uri.parse(widget.url!));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller = VideoPlayerController.asset('assets/fishesexample/egVideo.mp4')
-      ..addListener(() => setState(() {}))
-      ..setLooping(true)
-      ..initialize().then((_) => controller.play());
   }
 
   @override

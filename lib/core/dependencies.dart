@@ -1,4 +1,5 @@
 import 'package:betta_store/core/constents.dart';
+import 'package:betta_store/infrastructure/controller/address_Info_controller.dart';
 import 'package:betta_store/infrastructure/controller/items_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/auth_controller.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
@@ -8,6 +9,7 @@ import 'package:betta_store/infrastructure/controller/plants_info_controller.dar
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/user_Info_Controller.dart';
 import 'package:betta_store/infrastructure/data/api/api_clint.dart';
+import 'package:betta_store/infrastructure/data/repository/address_repo.dart';
 import 'package:betta_store/infrastructure/data/repository/auth_repo.dart';
 import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
 import 'package:betta_store/infrastructure/data/repository/feeds_info_repo.dart';
@@ -20,7 +22,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> init() async {
-  final sharedPreferences = await SharedPreferences.getInstance;
+  const sharedPreferences = SharedPreferences.getInstance;
   Get.lazyPut(() => sharedPreferences);
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
   Get.lazyPut(() => ApiClint(
@@ -29,13 +31,16 @@ Future<void> init() async {
       () => AuthRepo(apiClint: Get.find(), sharedPreferences: Get.find()));
 //repos
   Get.lazyPut(() => ProductInfoRepo(apiClint: Get.find()));
-
   Get.lazyPut(() => PlantsInfoRepo(apiClint: Get.find()));
   Get.lazyPut(() => OtherFishInfoRepo(apiClint: Get.find()));
   Get.lazyPut(() => ItemsInfoRepo(apiClint: Get.find()));
   Get.lazyPut(() => FeedsInfoRepo(apiClint: Get.find()));
   Get.lazyPut(() => CartRepository(sharedPreferences: Get.find()));
   Get.lazyPut(() => UserRepo(apiClint: Get.find()));
+  Get.lazyPut(() => AddressRepo(
+        sharedPreferences: Get.find(),
+        apiClint: Get.find(),
+      ));
 //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => UserInfoController(userRepo: Get.find()));
@@ -44,4 +49,5 @@ Future<void> init() async {
   Get.lazyPut(() => OtherFishInfoController(otherFishInfoRepo: Get.find()));
   Get.lazyPut(() => ItemsInfoController(itemsInfoRepo: Get.find()));
   Get.lazyPut(() => FeedsInfoController(feedsInfoRepo: Get.find()));
+  Get.lazyPut(() => AddressInfoController(addressRepo: Get.find()));
 }

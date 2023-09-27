@@ -15,7 +15,7 @@ class NoDataPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Get.height,
       width: Get.width,
       child: Column(

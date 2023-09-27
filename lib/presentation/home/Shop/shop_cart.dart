@@ -4,8 +4,6 @@ import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/auth_controller.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
-import 'package:betta_store/infrastructure/data/repository/cart_repo.dart';
-import 'package:betta_store/presentation/helps/widgets/containers.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,8 +16,8 @@ class ShopCartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: GetBuilder<CartController>(builder: (cartCon) {
-          return cartCon.getItems.length > 0
-              ? Container(
+          return cartCon.getItems.isNotEmpty
+              ? SizedBox(
                   width: Get.width,
                   height: 100.h,
                   child: Row(
@@ -35,13 +33,12 @@ class ShopCartPage extends StatelessWidget {
                           if (Get.find<AuthController>().userLogedIn()) {
                             Get.defaultDialog(
                                 title: "Confirm",
-                                contentPadding: EdgeInsets.all(20),
+                                contentPadding: const EdgeInsets.all(20),
                                 content:
                                     textWidget(text: "Add your items to cart"),
                                 // confirm: textWidget(text: "Go to login"),
                                 onConfirm: () {
-                                  cartCon.addToHistory();
-                                  Get.back();
+                                  Get.toNamed(AppRouts.getAddressPage());
                                 },
                                 onCancel: () {
                                   Get.back();
@@ -84,6 +81,7 @@ class ShopCartPage extends StatelessWidget {
                 );
         }),
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: Colors.transparent,
           title: textWidget(
               text: "Your Bag",
@@ -94,14 +92,14 @@ class ShopCartPage extends StatelessWidget {
         body: GetBuilder<CartController>(builder: (
           carts,
         ) {
-          return carts.getItems.length > 0
+          return carts.getItems.isNotEmpty
               ? ListView.builder(
                   itemCount: carts.getItems.length,
                   itemBuilder: (context, index) {
                     return Stack(
                       children: [
                         Container(
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
                           height: 110.h,
                           width: Get.width,
                           color: const Color.fromARGB(0, 255, 255, 255),
@@ -110,6 +108,7 @@ class ShopCartPage extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
+                                  print('taped');
                                   var productIndex =
                                       Get.find<ProductInfoController>()
                                           .productInfoList
@@ -118,37 +117,26 @@ class ShopCartPage extends StatelessWidget {
                                   Get.toNamed(
                                       AppRouts.getfishDetails(productIndex));
                                 },
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      left: 0,
-                                      top: 0,
-                                      child: Image.network(
-                                        AppConstents.BASE_URL +
-                                            AppConstents.UPLOAD_URL +
-                                            carts.getItems[index].img!,
-                                        width: 110.w,
-                                        height: 110.h,
-                                      ),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).splashColor,
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                    BlurContainer(
-                                        child: Image.network(
-                                          AppConstents.BASE_URL +
-                                              AppConstents.UPLOAD_URL +
-                                              carts.getItems[index].img!,
-                                          width: 150.w,
-                                          height: 150.h,
-                                        ),
-                                        width: 110.w,
-                                        height: 110.h),
-                                  ],
-                                ),
+                                    width: 110.w,
+                                    height: 110.h,
+                                    child: Image.network(
+                                      AppConstents.BASE_URL +
+                                          AppConstents.UPLOAD_URL +
+                                          carts.getItems[index].img!,
+                                      width: 150.w,
+                                      height: 150.w,
+                                    )),
                               ),
                               SizedBox(
                                 width: 20.w,
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: 20),
+                                margin: const EdgeInsets.only(top: 20),
                                 height: 30,
                                 width: 193.w,
                                 child: textWidget(
@@ -164,7 +152,7 @@ class ShopCartPage extends StatelessWidget {
                                     //     false;
                                     carts.deletetCart(carts.getItems[index]);
                                   },
-                                  icon: Icon(Icons.delete))
+                                  icon: const Icon(Icons.delete))
                             ],
                           ),
                         ),
@@ -237,7 +225,7 @@ class ShopCartPage extends StatelessWidget {
                       ],
                     );
                   })
-              : NoDataPage(infoText: "");
+              : const NoDataPage(infoText: "");
         }));
   }
 }

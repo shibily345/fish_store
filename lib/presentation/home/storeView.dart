@@ -5,19 +5,10 @@ import 'package:betta_store/infrastructure/controller/feeds_info_controller.dart
 import 'package:betta_store/infrastructure/controller/other_fish_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/plants_info_controller.dart';
 import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
-import 'package:betta_store/infrastructure/data/repository/product_info_repo.dart';
-import 'package:betta_store/infrastructure/models/feeds_detile_model.dart';
 import 'package:betta_store/infrastructure/models/fish_detile_model.dart';
-import 'package:betta_store/infrastructure/models/items_detile_model.dart';
-import 'package:betta_store/infrastructure/models/other_fish_detile_model.dart';
-import 'package:betta_store/infrastructure/models/plant_detile_model.dart';
-import 'package:betta_store/presentation/helps/widgets/containers.dart';
 import 'package:betta_store/presentation/helps/widgets/loading.dart';
 import 'package:betta_store/presentation/helps/widgets/spaces.dart';
 import 'package:betta_store/presentation/helps/widgets/text.dart';
-import 'package:betta_store/presentation/home/home_screen.dart';
-import 'package:betta_store/presentation/product_detils/detile_screen.dart';
-import 'package:betta_store/utils/theme/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -30,8 +21,12 @@ class StoreView extends StatefulWidget {
   State<StoreView> createState() => _StoreViewState();
 }
 
+enum SortOption { priceHighToLow, priceLowToHigh, newest, oldest }
+
 class _StoreViewState extends State<StoreView> {
+  SortOption _selectedSortOption = SortOption.newest;
   Future<void> _loadResources() async {
+    _selectedSortOption = SortOption.newest;
     await Get.find<ProductInfoController>().getProductInfoList();
     await Get.find<PlantsInfoController>().getPlantsInfoList();
     await Get.find<OtherFishInfoController>().getOtherFishInfoList();
@@ -44,27 +39,211 @@ class _StoreViewState extends State<StoreView> {
     return GetBuilder<ProductInfoController>(builder: (
       productInfo,
     ) {
+      void _sortData(SortOption selectedOption) {
+        setState(() {
+          switch (selectedOption) {
+            case SortOption.priceHighToLow:
+              productInfo.productInfoList
+                  .sort((a, b) => b.price.compareTo(a.price));
+              break;
+            case SortOption.priceLowToHigh:
+              productInfo.productInfoList
+                  .sort((a, b) => a.price.compareTo(b.price));
+              break;
+            case SortOption.newest:
+              productInfo.productInfoList
+                  .sort((a, b) => b.createdAt.compareTo(a.createdAt));
+              break;
+            case SortOption.oldest:
+              productInfo.productInfoList
+                  .sort((a, b) => a.createdAt.compareTo(b.createdAt));
+              break;
+          }
+        });
+      }
+
       return productInfo.isLoaded
           ? DefaultTabController(
               length: 5,
               child: TabBarView(controller: widget.tabcontroller, children: [
                 RefreshIndicator(
                   onRefresh: _loadResources,
-                  child: GridView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: productInfo.productInfoList.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Number of columns
-                      mainAxisSpacing: 3.0,
-                      crossAxisSpacing: 3.0,
-                    ),
-                    itemBuilder: (context, index) {
-                      return shopItems(
-                        productInfo,
-                        index,
-                        productInfo.productInfoList[index],
-                      );
-                    },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: SizedBox(
+                          height: 60.h,
+                          child: DropdownButton<SortOption>(
+                            focusColor: Theme.of(context).splashColor,
+                            padding: const EdgeInsets.all(10),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            borderRadius: BorderRadius.circular(20),
+                            underline: Container(),
+                            hint: textWidget(
+                                text: "Sortby",
+                                color: Theme.of(context).primaryColor),
+                            value: _selectedSortOption,
+                            onChanged: (SortOption? newValue) {
+                              setState(() {
+                                _selectedSortOption = newValue!;
+                                _sortData(_selectedSortOption);
+                              });
+                            },
+                            items: SortOption.values.map((SortOption option) {
+                              return DropdownMenuItem<SortOption>(
+                                value: option,
+                                child: Text(option.toString().split('.').last),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 10,
+                        child: GridView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: productInfo.productInfoList.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Number of columns
+                            mainAxisSpacing: 3.0,
+                            crossAxisSpacing: 3.0,
+                          ),
+                          itemBuilder: (context, index) {
+                            return Stack(
+                              //   fit: StackFit.loose,
+                              children: [
+                                Container(
+                                  width: 190.w,
+                                  height: 190.h,
+                                  margin: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    // color: Color.fromARGB(236, 217, 16, 16),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      bigSpace,
+                                      bigSpace,
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            width: 175.w,
+                                            height: 70.h,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Theme.of(context).splashColor,
+
+                                              // ),
+                                              borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(20.h),
+                                                  topRight:
+                                                      Radius.circular(20.h),
+                                                  bottomRight:
+                                                      Radius.elliptical(
+                                                          180.h, 160.h),
+                                                  topLeft: Radius.elliptical(
+                                                      180.h, 160.h)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                    bottom: 10,
+                                    right: 10,
+                                    child: CircleAvatar(
+                                      backgroundColor:
+                                          Theme.of(context).splashColor,
+                                      child: IconButton(
+                                          enableFeedback: true,
+                                          onPressed: () {
+                                            Get.toNamed(AppRouts.getfishDetails(
+                                                productInfo
+                                                    .productInfoList[index]
+                                                    .id!));
+                                          },
+                                          icon: Icon(
+                                            Iconsax.shopping_cart,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          )),
+                                    )),
+                                Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: IconButton(
+                                        enableFeedback: true,
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.favorite_border,
+                                          color: Theme.of(context).primaryColor,
+                                        ))),
+                                Positioned(
+                                  bottom: 20.h,
+                                  left: 30.w,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 120.w,
+                                        child: textWidget(
+                                            text: productInfo
+                                                .productInfoList[index].name!,
+                                            color: Theme.of(context)
+                                                .indicatorColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      textWidget(
+                                          text: productInfo
+                                                      .productInfoList[index]
+                                                      .breeder ==
+                                                  ''
+                                              ? "@Devine_Bettas"
+                                              : '@${productInfo.productInfoList[index].breeder!}',
+                                          color:
+                                              Theme.of(context).indicatorColor,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w300),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  //top: 10,
+                                  left: 20,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.toNamed(AppRouts.getfishDetails(
+                                          productInfo
+                                              .productInfoList[index].id!));
+                                    },
+                                    child: Image.network(
+                                      AppConstents.BASE_URL +
+                                          AppConstents.UPLOAD_URL +
+                                          productInfo
+                                              .productInfoList[index].img!,
+                                      width: 150.w,
+                                      height: 150.h,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 GetBuilder<PlantsInfoController>(
@@ -78,7 +257,7 @@ class _StoreViewState extends State<StoreView> {
                               padding: EdgeInsets.zero,
                               itemCount: productInfo.plantsInfoList.length,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, // Number of columns
                                 mainAxisSpacing: 3.0,
                                 crossAxisSpacing: 3.0,
@@ -87,7 +266,7 @@ class _StoreViewState extends State<StoreView> {
                                 return Container(
                                   width: 190.w,
                                   height: 190.h,
-                                  margin: EdgeInsets.all(8.0),
+                                  margin: const EdgeInsets.all(8.0),
                                   decoration: BoxDecoration(
                                     // color: Color.fromARGB(236, 217, 16, 16),
                                     borderRadius: BorderRadius.circular(12.0),
@@ -99,8 +278,9 @@ class _StoreViewState extends State<StoreView> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          Get.toNamed(
-                                              AppRouts.getPlantDetails(index));
+                                          Get.toNamed(AppRouts.getPlantDetails(
+                                              productInfo
+                                                  .plantsInfoList[index].id));
                                         },
                                         child: Container(
                                           height: 110.h,
@@ -122,30 +302,13 @@ class _StoreViewState extends State<StoreView> {
                                         ),
                                       ),
                                       Container(
-                                        padding:
-                                            EdgeInsets.only(top: 6, left: 30),
+                                        padding: const EdgeInsets.only(
+                                            top: 6, left: 30),
                                         width: 170.w,
                                         height: 50.h,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color.fromARGB(
-                                                  255, 226, 226, 226),
-                                              Color.fromARGB(255, 255, 213, 0)
-                                            ], // List of colors in the gradient
-                                            begin: Alignment
-                                                .topLeft, // Starting point of the gradient
-                                            end: Alignment
-                                                .bottomRight, // Ending point of the gradient
-                                            stops: [
-                                              0.0,
-                                              1.0
-                                            ], // Stops for each color in the gradient
-                                            // You can also use `TileMode` to control how the gradient is repeated
-                                            tileMode: TileMode
-                                                .clamp, // This will repeat the gradient to fill the container
-                                          ),
-                                          borderRadius: BorderRadius.only(
+                                          color: Theme.of(context).splashColor,
+                                          borderRadius: const BorderRadius.only(
                                               bottomLeft: Radius.circular(20),
                                               topRight: Radius.circular(20),
                                               bottomRight:
@@ -165,13 +328,15 @@ class _StoreViewState extends State<StoreView> {
                                                   text: productInfo
                                                       .plantsInfoList[index]
                                                       .name!,
-                                                  color: Colors.black,
+                                                  color: Theme.of(context)
+                                                      .indicatorColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
                                             textWidget(
                                                 text: "@Devine_Bettas",
-                                                color: Colors.black,
+                                                color: Theme.of(context)
+                                                    .indicatorColor,
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w300),
                                           ],
@@ -183,7 +348,7 @@ class _StoreViewState extends State<StoreView> {
                               },
                             ),
                           )
-                        : Center(
+                        : const Center(
                             child: CustomeLoader(),
                           );
                   },
@@ -199,7 +364,7 @@ class _StoreViewState extends State<StoreView> {
                               padding: EdgeInsets.zero,
                               itemCount: ofProductInfo.otherFishInfoList.length,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, // Number of columns
                                 mainAxisSpacing: 3.0,
                                 crossAxisSpacing: 3.0,
@@ -208,10 +373,10 @@ class _StoreViewState extends State<StoreView> {
                                 return Container(
                                   width: 190.w,
                                   height: 190.h,
-                                  margin: EdgeInsets.all(8.0),
+                                  margin: const EdgeInsets.all(8.0),
                                   decoration: BoxDecoration(
                                     // color: Color.fromARGB(236, 217, 16, 16),
-                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderRadius: BorderRadius.circular(12.0.w),
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
@@ -222,14 +387,16 @@ class _StoreViewState extends State<StoreView> {
                                         onTap: () {
                                           Get.toNamed(
                                               AppRouts.getOtherFishDetails(
-                                                  index));
+                                                  ofProductInfo
+                                                      .otherFishInfoList[index]
+                                                      .id));
                                         },
                                         child: Container(
                                           height: 110.h,
                                           width: 150.w,
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(20.w),
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: NetworkImage(
@@ -244,30 +411,13 @@ class _StoreViewState extends State<StoreView> {
                                         ),
                                       ),
                                       Container(
-                                        padding:
-                                            EdgeInsets.only(top: 6, left: 30),
+                                        padding: EdgeInsets.only(
+                                            top: 6.h, left: 30.w),
                                         width: 170.w,
                                         height: 50.h,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color.fromARGB(
-                                                  255, 226, 226, 226),
-                                              Color.fromARGB(255, 255, 213, 0)
-                                            ], // List of colors in the gradient
-                                            begin: Alignment
-                                                .topLeft, // Starting point of the gradient
-                                            end: Alignment
-                                                .bottomRight, // Ending point of the gradient
-                                            stops: [
-                                              0.0,
-                                              1.0
-                                            ], // Stops for each color in the gradient
-                                            // You can also use `TileMode` to control how the gradient is repeated
-                                            tileMode: TileMode
-                                                .clamp, // This will repeat the gradient to fill the container
-                                          ),
-                                          borderRadius: BorderRadius.only(
+                                          color: Theme.of(context).splashColor,
+                                          borderRadius: const BorderRadius.only(
                                               bottomLeft: Radius.circular(20),
                                               topRight: Radius.circular(20),
                                               bottomRight:
@@ -287,13 +437,15 @@ class _StoreViewState extends State<StoreView> {
                                                   text: ofProductInfo
                                                       .otherFishInfoList[index]
                                                       .name!,
-                                                  color: Colors.black,
+                                                  color: Theme.of(context)
+                                                      .indicatorColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
                                             textWidget(
                                                 text: "@Devine_Bettas",
-                                                color: Colors.black,
+                                                color: Theme.of(context)
+                                                    .indicatorColor,
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w300),
                                           ],
@@ -305,7 +457,7 @@ class _StoreViewState extends State<StoreView> {
                               },
                             ),
                           )
-                        : CustomeLoader();
+                        : const CustomeLoader();
                   },
                 ),
                 GetBuilder<ItemsInfoController>(
@@ -319,7 +471,7 @@ class _StoreViewState extends State<StoreView> {
                               padding: EdgeInsets.zero,
                               itemCount: productInfo.itemsInfoList.length,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, // Number of columns
                                 mainAxisSpacing: 3.0,
                                 crossAxisSpacing: 3.0,
@@ -328,7 +480,7 @@ class _StoreViewState extends State<StoreView> {
                                 return Container(
                                   width: 190.w,
                                   height: 190.h,
-                                  margin: EdgeInsets.all(8.0),
+                                  margin: const EdgeInsets.all(8.0),
                                   decoration: BoxDecoration(
                                     // color: Color.fromARGB(236, 217, 16, 16),
                                     borderRadius: BorderRadius.circular(12.0),
@@ -340,8 +492,9 @@ class _StoreViewState extends State<StoreView> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          Get.toNamed(
-                                              AppRouts.getItemsDetails(index));
+                                          Get.toNamed(AppRouts.getItemsDetails(
+                                              productInfo
+                                                  .itemsInfoList[index].id));
                                         },
                                         child: Container(
                                           height: 110.h,
@@ -363,30 +516,13 @@ class _StoreViewState extends State<StoreView> {
                                         ),
                                       ),
                                       Container(
-                                        padding:
-                                            EdgeInsets.only(top: 6, left: 30),
+                                        padding: const EdgeInsets.only(
+                                            top: 6, left: 30),
                                         width: 170.w,
                                         height: 50.h,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color.fromARGB(
-                                                  255, 226, 226, 226),
-                                              Color.fromARGB(255, 255, 213, 0)
-                                            ], // List of colors in the gradient
-                                            begin: Alignment
-                                                .topLeft, // Starting point of the gradient
-                                            end: Alignment
-                                                .bottomRight, // Ending point of the gradient
-                                            stops: [
-                                              0.0,
-                                              1.0
-                                            ], // Stops for each color in the gradient
-                                            // You can also use `TileMode` to control how the gradient is repeated
-                                            tileMode: TileMode
-                                                .clamp, // This will repeat the gradient to fill the container
-                                          ),
-                                          borderRadius: BorderRadius.only(
+                                          color: Theme.of(context).splashColor,
+                                          borderRadius: const BorderRadius.only(
                                               bottomLeft: Radius.circular(20),
                                               topRight: Radius.circular(20),
                                               bottomRight:
@@ -406,13 +542,15 @@ class _StoreViewState extends State<StoreView> {
                                                   text: productInfo
                                                       .itemsInfoList[index]
                                                       .name!,
-                                                  color: Colors.black,
+                                                  color: Theme.of(context)
+                                                      .indicatorColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
                                             textWidget(
                                                 text: "@Devine_Bettas",
-                                                color: Colors.black,
+                                                color: Theme.of(context)
+                                                    .indicatorColor,
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w300),
                                           ],
@@ -424,7 +562,7 @@ class _StoreViewState extends State<StoreView> {
                               },
                             ),
                           )
-                        : CustomeLoader();
+                        : const CustomeLoader();
                   },
                 ),
                 GetBuilder<FeedsInfoController>(
@@ -438,7 +576,7 @@ class _StoreViewState extends State<StoreView> {
                               padding: EdgeInsets.zero,
                               itemCount: productInfo.feedsInfoList.length,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, // Number of columns
                                 mainAxisSpacing: 3.0,
                                 crossAxisSpacing: 3.0,
@@ -447,7 +585,7 @@ class _StoreViewState extends State<StoreView> {
                                 return Container(
                                   width: 190.w,
                                   height: 190.h,
-                                  margin: EdgeInsets.all(8.0),
+                                  margin: const EdgeInsets.all(8.0),
                                   decoration: BoxDecoration(
                                     // color: Color.fromARGB(236, 217, 16, 16),
                                     borderRadius: BorderRadius.circular(12.0),
@@ -459,8 +597,9 @@ class _StoreViewState extends State<StoreView> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          Get.toNamed(
-                                              AppRouts.getFeedsDetail(index));
+                                          Get.toNamed(AppRouts.getFeedsDetail(
+                                              productInfo
+                                                  .feedsInfoList[index].id));
                                         },
                                         child: Container(
                                           height: 110.h,
@@ -482,30 +621,13 @@ class _StoreViewState extends State<StoreView> {
                                         ),
                                       ),
                                       Container(
-                                        padding:
-                                            EdgeInsets.only(top: 6, left: 30),
+                                        padding: const EdgeInsets.only(
+                                            top: 6, left: 30),
                                         width: 170.w,
                                         height: 50.h,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color.fromARGB(
-                                                  255, 226, 226, 226),
-                                              Color.fromARGB(255, 255, 213, 0)
-                                            ], // List of colors in the gradient
-                                            begin: Alignment
-                                                .topLeft, // Starting point of the gradient
-                                            end: Alignment
-                                                .bottomRight, // Ending point of the gradient
-                                            stops: [
-                                              0.0,
-                                              1.0
-                                            ], // Stops for each color in the gradient
-                                            // You can also use `TileMode` to control how the gradient is repeated
-                                            tileMode: TileMode
-                                                .clamp, // This will repeat the gradient to fill the container
-                                          ),
-                                          borderRadius: BorderRadius.only(
+                                          color: Theme.of(context).splashColor,
+                                          borderRadius: const BorderRadius.only(
                                               bottomLeft: Radius.circular(20),
                                               topRight: Radius.circular(20),
                                               bottomRight:
@@ -525,13 +647,15 @@ class _StoreViewState extends State<StoreView> {
                                                   text: productInfo
                                                       .feedsInfoList[index]
                                                       .name!,
-                                                  color: Colors.black,
+                                                  color: Theme.of(context)
+                                                      .indicatorColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
                                             textWidget(
                                                 text: "@Devine_Bettas",
-                                                color: Colors.black,
+                                                color: Theme.of(context)
+                                                    .indicatorColor,
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w300),
                                           ],
@@ -543,162 +667,14 @@ class _StoreViewState extends State<StoreView> {
                               },
                             ),
                           )
-                        : CustomeLoader();
+                        : const CustomeLoader();
                   },
                 ),
               ]),
             )
-          : Center(
+          : const Center(
               child: CustomeLoader(),
             );
     });
-  }
-
-  Stack shopItems(
-      ProductInfoController productInfo, int index, ProductModel products) {
-    return Stack(
-      //   fit: StackFit.loose,
-      children: [
-        Container(
-          width: 190.w,
-          height: 190.h,
-          margin: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            // color: Color.fromARGB(236, 217, 16, 16),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              bigSpace,
-              bigSpace,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    //padding: EdgeInsets.only(top: 40, left: 20),
-                    width: 177.w,
-                    height: 70.h,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor),
-                      // gradient: LinearGradient(
-                      //   colors: [
-                      //     Color.fromARGB(255, 226, 226, 226),
-                      //     Color.fromARGB(255, 255, 213, 0)
-                      //   ], // List of colors in the gradient
-                      //   begin:
-                      //       Alignment.topLeft, // Starting point of the gradient
-                      //   end: Alignment
-                      //       .bottomRight, // Ending point of the gradient
-                      //   stops: [
-                      //     0.0,
-                      //     1.0
-                      //   ], // Stops for each color in the gradient
-                      //   // You can also use `TileMode` to control how the gradient is repeated
-                      //   tileMode: TileMode
-                      //       .clamp, // This will repeat the gradient to fill the container
-                      // ),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.elliptical(180, 160),
-                          topLeft: Radius.elliptical(180, 160)),
-                    ),
-                  ),
-                  // SizedBox(width: 40.w),
-                  // textWidget(
-                  //     text: "Pair : ₹ ",
-                  //     color: secondaryColor40DarkTheme),
-                  // textWidget(
-                  //     text: "300",
-                  //     color: secondaryColor20DarkTheme,
-                  //     fontSize: 20,
-                  //     fontWeight: FontWeight.bold)
-                ],
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-            bottom: 10,
-            right: 10,
-            child: CircleAvatar(
-              backgroundColor: secondaryColor80DarkTheme,
-              child: IconButton(
-                  enableFeedback: true,
-                  onPressed: () {
-                    Get.toNamed(AppRouts.getfishDetails(index));
-                  },
-                  icon: Icon(Iconsax.shopping_cart)),
-            )),
-        Positioned(
-            top: 10,
-            right: 10,
-            child: CircleAvatar(
-              backgroundColor: secondaryColor80DarkTheme,
-              child: IconButton(
-                  enableFeedback: true,
-                  onPressed: () {},
-                  icon: Icon(Icons.favorite_border)),
-            )),
-        Positioned(
-          bottom: 20.h,
-          left: 30.w,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 120.w,
-                child: textWidget(
-                    text: products.name!,
-                    color: Theme.of(context).indicatorColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700),
-              ),
-              textWidget(
-                  text: "@Devine_Bettas",
-                  color: Theme.of(context).indicatorColor,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w300),
-            ],
-          ),
-        ),
-        Positioned(
-          //top: 10,
-          left: 20,
-          child: InkWell(
-            onTap: () {
-              Get.toNamed(AppRouts.getfishDetails(index));
-            },
-            child: Image.network(
-              AppConstents.BASE_URL + AppConstents.UPLOAD_URL + products.img!,
-              width: 150.w,
-              height: 150.h,
-            ),
-          ),
-        ),
-        // Positioned(
-        //   top: 50,
-        //   right: 20,
-        //   child: IconButton.filled(
-        //     onPressed: () {},
-        //     icon: Icon(
-        //       Iconsax.heart,
-        //       color: Theme.of(context).indicatorColor,
-        //     ),
-        //     highlightColor: Colors.red,
-        //   ),
-        // ),
-        // Positioned(
-        //   top: 150,
-        //   right: 20,
-        //   child: FloatingActionButton.small(
-        //     child: Icon(Iconsax.bag_2),
-        //     onPressed: () {},
-        //   ),
-        // )
-      ],
-    );
   }
 }

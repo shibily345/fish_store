@@ -16,8 +16,10 @@ class CartRepository {
     cart = [];
     cartList.forEach((element) {
       element.time = time;
+
       return cart.add(jsonEncode(element));
     });
+    print(cart.toString());
     await sharedPreferences.setStringList(AppConstents.Cart_list, cart);
     print(sharedPreferences.getStringList(AppConstents.Cart_list));
   }
@@ -47,6 +49,26 @@ class CartRepository {
         "saved list....................'''''''''''''''''''''''''''''''''''''''''''''''''''''''" +
             cartListHistory.toString());
     return cartListHistory;
+  }
+
+  Future<void> removeFromCartList(CartModel itemToRemove) async {
+    List<String> cart =
+        sharedPreferences.getStringList(AppConstents.Cart_list)!;
+
+    if (cart != null) {
+      cart.removeWhere((element) {
+        final decodedItem = jsonDecode(element);
+        final cartItem = CartModel.fromJson(decodedItem);
+
+        // Compare the item you want to remove with the item in the list
+        return cartItem.id ==
+            itemToRemove.id; // Assuming 'id' is a unique identifier
+      });
+      print("-----------------------item removed" + itemToRemove.toString());
+
+      await sharedPreferences.setStringList(AppConstents.Cart_list, cart);
+      print(sharedPreferences.getStringList(AppConstents.Cart_list));
+    }
   }
 
   void addToCartHistoryList() {

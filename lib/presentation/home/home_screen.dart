@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:betta_store/presentation/helps/widgets/bottom_nav_bar.dart';
-import 'package:betta_store/presentation/helps/widgets/containers.dart';
+import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/presentation/helps/widgets/spaces.dart';
-import 'package:betta_store/presentation/helps/widgets/tab_bar.dart';
 import 'package:betta_store/presentation/home/storeView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-import '../../utils/theme/constants.dart';
 import '../helps/widgets/text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabcontroller = TabController(length: 5, vsync: this);
-
+    TabController tabcontroller = TabController(length: 5, vsync: this);
+    final isLightTheme = Theme.of(context).brightness == Brightness.light;
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool rotated = MediaQuery.of(context).size.height < screenWidth;
     return Stack(
@@ -67,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     SliverAppBar(
                         leading: IconButton(
                           onPressed: () {},
-                          icon: Icon(Iconsax.menu_1),
+                          icon: Icon(
+                            Iconsax.menu_1,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                         expandedHeight: 225.h,
                         backgroundColor:
@@ -80,54 +80,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         title: Align(
                           alignment: Alignment.centerRight,
                           child: Image.asset(
-                            'assets/bstore logos/labelWhite.png',
+                            isLightTheme
+                                ? 'assets/bstore logos/labelBlack.png'
+                                : 'assets/bstore logos/labelWhite.png',
                             width: 150.w,
-                            height: 50.h,
+                            height: 40.h,
                           ),
                         ),
                         bottom: TabBar(
                             isScrollable: true,
                             labelColor: const Color.fromARGB(255, 0, 0, 0),
-                            labelPadding:
-                                EdgeInsets.symmetric(horizontal: 25.w),
+                            labelPadding: EdgeInsets.symmetric(
+                              horizontal: 25.w,
+                              vertical: 0,
+                            ),
                             //  indicatorPadding: EdgeInsets.symmetric(horizontal: 2),
                             indicatorColor: Colors.transparent,
                             dividerColor: Colors.transparent,
                             indicatorSize: TabBarIndicatorSize.tab,
                             indicator: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.h),
-                                border: Border.all(color: primaryColor)),
-                            controller: _tabcontroller,
+                              color: Theme.of(context).splashColor,
+                              borderRadius: BorderRadius.circular(20.h),
+                            ),
+                            controller: tabcontroller,
                             tabs: [
                               Tab(
                                 child: textWidget(
                                   text: "Bettas",
-                                  color: primaryColor,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 14,
                                 ),
                               ),
                               Tab(
                                 child: textWidget(
                                     text: "Plants",
-                                    color: primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 14),
                               ),
                               Tab(
                                 child: textWidget(
                                     text: "Fishes",
-                                    color: primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 14),
                               ),
                               Tab(
                                 child: textWidget(
                                     text: "Items",
-                                    color: primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 14),
                               ),
                               Tab(
                                 child: textWidget(
                                     text: "Feeds",
-                                    color: primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 14),
                               ),
                             ]),
@@ -139,29 +144,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             background: Stack(
                               children: [
                                 Container(
-                                  height: 220,
+                                  height: 205.h,
                                   width: Get.width,
                                   decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Theme.of(context).primaryColor),
-                                    // gradient: LinearGradient(
-                                    //   colors: [
-                                    //     const Color.fromARGB(255, 243, 222, 33),
-                                    //     Color.fromARGB(255, 184, 154, 0)
-                                    //   ], // List of colors in the gradient
-                                    //   begin: Alignment
-                                    //       .topLeft, // Starting point of the gradient
-                                    //   end: Alignment
-                                    //       .bottomRight, // Ending point of the gradient
-                                    //   stops: [
-                                    //     0.0,
-                                    //     1.0
-                                    //   ], // Stops for each color in the gradient
-                                    //   // You can also use `TileMode` to control how the gradient is repeated
-                                    //   tileMode: TileMode
-                                    //       .clamp, // This will repeat the gradient to fill the container
-                                    // ),
-                                    borderRadius: BorderRadius.only(
+                                    color: Theme.of(context).splashColor,
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(30),
                                       bottomRight: Radius.circular(30),
                                     ),
@@ -179,81 +166,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         animation: _scrollController,
                                         builder: (context, child) {
                                           return GestureDetector(
-                                            child: AnimatedContainer(
-                                              width: (!_scrollController
-                                                          .hasClients ||
-                                                      _scrollController
-                                                              .positions
-                                                              .length >
-                                                          1)
-                                                  ? Get.width.w
-                                                  : max(
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width -
-                                                          _scrollController
-                                                              .offset
-                                                              .roundToDouble(),
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width -
-                                                          (rotated ? 0 : 75),
-                                                    ),
-                                              height: 45.0,
-                                              duration: const Duration(
-                                                milliseconds: 150,
-                                              ),
-                                              padding: EdgeInsets.all(2.0.h),
-                                              // margin: EdgeInsets.zero,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Theme.of(context)
-                                                        .primaryColor),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  20.0,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Get.toNamed(
+                                                    AppRouts.searchPage);
+                                              },
+                                              child: AnimatedContainer(
+                                                width: (!_scrollController
+                                                            .hasClients ||
+                                                        _scrollController
+                                                                .positions
+                                                                .length >
+                                                            1)
+                                                    ? Get.width.w
+                                                    : max(
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width -
+                                                            _scrollController
+                                                                .offset
+                                                                .roundToDouble(),
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width -
+                                                            (rotated ? 0 : 75),
+                                                      ),
+                                                height: 45.0,
+                                                duration: const Duration(
+                                                  milliseconds: 150,
                                                 ),
-                                                // gradient: LinearGradient(
-                                                //   colors: [
-                                                //     const Color.fromARGB(
-                                                //         255, 253, 253, 253),
-                                                //     const Color.fromARGB(
-                                                //         255, 183, 183, 183)
-                                                //   ], // List of colors in the gradient
-                                                //   begin: Alignment
-                                                //       .topLeft, // Starting point of the gradient
-                                                //   end: Alignment
-                                                //       .bottomRight, // Ending point of the gradient
-                                                //   stops: [
-                                                //     0.0,
-                                                //     1.0
-                                                //   ], // Stops for each color in the gradient
-                                                //   // You can also use `TileMode` to control how the gradient is repeated
-                                                //   tileMode: TileMode
-                                                //       .clamp, // This will repeat the gradient to fill the container
-                                                // ),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    color: Colors.black26,
-                                                    blurRadius: 5.0,
-                                                    offset: Offset(1.5, 1.5),
-                                                    // shadow direction: bottom right
-                                                  )
-                                                ],
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(
-                                                    width: 10.w,
+                                                padding: EdgeInsets.all(2.0.h),
+                                                // margin: EdgeInsets.zero,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .primaryColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    20.0,
                                                   ),
-                                                  Icon(
-                                                    CupertinoIcons.search,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary,
-                                                  ),
-                                                  smallwidth,
-                                                ],
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                    ),
+                                                    Icon(
+                                                      CupertinoIcons.search,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                    ),
+                                                    smallwidth,
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );
@@ -268,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         })),
                   ];
                 },
-                body: StoreView(tabcontroller: _tabcontroller)),
+                body: StoreView(tabcontroller: tabcontroller)),
           ),
         ),
       ],

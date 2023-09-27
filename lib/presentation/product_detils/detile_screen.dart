@@ -3,9 +3,10 @@ import 'dart:ui';
 
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/infrastructure/controller/cart_controller.dart';
-import 'package:betta_store/infrastructure/helper/dependencies.dart';
+import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/presentation/home/Shop/shop_cart.dart';
 import 'package:betta_store/presentation/home/home_screen.dart';
+import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:counter_button/counter_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -58,13 +59,18 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var product =
-        Get.find<ProductInfoController>().productInfoList[widget.pageId];
+  Widget build(
+    BuildContext context,
+  ) {
+    var product = Get.find<ProductInfoController>()
+        .productInfoList
+        .firstWhere((p) => p.id == widget.pageId);
     Get.find<ProductInfoController>().initNew(
       Get.find<CartController>(),
       product,
     );
+    int femaleOfPrice = product.femalePrice == '' ? 0 : product.femalePrice!;
+    int maleOfPrice = product.malePrice == '' ? 0 : product.malePrice!;
     return Stack(
       children: [
         Scaffold(
@@ -80,7 +86,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                   SliverAppBar.large(
                     leading: IconButton(
                       onPressed: () {},
-                      icon: Icon(Iconsax.menu_1),
+                      icon: const Icon(Iconsax.menu_1),
                     ),
                     expandedHeight: 655.h,
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -119,7 +125,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                             child: textWidget(
                                 text: product.name!,
                                 fontSize: 16,
-                                color: Colors.white),
+                                color: Theme.of(context).indicatorColor),
                           ),
                         ),
                       ),
@@ -134,50 +140,58 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                     //  crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BlurContainer(
+                          width: Get.width.w,
+                          height: 100.h,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RichTextWidget(texts: [
-                                TextSpan(text: 'Pair : \n       \n'),
+                                const TextSpan(text: 'Pair : \n       \n'),
                                 TextSpan(
                                     text: '₹ ${product.price!}',
-                                    style: TextStyle(fontSize: 20))
+                                    style: const TextStyle(fontSize: 20))
                               ]),
                               RichTextWidget(texts: [
-                                TextSpan(text: 'Male : \n       \n'),
+                                const TextSpan(text: 'Male : \n       \n'),
                                 TextSpan(
-                                    text: '₹ 200',
-                                    style: TextStyle(fontSize: 20))
+                                    text: product.malePrice == 0
+                                        ? "No"
+                                        : '₹ ${product.malePrice!}',
+                                    style: const TextStyle(fontSize: 20))
                               ]),
                               RichTextWidget(texts: [
-                                TextSpan(text: 'Female : \n       \n'),
+                                const TextSpan(text: 'Female : \n       \n'),
                                 TextSpan(
-                                    text: '₹ 100',
-                                    style: TextStyle(fontSize: 20))
+                                    text: product.femalePrice == 0
+                                        ? "No"
+                                        : '₹ ${product.femalePrice!}',
+                                    style: const TextStyle(fontSize: 20))
                               ])
                             ],
-                          ),
-                          width: Get.width.w,
-                          height: 100.h),
+                          )),
                       SizedBox(
                         height: 20.w,
                       ),
-                      textWidget(text: '@devine_Bettas', color: Colors.white),
+                      textWidget(
+                          text: product.breeder == ''
+                              ? "@Devine_Bettas"
+                              : '@${product.breeder!}',
+                          color: Theme.of(context).indicatorColor),
                       SizedBox(
                         height: 60.w,
                       ),
                       textWidget(
                           maxline: 20,
                           text: product.description!,
-                          color: Colors.white),
+                          color: Theme.of(context).indicatorColor),
                     ],
                   ))),
         ),
         GetBuilder<ProductInfoController>(builder: (productInfo) {
           double totel =
               (product.price!.toDouble() * productInfo.quantity.toDouble()) +
-                  (200 * productInfo.maleQuantity.toDouble()) +
-                  (100 * productInfo.feQuantity.toDouble());
+                  (maleOfPrice * productInfo.maleQuantity.toDouble()) +
+                  (femaleOfPrice * productInfo.feQuantity.toDouble());
           productInfo.getPrice(totel);
           return Positioned(
             bottom: 20,
@@ -191,9 +205,9 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                         }
                       : _toggleExpanded,
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     height: _expanded ? 280.0.h : 50.0,
-                    width: _expanded ? 190.0.w : 190.0.w,
+                    width: _expanded ? 210.0.w : 200.0.w,
                     decoration: BoxDecoration(
                         boxShadow: const [
                           BoxShadow(
@@ -206,7 +220,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(40.h)),
                     child: _expanded
-                        ? Container(
+                        ? SizedBox(
                             height: 290.h,
                             width: 180.w,
                             child: ListView(
@@ -227,7 +241,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                             color: secondaryColor60DarkTheme,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 15,
                                       ),
                                       IconButton(
@@ -364,7 +378,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                                     ? ()
                                                     : _toggleExpanded();
                                               },
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 color:
                                                     secondaryColor80DarkTheme,
                                                 Iconsax.login_1,
@@ -375,7 +389,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                               ],

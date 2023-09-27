@@ -2,7 +2,6 @@ import 'package:betta_store/infrastructure/controller/cart_controller.dart';
 import 'package:betta_store/infrastructure/data/repository/other_fish_info_repo%20copy%202.dart';
 import 'package:betta_store/infrastructure/models/cart_model.dart';
 import 'package:betta_store/infrastructure/models/fish_detile_model.dart';
-import 'package:betta_store/infrastructure/models/other_fish_detile_model.dart';
 import 'package:get/get.dart';
 
 class OtherFishInfoController extends GetxController {
@@ -37,7 +36,7 @@ class OtherFishInfoController extends GetxController {
           "Got It ........................................................................................................");
       _otherFishInfoList = [];
       _otherFishInfoList
-          .addAll(OtherFishinfo.fromJson(response.body).otherFishes);
+          .addAll(ProductInfoModel.fromJson(response.body).products);
       _isLoded = true;
       print(_otherFishInfoList);
       update();
@@ -94,7 +93,7 @@ class OtherFishInfoController extends GetxController {
 
   void initNew(
     CartController cart,
-    OtherFishModel otherFish,
+    ProductModel otherFish,
   ) {
     _totelQuantity = 0;
     _quantity = 0;
@@ -102,19 +101,19 @@ class OtherFishInfoController extends GetxController {
     _feQuantity = 0;
     _inCartItemCount = 0;
     _cart = cart;
-    // exist = false;
-    // _exist = _cart.existInCart(otherFish);
-    // print(exist.toString() + ".............................");
-    // if (exist) {
-    //   _inCartItemCount = _cart.getQuantity(otherFish);
-    // }
+
+    _exist = _cart.existInCart(otherFish);
+    print(exist.toString() + ".............................");
+    if (exist) {
+      _inCartItemCount = _cart.getQuantity(otherFish);
+    }
     print(_inCartItemCount.toString() + ".............................");
   }
 
-  void addItem(OtherFishModel otherFish) {
+  void addItem(ProductModel otherFish) {
     if (totelQuantity > 0) {
-      // _cart.addItem(otherFish, _totelQuantity, _quantity, _maleQuantity,
-      //     feQuantity, totPrice);
+      _cart.addItem(otherFish, _totelQuantity, _quantity, _maleQuantity,
+          feQuantity, totPrice);
       _totelQuantity = 0;
       _cart.items.forEach((key, value) {
         print('the id is.....................' +

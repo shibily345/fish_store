@@ -12,6 +12,10 @@ class AppConstents {
   static const String registrationUri = "/api/v1/auth/register";
   static const String loginUri = "/api/v1/auth/login";
   static const String userUri = "/api/v1/customer/info";
+  static const String addressUri = "/api/v1/customer/address/add";
+  static const String addressListUri = "/api/v1/customer/address/list";
+  static const String addProductUri = "/api/v1/products/add-product";
+  static const String userAddress = "useraddress";
   static const String TOKEN = "DBtoken";
   static const String Cart_list = "cart-list";
   static const String Cart_history_list = "cart-history-list";
