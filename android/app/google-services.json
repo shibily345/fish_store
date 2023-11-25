@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "822028744441",
+    "project_id": "betta-store",
+    "storage_bucket": "betta-store.appspot.com"
+  }, 
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822028744441:android:55dd88864c67ac133a9428",
+        "android_client_info": {
+          "package_name": "com.example.betta_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKB7bBDOgW5n-_J6JmvGR2SKrzXnf-nNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

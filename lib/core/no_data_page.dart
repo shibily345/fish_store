@@ -1,5 +1,5 @@
-import 'package:betta_store/presentation/helps/widgets/spaces.dart';
-import 'package:betta_store/presentation/helps/widgets/text.dart';
+import 'package:betta_store/core/utils/widgets/spaces.dart';
+import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

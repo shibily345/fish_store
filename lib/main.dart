@@ -1,26 +1,52 @@
+import 'package:betta_store/core/helper/notification.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/infrastructure/controller/cart_controller.dart';
-import 'package:betta_store/infrastructure/controller/feeds_info_controller.dart';
-import 'package:betta_store/infrastructure/controller/items_info_controller.dart';
-import 'package:betta_store/infrastructure/controller/other_fish_info_controller.dart';
-import 'package:betta_store/infrastructure/controller/plants_info_controller.dart';
-import 'package:betta_store/infrastructure/controller/product_info_controller.dart';
-import 'package:betta_store/core/dependencies.dart' as dep;
-import 'package:betta_store/utils/theme/light_theme.dart';
+import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
+import 'package:betta_store/features/store/domain/controller/cart_controller.dart';
+import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
+import 'package:betta_store/features/shop/items/presentation/controller/items_info_controller.dart';
+import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
+import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 
+import 'package:betta_store/core/dependencies.dart' as dep;
+import 'package:betta_store/core/utils/theme/light_theme.dart';
+import 'package:betta_store/features/store/presentation/onBoarding/on_boarding.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'utils/theme/dark_theme.dart';
+import 'core/utils/theme/dark_theme.dart';
 
-void main() async {
+Future<dynamic> myBackgroundMessageHandler(RemoteMessage message) async {
+  print(
+      "onBackground: ${message.notification?.title}/${message.notification?.body}/"
+      "${message.notification?.titleLocKey}");
+}
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+Future<void> main() async {
   dep.init();
+
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Get.put(prefs);
-
+  try {
+    if (GetPlatform.isMobile) {
+      final RemoteMessage? remoteMessage =
+          await FirebaseMessaging.instance.getInitialMessage();
+      await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
+      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+  }
   runApp(const MyApp());
 }
 
@@ -36,17 +62,21 @@ class MyApp extends StatelessWidget {
         designSize: const Size(411.4, 843.4),
         builder: (_, child) {
           return GetBuilder<ProductInfoController>(builder: (_) {
+            Get.find<UserInfoController>().getUserInfo();
             return GetBuilder<PlantsInfoController>(builder: (_) {
               return GetBuilder<OtherFishInfoController>(builder: (_) {
                 return GetBuilder<ItemsInfoController>(builder: (_) {
                   return GetBuilder<FeedsInfoController>(builder: (_) {
+                    // return ChangeNotifierProvider(
+                    //     create: (context) => OnBoardModel(),
+                    // child:
                     return GetMaterialApp(
                       themeMode: ThemeMode.system,
                       debugShowCheckedModeBanner: false,
                       title: 'Flutter Demo',
                       theme: lightTheme(context),
                       darkTheme: darkTheme(context),
-                      // home: OnBoarding(),
+                      // home: OnboardingScreen(),
                       initialRoute: AppRouts.getSplash(),
                       getPages: AppRouts.routs,
                     );
