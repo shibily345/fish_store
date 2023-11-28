@@ -78,33 +78,46 @@ class _AllProductGridState extends State<AllProductGrid> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             smallSpace,
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              height: 50.h,
-              child: DropdownButton<SortOption>(
-                focusColor: Theme.of(context).splashColor,
-                padding: const EdgeInsets.all(10),
-                style: TextStyle(color: Theme.of(context).primaryColor),
-                borderRadius: BorderRadius.circular(20),
-                underline: Container(),
-                hint: textWidget(
-                    text: "Sortby", color: Theme.of(context).primaryColor),
-                value: _selectedSortOption,
-                onChanged: (SortOption? newValue) {
-                  setState(() {
-                    _selectedSortOption = newValue!;
-                    _sortData(_selectedSortOption);
-                  });
-                },
-                items: SortOption.values.map((SortOption option) {
-                  return DropdownMenuItem<SortOption>(
-                    value: option,
-                    child: Text(option.toString().split('.').last),
-                  );
-                }).toList(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 18.0),
+              child: SizedBox(
+                height: 35.h,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: SortOption.values.map((SortOption option) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedSortOption = option;
+                          _sortData(_selectedSortOption);
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Container(
+                          // height: 10,
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: _selectedSortOption == option
+                                ? Theme.of(context).splashColor
+                                : Theme.of(context)
+                                    .splashColor
+                                    .withOpacity(0.4),
+                          ),
+                          child: Center(
+                            child: textWidget(
+                              text: option.toString().split('.').last,
+                              color: _selectedSortOption == option
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).indicatorColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
             Expanded(
@@ -135,7 +148,7 @@ class _AllProductGridState extends State<AllProductGrid> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           CachedNetworkImage(
-                            height: 115.h,
+                            height: 105.h,
                             width: 160.w,
                             imageUrl: AppConstents.BASE_URL +
                                 AppConstents.UPLOAD_URL +
@@ -149,16 +162,16 @@ class _AllProductGridState extends State<AllProductGrid> {
                                 ),
                               ),
                             ),
-                            placeholder: (context, url) => Center(
+                            placeholder: (context, url) => const Center(
                                 child: CustomeLoader(
                               bg: Colors.transparent,
                             )),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            margin: EdgeInsets.all(10),
+                            margin: const EdgeInsets.all(10),
                             width: 175.w,
                             height: 70.h,
                             decoration: BoxDecoration(

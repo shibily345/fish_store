@@ -1,6 +1,8 @@
 import 'package:betta_store/core/helper/notification.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/features/store/domain/controller/ad_list_controller.dart';
+import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/cart_controller.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
@@ -11,6 +13,7 @@ import 'package:betta_store/features/shop/plants/presentation/controller/plants_
 import 'package:betta_store/core/dependencies.dart' as dep;
 import 'package:betta_store/core/utils/theme/light_theme.dart';
 import 'package:betta_store/features/store/presentation/onBoarding/on_boarding.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +40,7 @@ Future<void> main() async {
   Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Get.put(prefs);
+  // CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
   try {
     if (GetPlatform.isMobile) {
       final RemoteMessage? remoteMessage =
@@ -62,21 +66,19 @@ class MyApp extends StatelessWidget {
         designSize: const Size(411.4, 843.4),
         builder: (_, child) {
           return GetBuilder<ProductInfoController>(builder: (_) {
+            Get.find<AdlistController>().getAllads();
             Get.find<UserInfoController>().getUserInfo();
+            Get.find<OrderController>().getOrderListForSeller();
             return GetBuilder<PlantsInfoController>(builder: (_) {
               return GetBuilder<OtherFishInfoController>(builder: (_) {
                 return GetBuilder<ItemsInfoController>(builder: (_) {
                   return GetBuilder<FeedsInfoController>(builder: (_) {
-                    // return ChangeNotifierProvider(
-                    //     create: (context) => OnBoardModel(),
-                    // child:
                     return GetMaterialApp(
                       themeMode: ThemeMode.system,
                       debugShowCheckedModeBanner: false,
                       title: 'Flutter Demo',
                       theme: lightTheme(context),
                       darkTheme: darkTheme(context),
-                      // home: OnboardingScreen(),
                       initialRoute: AppRouts.getSplash(),
                       getPages: AppRouts.routs,
                     );

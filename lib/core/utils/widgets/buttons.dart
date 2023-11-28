@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SimpleButton extends StatelessWidget {
   final String label;
-  final VoidCallback onPress;
+  final VoidCallback? onPress;
   const SimpleButton({
     super.key,
     required this.onPress,

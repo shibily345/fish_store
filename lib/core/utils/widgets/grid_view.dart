@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AnimatedGridView extends StatelessWidget {
+  const AnimatedGridView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -15,7 +17,7 @@ class AnimatedGridView extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 16.0),
               child: AnimatedContainer(
                 height: 120,
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
                   color: Theme.of(context).indicatorColor,
@@ -48,7 +50,7 @@ class AnimatedGridView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         textWidget(
@@ -58,7 +60,7 @@ class AnimatedGridView extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.currency_rupee,
                               size: 14,
                             ),
@@ -70,7 +72,7 @@ class AnimatedGridView extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.location_on,
                               size: 12,
                             ),

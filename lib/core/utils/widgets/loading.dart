@@ -1,23 +1,61 @@
+import 'dart:async';
+
+import 'package:betta_store/core/dependencies.dart';
+import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
-class CustomeLoader extends StatelessWidget {
+class CustomeLoader extends StatefulWidget {
   final bool isloading;
   final Color bg;
   const CustomeLoader(
       {super.key, this.isloading = false, this.bg = Colors.black});
 
   @override
+  State<CustomeLoader> createState() => _CustomeLoaderState();
+}
+
+class _CustomeLoaderState extends State<CustomeLoader> {
+  bool timeout = false;
+  @override
+  void initState() {
+    super.initState();
+    startLoading();
+  }
+
+  void startLoading() {
+    Timer(
+        const Duration(seconds: 20),
+        () => setState(() {
+              timeout = true;
+            }));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
-        child: Container(
-      decoration:
-          BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20.h)),
-      height: 80.h,
-      width: 80.w,
-      child: Lottie.asset('assets/ui_elementsbgon/animation_lmeiawsk.json'),
-    ));
+      child: timeout == false
+          ? Container(
+              decoration: BoxDecoration(
+                  color: widget.bg, borderRadius: BorderRadius.circular(20.h)),
+              height: 80.h,
+              width: 80.w,
+              child: Lottie.asset(
+                  'assets/ui_elementsbgon/animation_lmeiawsk.json'),
+            )
+          : Container(
+              child: SimpleButton(
+                  onPress: () {
+                    setState(() {
+                      loadResources();
+                      timeout = false;
+                      startLoading();
+                    });
+                  },
+                  label: "Retry "),
+            ),
+    );
   }
 }
 
@@ -40,7 +78,7 @@ Future<void> showSuccessDialog(BuildContext context) async {
   );
 
   // Delay the closing of the dialog for 3 seconds
-  await Future.delayed(Duration(seconds: 3));
+  await Future.delayed(const Duration(seconds: 3));
 
   // Close the dialog after 3 seconds (if it's still open)
   Navigator.of(context).pop();

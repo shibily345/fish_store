@@ -57,18 +57,16 @@ class _AddressPageState extends State<AddressPage> {
       }
     }
     Get.find<AddressInfoController>().getUserAddress();
-    if (Get.find<AddressInfoController>().getUserAddress() != null) {
-      _nameController.text =
-          Get.find<AddressInfoController>().getUserAddress().name;
-      _addressController.text =
-          Get.find<AddressInfoController>().getUserAddress().address;
-      _pincodeController.text =
-          Get.find<AddressInfoController>().getUserAddress().pincode;
-      _phoneController.text =
-          Get.find<AddressInfoController>().getUserAddress().phone;
-      _secPhoneController.text =
-          Get.find<AddressInfoController>().getUserAddress().secondoryPhone;
-    }
+    _nameController.text =
+        Get.find<AddressInfoController>().getUserAddress().name;
+    _addressController.text =
+        Get.find<AddressInfoController>().getUserAddress().address;
+    _pincodeController.text =
+        Get.find<AddressInfoController>().getUserAddress().pincode;
+    _phoneController.text =
+        Get.find<AddressInfoController>().getUserAddress().phone;
+    _secPhoneController.text =
+        Get.find<AddressInfoController>().getUserAddress().secondoryPhone;
     super.initState();
   }
 

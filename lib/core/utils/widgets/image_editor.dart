@@ -20,7 +20,7 @@
 //   void initState() {
 //     super.initState();
 //     _loadImage();
-//   }
+//   } 
 
 //   Future<void> _loadImage() async {
 //     final image = File(widget.imagePath);

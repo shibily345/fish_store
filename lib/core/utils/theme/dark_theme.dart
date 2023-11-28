@@ -8,18 +8,19 @@ ThemeData darkTheme(BuildContext context) {
       brightness: Brightness.dark,
       primaryColorLight: Colors.grey,
       primaryColorDark: const Color.fromARGB(255, 0, 0, 0),
-      primaryColor: Color(0xFFE8BD70),
+      primaryColor: const Color(0xFFE8BD70),
       primarySwatch: Colors.yellow,
       indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-      splashColor: Color.fromARGB(255, 21, 21, 21),
-      shadowColor: Color.fromARGB(221, 0, 0, 0),
-      scaffoldBackgroundColor: Color.fromARGB(255, 36, 36, 36),
-      bottomSheetTheme: BottomSheetThemeData(
+      splashColor: const Color.fromARGB(255, 21, 21, 21),
+      shadowColor: const Color.fromARGB(221, 0, 0, 0),
+      scaffoldBackgroundColor: const Color.fromARGB(255, 36, 36, 36),
+      bottomSheetTheme: const BottomSheetThemeData(
+        modalBackgroundColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       appBarTheme:
-          AppBarTheme(backgroundColor: Colors.transparent, elevation: 0)
+          const AppBarTheme(backgroundColor: Colors.transparent, elevation: 0)
       // textTheme: const TextTheme(
       //   labelLarge: lableTextStyle,
       //   labelMedium: lableTextStyle,
@@ -27,7 +28,7 @@ ThemeData darkTheme(BuildContext context) {
       //   bodyMedium: TextStyle(color: secondaryColor40DarkTheme),
       // ),
       ,
-      iconTheme: IconThemeData(color: primaryColor),
+      iconTheme: const IconThemeData(color: primaryColor),
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
               foregroundColor:

@@ -1,6 +1,7 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/features/shop/betta_fishes/data/repositories/product_info_repo.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/features/store/domain/controller/ad_list_controller.dart';
 
 import 'package:betta_store/features/store/domain/controller/address_Info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
@@ -13,6 +14,7 @@ import 'package:betta_store/features/store/domain/controller/order_controller.da
 import 'package:betta_store/features/store/domain/controller/review_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/store/domain/data/api/api_clint.dart';
+import 'package:betta_store/features/store/domain/data/repository/ad_list_repo.dart';
 import 'package:betta_store/features/store/domain/data/repository/address_repo.dart';
 import 'package:betta_store/features/store/domain/data/repository/auth_repo.dart';
 import 'package:betta_store/features/store/domain/data/repository/cart_repo.dart';
@@ -41,6 +43,7 @@ Future<void> init() async {
   Get.lazyPut(() => OtherFishInfoRepo(apiClint: Get.find()));
   Get.lazyPut(() => ItemsInfoRepo(apiClint: Get.find()));
   Get.lazyPut(() => FeedsInfoRepo(apiClint: Get.find()));
+  Get.lazyPut(() => AdListRepo(apiClint: Get.find()));
   // Get.lazyPut(() => CartRepository(sharedPreferences: Get.find()));
   Get.lazyPut(() => UserRepo(apiClint: Get.find()));
   Get.lazyPut(() => OrderRepo(apiClint: Get.find()));
@@ -51,6 +54,7 @@ Future<void> init() async {
       ));
 //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
+  Get.lazyPut(() => AdlistController(adListRepo: Get.find()));
   Get.lazyPut(() => UserInfoController(userRepo: Get.find()));
   Get.lazyPut(() => ProductInfoController(productInfoRepo: Get.find()));
   Get.lazyPut(() => PlantsInfoController(plantsInfoRepo: Get.find()));
@@ -63,7 +67,10 @@ Future<void> init() async {
 }
 
 Future<void> loadResources() async {
+  await Future.delayed(const Duration(seconds: 2));
+  init();
   await Get.find<ProductInfoController>().getProductInfoList();
+  await Get.find<AdListRepo>().getAds();
   await Get.find<PlantsInfoController>().getPlantsInfoList();
   await Get.find<OtherFishInfoController>().getOtherFishInfoList();
   await Get.find<ItemsInfoController>().getItemsInfoList();

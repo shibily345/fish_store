@@ -12,6 +12,8 @@ class AppConstents {
   static const String registrationUri = "/api/v1/auth/register";
   static const String loginUri = "/api/v1/auth/login";
   static const String userList = "/api/v1/auth/users";
+  static const String resetPsd = "/api/v1/auth/reset-psd";
+  static const String ads = "/api/v1/ad-lists/all";
 
   static const String placeOrderUri = "/api/v1/customer/order/place";
   static const String getOrderListUri = "/api/v1/customer/order/list";

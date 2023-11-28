@@ -6,14 +6,13 @@ class VideoPlayerWidget extends StatelessWidget {
   const VideoPlayerWidget({super.key, required this.controller});
 
   @override
-  Widget build(BuildContext context) =>
-      controller != null && controller.value.isInitialized
-          ? Container(alignment: Alignment.topCenter, child: buildVideo())
-          : Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+  Widget build(BuildContext context) => controller.value.isInitialized
+      ? Container(alignment: Alignment.topCenter, child: buildVideo())
+      : Container(
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
   Widget buildVideo() => buildVideoPlayer();
 
   Widget buildVideoPlayer() => VideoPlayer(controller);

@@ -98,12 +98,12 @@ class _FishesHorizontslGridState extends State<FishesHorizontslGrid> {
                                       ),
                                     ),
                                   ),
-                                  placeholder: (context, url) => Center(
+                                  placeholder: (context, url) => const Center(
                                       child: CustomeLoader(
                                     bg: Colors.transparent,
                                   )),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 ),
                                 Container(
                                   padding:
@@ -157,7 +157,7 @@ class _FishesHorizontslGridState extends State<FishesHorizontslGrid> {
                   ),
                 ],
               )
-            : const CustomeLoader();
+            : Container();
       },
     );
   }

@@ -177,7 +177,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                 color: Theme.of(context).indicatorColor),
                           ),
                           RatingBarIndicator(
-                            rating: double.parse(product.stars.toString()),
+                            rating: double.parse(product.stars),
                             direction: Axis.horizontal,
                             itemCount: 5,
                             itemPadding: EdgeInsets.symmetric(horizontal: 1.0),

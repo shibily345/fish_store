@@ -36,7 +36,7 @@ class _DrawerItemsState extends State<DrawerItems> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       children: [
         Get.find<AuthController>().userLogedIn()
             ? GetBuilder<UserInfoController>(builder: (userInfo) {
@@ -55,11 +55,12 @@ class _DrawerItemsState extends State<DrawerItems> {
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           backgroundImage: imageProvider,
                         ),
-                        placeholder: (context, url) => Center(
+                        placeholder: (context, url) => const Center(
                             child: CustomeLoader(
                           bg: Colors.transparent,
                         )),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                       subtitle: textWidget(
                           text: userInfo.userModel.location!,
@@ -71,20 +72,20 @@ class _DrawerItemsState extends State<DrawerItems> {
                           color: Theme.of(context).indicatorColor,
                           fontSize: 15),
                       onTap: () {
-                        Get.to(() => ProfilePage());
+                        Get.to(() => const ProfilePage());
                         // Handle menu item 2 press
                       },
                     ),
                     if (userInfo.userModel.sellproduct == 1)
                       ListTile(
                         onTap: () {
-                          Get.to(() => MyShop());
+                          Get.to(() => const MyShop());
                         },
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 23.0),
                         title: Container(
                           height: 80,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                               color: Theme.of(context).splashColor,
                               borderRadius: BorderRadius.circular(40)),
@@ -102,7 +103,7 @@ class _DrawerItemsState extends State<DrawerItems> {
                                     color: Theme.of(context).indicatorColor,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
-                                Icon(
+                                const Icon(
                                   Icons.add_circle_rounded,
                                   size: 40,
                                 ),
@@ -120,26 +121,26 @@ class _DrawerItemsState extends State<DrawerItems> {
         ListTile(
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
           onTap: () {
-            Get.to(() => MyOrders());
+            Get.to(() => const MyOrders());
           },
-          leading: Icon(Icons.wallet),
+          leading: const Icon(Icons.wallet),
           title: textWidget(
               text: "My Orders",
               color: Theme.of(context).indicatorColor,
               fontSize: 13),
-          trailing: Icon(Icons.arrow_right),
+          trailing: const Icon(Icons.arrow_right),
         ),
         ListTile(
           onTap: () {
             Get.toNamed(AppRouts.cartPage);
           },
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
-          leading: Icon(Iconsax.shopping_cart),
+          leading: const Icon(Iconsax.shopping_cart),
           title: textWidget(
               text: "My Cart",
               color: Theme.of(context).indicatorColor,
               fontSize: 13),
-          trailing: Icon(Icons.arrow_right),
+          trailing: const Icon(Icons.arrow_right),
         ),
         bigSpace,
         textWidget(
@@ -186,12 +187,12 @@ class _DrawerItemsState extends State<DrawerItems> {
                     },
                     label: 'Cancel'));
           },
-          leading: Icon(Icons.logout),
+          leading: const Icon(Icons.logout),
           title: textWidget(
               text: "Log Out",
               color: Theme.of(context).indicatorColor,
               fontSize: 13),
-          trailing: Icon(Icons.arrow_right),
+          trailing: const Icon(Icons.arrow_right),
         ),
         bigSpace,
         textWidget(
@@ -204,26 +205,26 @@ class _DrawerItemsState extends State<DrawerItems> {
             Get.to(() => ContactUsPage());
           },
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
-          leading: Icon(Icons.chat),
+          leading: const Icon(Icons.chat),
           title: textWidget(
               text: "Contact us",
               color: Theme.of(context).indicatorColor,
               fontWeight: FontWeight.normal,
               fontSize: 12),
-          trailing: Icon(Icons.arrow_right),
+          trailing: const Icon(Icons.arrow_right),
         ),
         ListTile(
           onTap: () {
             Get.to(() => AboutUsPage());
           },
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
-          leading: Icon(Icons.stay_current_landscape_outlined),
+          leading: const Icon(Icons.stay_current_landscape_outlined),
           title: textWidget(
               text: "About us",
               color: Theme.of(context).indicatorColor,
               fontWeight: FontWeight.normal,
               fontSize: 12),
-          trailing: Icon(Icons.arrow_right),
+          trailing: const Icon(Icons.arrow_right),
         ),
       ],
     );

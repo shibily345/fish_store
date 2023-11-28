@@ -43,6 +43,8 @@ class _SignUpPageState extends State<SignUpPage> {
         showCustumeSnackBar("Enter Your Name", title: "Name is Empty");
       } else if (mobile.isEmpty) {
         showCustumeSnackBar("Enter Your Phone No", title: "Phone No is Empty");
+      } else if (mobile.length < 10) {
+        showCustumeSnackBar("Check Your Phone No", title: "Phone No is wrong");
       } else if (email.isEmpty) {
         showCustumeSnackBar("Enter Your Email", title: "Email is Empty");
       } else if (!GetUtils.isEmail(email)) {
@@ -72,8 +74,9 @@ class _SignUpPageState extends State<SignUpPage> {
               showCustumeSnackBar(
                   "Not availeble Try diffrend 'Name' or phone or email",
                   title: "Name Alredy Used");
-            } else
-              showCustumeSnackBar(status.message);
+            } else {
+              showCustumeSnackBar("${status.message}wrong detiles");
+            }
           }
         });
         print(signUpBody.toString());

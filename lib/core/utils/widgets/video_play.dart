@@ -47,7 +47,7 @@ class _VideoPlayViewState extends State<VideoPlayView> {
       fit: StackFit.passthrough,
       children: [
         Container(
-          child: CustomeLoader(),
+          child: const CustomeLoader(),
         ),
         AspectRatio(
           aspectRatio: 2 / 3,

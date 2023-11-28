@@ -5,8 +5,8 @@ import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
-import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
+import 'package:betta_store/features/shop/items/presentation/controller/items_info_controller.dart';
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,25 +14,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class FeedsGrid extends StatefulWidget {
-  const FeedsGrid({super.key});
+class ItemsGrid extends StatefulWidget {
+  const ItemsGrid({super.key});
 
   @override
-  State<FeedsGrid> createState() => _FeedsGridState();
+  State<ItemsGrid> createState() => _ItemsGridState();
 }
 
 enum SortOption { priceHighToLow, priceLowToHigh, newest, oldest }
 
-class _FeedsGridState extends State<FeedsGrid> {
+class _ItemsGridState extends State<ItemsGrid> {
   SortOption _selectedSortOption = SortOption.newest;
   Future<void> _loadResources() async {
     _selectedSortOption = SortOption.newest;
-    await Get.find<FeedsInfoController>().getfeedsInfoList();
+    await Get.find<ItemsInfoController>().getItemsInfoList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<FeedsInfoController>(
+    return GetBuilder<ItemsInfoController>(
       builder: (
         productInfo,
       ) {
@@ -40,19 +40,19 @@ class _FeedsGridState extends State<FeedsGrid> {
           setState(() {
             switch (selectedOption) {
               case SortOption.priceHighToLow:
-                productInfo.feedsInfoList
+                productInfo.itemsInfoList
                     .sort((a, b) => b.price.compareTo(a.price));
                 break;
               case SortOption.priceLowToHigh:
-                productInfo.feedsInfoList
+                productInfo.itemsInfoList
                     .sort((a, b) => a.price.compareTo(b.price));
                 break;
               case SortOption.newest:
-                productInfo.feedsInfoList
+                productInfo.itemsInfoList
                     .sort((a, b) => b.createdAt.compareTo(a.createdAt));
                 break;
               case SortOption.oldest:
-                productInfo.feedsInfoList
+                productInfo.itemsInfoList
                     .sort((a, b) => a.createdAt.compareTo(b.createdAt));
                 break;
             }
@@ -65,40 +65,53 @@ class _FeedsGridState extends State<FeedsGrid> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      height: 50.h,
-                      child: DropdownButton<SortOption>(
-                        focusColor: Theme.of(context).splashColor,
-                        padding: const EdgeInsets.all(10),
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.circular(20),
-                        underline: Container(),
-                        hint: textWidget(
-                            text: "Sortby",
-                            color: Theme.of(context).primaryColor),
-                        value: _selectedSortOption,
-                        onChanged: (SortOption? newValue) {
-                          setState(() {
-                            _selectedSortOption = newValue!;
-                            _sortData(_selectedSortOption);
-                          });
-                        },
-                        items: SortOption.values.map((SortOption option) {
-                          return DropdownMenuItem<SortOption>(
-                            value: option,
-                            child: Text(option.toString().split('.').last),
-                          );
-                        }).toList(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Container(
+                        height: 35.h,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: SortOption.values.map((SortOption option) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedSortOption = option;
+                                  _sortData(_selectedSortOption);
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Container(
+                                  // height: 10,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: _selectedSortOption == option
+                                        ? Theme.of(context).splashColor
+                                        : Theme.of(context)
+                                            .splashColor
+                                            .withOpacity(0.4),
+                                  ),
+                                  child: Center(
+                                    child: textWidget(
+                                      text: option.toString().split('.').last,
+                                      color: _selectedSortOption == option
+                                          ? Theme.of(context).primaryColor
+                                          : Theme.of(context).indicatorColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                     Expanded(
                       child: GridView.builder(
                         padding: EdgeInsets.zero,
-                        itemCount: productInfo.feedsInfoList.length,
+                        itemCount: productInfo.itemsInfoList.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -108,7 +121,7 @@ class _FeedsGridState extends State<FeedsGrid> {
                           return GestureDetector(
                             onTap: () {
                               Get.toNamed(AppRouts.getProductDetailPage(
-                                  productInfo.feedsInfoList[index].id!));
+                                  productInfo.itemsInfoList[index].id!));
                             },
                             child: Container(
                               width: 190.w,
@@ -122,11 +135,11 @@ class _FeedsGridState extends State<FeedsGrid> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   CachedNetworkImage(
-                                    height: 115.h,
+                                    height: 105.h,
                                     width: 160.w,
                                     imageUrl: AppConstents.BASE_URL +
                                         AppConstents.UPLOAD_URL +
-                                        productInfo.feedsInfoList[index].img!,
+                                        productInfo.itemsInfoList[index].img!,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       decoration: BoxDecoration(
@@ -165,7 +178,7 @@ class _FeedsGridState extends State<FeedsGrid> {
                                           width: 120.w,
                                           child: textWidget(
                                               text: productInfo
-                                                  .feedsInfoList[index].name!,
+                                                  .itemsInfoList[index].name!,
                                               color: Theme.of(context)
                                                   .indicatorColor,
                                               fontSize: 12,
@@ -173,18 +186,18 @@ class _FeedsGridState extends State<FeedsGrid> {
                                         ),
                                         textWidget(
                                             text:
-                                                '₹ ${productInfo.feedsInfoList[index].price!} /-',
+                                                '₹ ${productInfo.itemsInfoList[index].price!} /-',
                                             color: Theme.of(context)
                                                 .indicatorColor,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w500),
                                         textWidget(
                                             text: productInfo
-                                                        .feedsInfoList[index]
+                                                        .itemsInfoList[index]
                                                         .breeder ==
                                                     ''
                                                 ? "@Devine_Bettas"
-                                                : '@${productInfo.feedsInfoList[index].breeder!}',
+                                                : '@${productInfo.itemsInfoList[index].breeder!}',
                                             color: Theme.of(context)
                                                 .indicatorColor,
                                             fontSize: 10,

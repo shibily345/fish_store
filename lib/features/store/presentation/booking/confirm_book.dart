@@ -111,7 +111,7 @@ class ConfirmBook extends StatelessWidget {
                       children: [
                         smallSpace,
                         Padding(
-                          padding: EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.all(18.0),
                           child: textWidget(
                               text: "Your address:  ",
                               color: Theme.of(context).primaryColor,
@@ -139,7 +139,7 @@ class ConfirmBook extends StatelessWidget {
                           padding: EdgeInsets.only(
                               left: 18.0.w, top: 10.h, right: 40.w),
                           child: textWidget(
-                            text: "pin: " + address.getUserAddress().pincode,
+                            text: "pin: ${address.getUserAddress().pincode}",
                             maxline: 1,
                             color: Theme.of(context).primaryColor,
                           ),
@@ -148,7 +148,7 @@ class ConfirmBook extends StatelessWidget {
                           padding: EdgeInsets.only(
                               left: 18.0.w, top: 10.h, right: 40.w),
                           child: textWidget(
-                            text: "Phone: " + address.getUserAddress().phone,
+                            text: "Phone: ${address.getUserAddress().phone}",
                             maxline: 1,
                             color: Theme.of(context).primaryColor,
                           ),
@@ -157,8 +157,8 @@ class ConfirmBook extends StatelessWidget {
                           padding: EdgeInsets.only(
                               left: 18.0.w, top: 10.h, right: 40.w),
                           child: textWidget(
-                            text: "Phone 2 : " +
-                                address.getUserAddress().secondoryPhone,
+                            text:
+                                "Phone 2 : ${address.getUserAddress().secondoryPhone}",
                             maxline: 1,
                             color: Theme.of(context).primaryColor,
                           ),
@@ -210,12 +210,13 @@ class ConfirmBook extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        placeholder: (context, url) => Center(
-                                            child: CustomeLoader(
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                                child: CustomeLoader(
                                           bg: Colors.transparent,
                                         )),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            const Icon(Icons.error),
                                       )),
                                 ),
                                 SizedBox(

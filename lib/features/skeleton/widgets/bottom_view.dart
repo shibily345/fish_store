@@ -4,11 +4,12 @@ import 'package:betta_store/features/store/presentation/home/home.dart';
 import 'package:betta_store/features/store/presentation/home/shop_view.dart';
 import 'package:betta_store/features/store/presentation/profile/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class BottomView extends StatefulWidget {
-  BottomView({super.key});
+  const BottomView({super.key});
 
   @override
   State<BottomView> createState() => _BottomViewState();
@@ -17,7 +18,7 @@ class BottomView extends StatefulWidget {
 class _BottomViewState extends State<BottomView> {
   List<Widget> _buildScreens() {
     return [
-      ShopingHome(),
+      const ShopingHome(),
       const BreedersPage(),
       const ShopCartPage(),
       const ProfilePage(),
@@ -64,37 +65,41 @@ class _BottomViewState extends State<BottomView> {
     }
 
     return PersistentTabView(
+      margin: EdgeInsets.only(bottom: 5.h, left: 10.w, right: 10.w),
       context,
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
       backgroundColor: Theme.of(context)
-          .scaffoldBackgroundColor, // Default is Theme.of(context).indicatorColor.
+          .splashColor
+          .withOpacity(0.6), // Default is Theme.of(context).indicatorColor.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
       stateManagement: true, // Default is true.
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: const NavBarDecoration(
-        //  borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.transparent,
+      decoration: NavBarDecoration(
+        colorBehindNavBar: Theme.of(context).splashColor,
+        borderRadius: BorderRadius.circular(70.0),
       ),
+      hideNavigationBar: false,
+
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
+        curve: Curves.easeInOut,
       ),
       screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
-        curve: Curves.ease,
+        curve: Curves.easeInOut,
         duration: Duration(milliseconds: 200),
       ),
-      navBarHeight: 70,
+      navBarHeight: 65,
       navBarStyle:
           NavBarStyle.style1, // Choose the nav bar style with this property.
     );

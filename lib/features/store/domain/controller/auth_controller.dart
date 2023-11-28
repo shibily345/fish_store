@@ -63,4 +63,8 @@ class AuthController extends GetxController implements GetxService {
   Future<void> updateToken() async {
     await authRepo.updateToken();
   }
+
+  Future<void> resetPsd(String phone, String newPsd) async {
+    await authRepo.resetPsd(phone, newPsd);
+  }
 }

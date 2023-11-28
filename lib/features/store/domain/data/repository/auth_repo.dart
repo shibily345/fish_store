@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:betta_store/core/constents.dart';
+import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/features/store/domain/data/api/api_clint.dart';
 import 'package:betta_store/features/store/domain/models/signup_body_model.dart';
 import 'package:betta_store/features/store/domain/models/user_model.dart';
@@ -82,5 +83,13 @@ class AuthRepo {
       debugPrint("token--------------" + _deviceToken);
     }
     return _deviceToken;
+  }
+
+  Future<Response> resetPsd(String phone, String newPsd) async {
+    print("Token is $newPsd");
+    return await apiClint.putData(AppConstents.resetPsd, {
+      "phone": phone,
+      "new_password": newPsd,
+    });
   }
 }

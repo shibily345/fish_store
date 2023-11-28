@@ -8,7 +8,8 @@ class CustomTextField extends StatelessWidget {
   final Icon? prefixIcon;
   final VoidCallback? onEditingComplete;
 
-  CustomTextField({
+  const CustomTextField({
+    super.key,
     required this.controller,
     required this.focusNode,
     this.keyboardType = TextInputType.text,
@@ -20,7 +21,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 40,

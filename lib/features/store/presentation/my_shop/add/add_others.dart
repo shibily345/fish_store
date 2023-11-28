@@ -123,7 +123,7 @@ class _AddOtherPageState extends State<AddOtherPage> {
             femalePrice: 0,
             img: 'images/' + _image!.name,
             video: selectedOption,
-            stars: 4,
+            stars: "5",
             typeId: widget.pageId);
         String token = Get.find<UserInfoController>().userModel.fcmToken!;
         NotificationHelper.sendPushNotification(

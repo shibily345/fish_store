@@ -1,71 +1,144 @@
+import 'dart:async';
+
+import 'package:betta_store/core/constents.dart';
+import 'package:betta_store/core/utils/widgets/loading.dart';
+import 'package:betta_store/features/store/domain/controller/ad_list_controller.dart';
+import 'package:betta_store/features/store/domain/data/repository/ad_list_repo.dart';
+import 'package:betta_store/features/store/domain/models/ad_list.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-final List<String> imgList = [
-  'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-  'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-  'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-];
-final List<Widget> imageSliders = imgList
-    .map((item) => Container(
-          child: Container(
-            margin: EdgeInsets.all(0.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image.network(item, fit: BoxFit.cover, width: 1000.0),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          'No. ${imgList.indexOf(item)} image',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-          ),
-        ))
-    .toList();
-
-class AdSliders extends StatelessWidget {
+class AdSliders extends StatefulWidget {
   const AdSliders({super.key});
 
   @override
+  State<AdSliders> createState() => _AdSlidersState();
+}
+
+class _AdSlidersState extends State<AdSliders> {
+  int _currentPage = 0;
+  List<String> imgList = [];
+  PageController _pageController = PageController();
+  // static final customeCacheManager = Basecache;
+  @override
+  void initState() {
+    super.initState();
+    // Auto-play the slider every 3 seconds
+    Timer.periodic(Duration(seconds: 6), (Timer timer) {
+      if (_currentPage < Get.find<AdlistController>().ads.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+      _pageController.animateToPage(
+        _currentPage,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
+    Get.find<AdlistController>().getAllads();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 200,
-        child: CarouselSlider(
-          options: CarouselOptions(
-            aspectRatio: 2.0,
-            enlargeCenterPage: true,
-            scrollDirection: Axis.horizontal,
-            autoPlay: true,
+    return GetBuilder<AdlistController>(builder: (ad) {
+      List<AdListModel> adsfirst = ad.ads.reversed.toList();
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 200.0, width: Get.width, // Adjust the height as needed
+            child: PageView.builder(
+              itemCount: ad.ads.length,
+              controller: _pageController,
+              onPageChanged: (int index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              itemBuilder: (context, index) {
+                return _buildImageSliderItem(adsfirst[index].img!, index);
+              },
+            ),
           ),
-          items: imageSliders,
+          SizedBox(height: 10.0),
+          _buildIndicators(ad.ads.length),
+        ],
+      );
+    });
+  }
+
+  Widget _buildImageSliderItem(String imageUrl, int index) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: AnimatedBuilder(
+          animation: _pageController,
+          builder: (context, child) {
+            double value = 1.0;
+            if (_pageController.position.haveDimensions) {
+              value = _pageController.page! - index;
+              value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
+            }
+            return Center(
+              child: SizedBox(
+                height: Curves.easeInOut.transform(value) * 200.0,
+                width: Curves.easeInOut.transform(value) *
+                    Get.width, // Adjust the width as needed
+                child: child,
+              ),
+            );
+          },
+          child: CachedNetworkImage(
+            // cacheManager: (),
+            key: UniqueKey(),
+            imageUrl:
+                AppConstents.BASE_URL + AppConstents.UPLOAD_URL + imageUrl,
+            imageBuilder: (context, imageProvider) => ClipRRect(
+              borderRadius: BorderRadius.circular(18.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.0),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    )),
+              ),
+            ),
+            placeholder: (context, url) => Center(
+                child: CustomeLoader(
+              bg: Colors.transparent,
+            )),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
         ));
+  }
+
+  Widget _buildIndicators(int length) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        length,
+        (index) => AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          width: _currentPage == index ? 16.0 : 8.0,
+          height: 8.0,
+          margin: EdgeInsets.symmetric(horizontal: 4.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: _currentPage == index
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).indicatorColor.withOpacity(0.2),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }

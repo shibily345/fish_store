@@ -37,7 +37,7 @@ class ProductModel {
   int? price;
   int? malePrice;
   int? femalePrice;
-  int? stars;
+  String? stars;
   int? isRecommended;
   int? people;
   String? img;

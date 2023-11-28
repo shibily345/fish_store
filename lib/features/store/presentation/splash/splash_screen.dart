@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/helper/firebase_api.dart';
+
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/features/store/domain/controller/ad_list_controller.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/shop/items/presentation/controller/items_info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/cart_controller.dart';
@@ -43,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.lazyPut(() => CartRepository(sharedPreferences: Get.find()));
       Get.lazyPut(() => CartController(cartRepo: Get.find()));
       Get.lazyPut(() => ProductInfoController(productInfoRepo: Get.find()));
+      Get.lazyPut(() => AdlistController(adListRepo: Get.find()));
       Get.lazyPut(() => PlantsInfoController(plantsInfoRepo: Get.find()));
       Get.lazyPut(() => OtherFishInfoController(otherFishInfoRepo: Get.find()));
       Get.lazyPut(() => ItemsInfoController(itemsInfoRepo: Get.find()));
@@ -52,6 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(const Duration(seconds: 3),
           () => Get.offAllNamed(AppRouts.getinitial()));
     } else {
+      // Get.lazyPut(() => AuthController(authRepo: Get.find()));
       Timer(const Duration(seconds: 3), () => Get.offAll(OnboardingScreen()));
     }
   }

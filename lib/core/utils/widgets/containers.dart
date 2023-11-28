@@ -33,11 +33,11 @@ class BlurContainer extends StatelessWidget {
       child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
           child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               color: color.withOpacity(0.2),
               child: child,
             ),
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           )),
     );
   }
@@ -72,11 +72,11 @@ class AmbiendContainer extends StatelessWidget {
       child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
           child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
             child: Container(
               color: color,
               child: child,
             ),
-            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           )),
     );
   }
@@ -113,11 +113,11 @@ class BlurImageContainer extends StatelessWidget {
       child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
           child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
             child: Container(
               color: Colors.black.withOpacity(0.6),
               child: child,
             ),
-            filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
           )),
     );
   }
@@ -126,7 +126,8 @@ class BlurImageContainer extends StatelessWidget {
 class ContainerPage extends StatelessWidget {
   final Widget widget;
 
-  ContainerPage({
+  const ContainerPage({
+    super.key,
     required this.widget,
   });
 
@@ -146,7 +147,7 @@ class BrickGridViewDelegate extends SliverGridDelegateWithFixedCrossAxisCount {
     double crossAxisSpacing = 0.0,
     double childAspectRatio = 1.0,
     required SliverConstraints mySliverConstraints,
-  })  : this.offset = offset,
+  })  : offset = offset,
         super(
             crossAxisCount: crossAxisCount,
             mainAxisSpacing: mainAxisSpacing,

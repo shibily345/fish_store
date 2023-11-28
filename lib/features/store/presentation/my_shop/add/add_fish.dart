@@ -165,7 +165,7 @@ class _AddBettaPageState extends State<AddBettaPage> {
             femalePrice: int.parse(femalePrice),
             img: 'images/' + _image!.name,
             video: 'files/' + _video!.name,
-            stars: 4,
+            stars: "5",
             typeId: widget.pageId);
         Map<String, dynamic> detils = {
           'product_count':

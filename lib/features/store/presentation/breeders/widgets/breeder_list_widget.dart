@@ -30,28 +30,28 @@ class _BreederListWidgetState extends State<BreederListWidget> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UserInfoController>(builder: (breeders) {
-      List<dynamic> _filteredBreedersList = breeders.breedersList
+      List<dynamic> filteredBreedersList = breeders.breedersList
           .where((breeder) => breeder.sellproduct == 1)
           .toList();
       return breeders.isLoaded
           ? RefreshIndicator(
               onRefresh: _loadResources,
               child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
 
-                itemCount: _filteredBreedersList
+                itemCount: filteredBreedersList
                     .length, // Replace with the number of items you have
                 itemBuilder: (BuildContext context, int index) {
                   // Replace this with your grid item widget
                   return GestureDetector(
                     onTap: () {
                       Get.toNamed(AppRouts.getBreederDetails(
-                          _filteredBreedersList[index].id!));
+                          filteredBreedersList[index].id!));
                     },
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: const EdgeInsets.only(bottom: 10),
                       height: 180,
                       decoration: BoxDecoration(
                           color: Theme.of(context).splashColor,
@@ -68,21 +68,21 @@ class _BreederListWidgetState extends State<BreederListWidget> {
                                   width: 60.h,
                                   imageUrl: AppConstents.BASE_URL +
                                       AppConstents.UPLOAD_URL +
-                                      _filteredBreedersList[index].logo!,
+                                      filteredBreedersList[index].logo!,
                                   imageBuilder: (context, imageProvider) =>
                                       CircleAvatar(
                                     backgroundImage: imageProvider,
                                   ),
-                                  placeholder: (context, url) => Center(
+                                  placeholder: (context, url) => const Center(
                                       child: CustomeLoader(
                                     bg: Colors.transparent,
                                   )),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 ),
                                 smallwidth,
                                 textWidget(
-                                    text: _filteredBreedersList[index].name,
+                                    text: filteredBreedersList[index].name,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Theme.of(context).indicatorColor),
@@ -94,9 +94,9 @@ class _BreederListWidgetState extends State<BreederListWidget> {
                             top: 100,
                             child: Row(
                               children: [
-                                Icon(Icons.location_on_outlined),
+                                const Icon(Icons.location_on_outlined),
                                 textWidget(
-                                    text: _filteredBreedersList[index].location,
+                                    text: filteredBreedersList[index].location,
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal,
                                     color: Theme.of(context)
@@ -109,16 +109,16 @@ class _BreederListWidgetState extends State<BreederListWidget> {
                             left: 20,
                             top: 135,
                             child: Row(children: [
-                              Icon(Icons.cases_sharp),
+                              const Icon(Icons.cases_sharp),
                               textWidget(
                                   text:
-                                      " ${_filteredBreedersList[index].productCount} Products",
+                                      " ${filteredBreedersList[index].productCount} Products",
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
                                   color: Theme.of(context).indicatorColor),
                             ]),
                           ),
-                          Positioned(
+                          const Positioned(
                               right: 20,
                               top: 100,
                               child: Icon(
@@ -132,7 +132,7 @@ class _BreederListWidgetState extends State<BreederListWidget> {
                 },
               ),
             )
-          : Center(child: CustomeLoader());
+          : Center(child: Container());
     });
   }
 }

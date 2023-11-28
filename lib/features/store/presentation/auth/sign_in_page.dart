@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
                   padding: EdgeInsets.only(right: 18.0.w),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => PasswordResetPage());
+                      Get.to(() => const PasswordResetPage());
                       print("password marannooy");
                     },
                     child: textWidget(
@@ -126,7 +126,7 @@ class _SignInPageState extends State<SignInPage> {
             bigSpace,
             bigSpace,
             bigSpace,
-            Center(child: const PrivecyLabelWidget())
+            const Center(child: PrivecyLabelWidget())
           ],
         ));
   }

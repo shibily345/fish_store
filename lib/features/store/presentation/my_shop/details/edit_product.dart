@@ -186,7 +186,7 @@ class _EditMainProductPageState extends State<EditMainProductPage> {
           video: product.typeId != 4 || product.typeId != 6
               ? selectedOption
               : video,
-          stars: 4,
+          stars: "5",
           typeId: product.typeId!);
       print(image! + video!);
       Get.find<ProductInfoController>().updateProduct(
