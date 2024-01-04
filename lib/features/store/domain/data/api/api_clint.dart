@@ -9,7 +9,7 @@ class ApiClint extends GetConnect implements GetxService {
   late Map<String, String> _mainHeders;
   ApiClint({required this.appBaseUrl, required this.sharedPreferences}) {
     baseUrl = appBaseUrl;
-    timeout = Duration(seconds: 30);
+    timeout = const Duration(seconds: 30);
     token = sharedPreferences.getString(AppConstents.TOKEN) ?? "";
     _mainHeders = {
       'Content-type': 'application/json; charset=UTF-8',

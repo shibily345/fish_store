@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:betta_store/core/dependencies.dart';
@@ -11,8 +10,6 @@ import 'package:betta_store/features/shop/items/presentation/controller/items_in
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:betta_store/features/store/presentation/my_shop/add/suucess_add_page.dart';
 
 import 'package:betta_store/features/store/domain/models/products_model.dart';
@@ -23,9 +20,9 @@ import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/presentation/my_shop/add/widgets/add_fields_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -68,22 +65,54 @@ class _AddBettaPageState extends State<AddBettaPage> {
   }
 
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        // _cropImage(pickedFile.path);
-        _image = pickedFile;
-        () {
-          //for loading
-          setState(() {
-            processingStatus = ProcessingStatus.processing;
-          });
-        };
-      } else {
-        print('No image selected.');
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.gallery)
+        .then((value) {
+      if (value != null) {
+        _cropImage(File(value.path));
       }
     });
+  }
+
+  _cropImage(File imgFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+        sourcePath: imgFile.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Image Cropper",
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: "Image Cropper",
+          )
+        ]);
+    if (croppedFile != null) {
+      imageCache.clear();
+      setState(() {
+        _image = XFile(croppedFile.path);
+      });
+      // reload();
+    }
   }
 
   Future<void> _pickVideo() async {
@@ -163,8 +192,8 @@ class _AddBettaPageState extends State<AddBettaPage> {
             price: int.parse(pairPrice),
             malePrice: int.parse(malePrice),
             femalePrice: int.parse(femalePrice),
-            img: 'images/' + _image!.name,
-            video: 'files/' + _video!.name,
+            img: 'images/${_image!.name}',
+            video: 'files/${_video!.name}',
             stars: "5",
             typeId: widget.pageId);
         Map<String, dynamic> detils = {
@@ -188,7 +217,7 @@ class _AddBettaPageState extends State<AddBettaPage> {
             .then((response) {
           if (response.isSuccess) {
             Get.snackbar("Added", "SuccessFully");
-            Get.to(() => ProductAdded());
+            Get.to(() => const ProductAdded());
           } else {
             Get.snackbar("Error Occurred", "Report us ASAP Profil>Contact us");
           }
@@ -208,7 +237,7 @@ class _AddBettaPageState extends State<AddBettaPage> {
                 Padding(
                   padding: EdgeInsets.only(top: 18.0.h, left: 10.w),
                   child: textWidget(
-                      text: "Sell my bettaFish",
+                      text: "Enter product details",
                       color: Theme.of(context).indicatorColor,
                       fontSize: 23,
                       fontWeight: FontWeight.bold),
@@ -278,7 +307,10 @@ class _AddBettaPageState extends State<AddBettaPage> {
                 bigSpace,
                 bigSpace,
                 bigSpace
-              ],
+              ]
+                  .animate(interval: 100.ms)
+                  .fade()
+                  .fadeIn(curve: Curves.easeInOutExpo),
             ),
           ),
         ));

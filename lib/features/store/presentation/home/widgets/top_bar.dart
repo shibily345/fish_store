@@ -1,16 +1,16 @@
 import 'package:betta_store/core/utils/widgets/spaces.dart';
-import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/presentation/home/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
-import 'package:iconsax/iconsax.dart';
 
 class TopBar extends StatelessWidget {
-  TopBar({
+  const TopBar({
     super.key,
+    required this.drawerWid,
   });
+  final Widget drawerWid;
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +31,21 @@ class TopBar extends StatelessWidget {
             smallwidth,
             GestureDetector(
               onTap: () {
-                Get.to(() => SerachPage());
+                Get.to(() => const SerachPage());
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Theme.of(context).splashColor),
                 width: 80,
                 height: 50.h,
-                child: Center(
+                child: const Center(
                   child: Icon(IconlyBroken.search),
                 ),
               ),
             ),
+            drawerWid,
           ],
         ),
       ),

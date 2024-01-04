@@ -13,7 +13,7 @@ class TopContents extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               // color: Theme.of(context).splashColor,
               ),
           child: Center(

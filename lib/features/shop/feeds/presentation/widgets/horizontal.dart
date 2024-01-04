@@ -1,18 +1,16 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
-import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
-import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
+import 'package:betta_store/features/shop/feeds/presentation/pages/detail_page.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FeedsHorizontalGrid extends StatefulWidget {
   const FeedsHorizontalGrid({super.key});
@@ -24,7 +22,7 @@ class FeedsHorizontalGrid extends StatefulWidget {
 enum SortOption { priceHighToLow, priceLowToHigh, newest, oldest }
 
 class _FeedsHorizontalGridState extends State<FeedsHorizontalGrid> {
-  SortOption _selectedSortOption = SortOption.newest;
+  final SortOption _selectedSortOption = SortOption.newest;
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +51,16 @@ class _FeedsHorizontalGridState extends State<FeedsHorizontalGrid> {
                                 .withOpacity(0.6),
                             fontSize: 15,
                             fontWeight: FontWeight.w600),
-                        textWidget(
-                            text: "See all >",
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => const FeedsFishPage());
+                          },
+                          child: textWidget(
+                              text: "See all >",
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ],
                     ),
                   ),
@@ -65,7 +68,7 @@ class _FeedsHorizontalGridState extends State<FeedsHorizontalGrid> {
                     height: 230,
                     child: GridView.builder(
                       scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.zero,
+                      padding: EdgeInsets.only(left: 15.w),
                       itemCount: productInfo.feedsInfoList.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -105,17 +108,24 @@ class _FeedsHorizontalGridState extends State<FeedsHorizontalGrid> {
                                       ),
                                     ),
                                   ),
-                                  placeholder: (context, url) => Center(
-                                      child: CustomeLoader(
-                                    bg: Colors.transparent,
-                                  )),
+                                  placeholder: (context, url) =>
+                                      Shimmer.fromColors(
+                                    baseColor: Colors.grey[800]!,
+                                    highlightColor: Colors.grey[700]!,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
+                                          color: Colors.black),
+                                    ),
+                                  ),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 ),
                                 Container(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 10.w),
-                                  margin: EdgeInsets.all(10),
+                                  margin: const EdgeInsets.all(10),
                                   width: 175.w,
                                   height: 70.h,
                                   decoration: BoxDecoration(

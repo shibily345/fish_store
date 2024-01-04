@@ -1,17 +1,15 @@
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/store/domain/models/signup_body_model.dart';
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/presentation/auth/widgets/sign_up_fields.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -173,7 +171,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     //     ),
                     //   ),
                     // )
-                  ],
+                  ]
+                      .animate(interval: 100.ms)
+                      .fade()
+                      .fadeIn(curve: Curves.easeInOutExpo),
                 )),
           ),
         );

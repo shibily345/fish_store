@@ -1,14 +1,9 @@
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/helper/notification.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AcceptOrderWidget extends StatelessWidget {
@@ -25,48 +20,42 @@ class AcceptOrderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<UserInfoController>().getBreedersList();
     return ListTile(
-        leading: Container(
-          width: 5,
-          color: Colors.red,
-        ),
         title: Center(
-          child: order.accepted == null
-              ? MaterialButton(
-                  onPressed: () {
-                    _showDialog(context);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  color: Theme.of(context).primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.handshake_outlined,
-                        color: Theme.of(context).primaryColorDark,
-                        size: 20,
-                      ),
-                      textWidget(
-                          text: 'Accept Order',
-                          color: Theme.of(context).primaryColorDark,
-                          fontSize: 15),
-                    ],
+      child: order.accepted == null
+          ? MaterialButton(
+              onPressed: () {
+                _showDialog(context);
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Theme.of(context).primaryColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.handshake_outlined,
+                    color: Theme.of(context).primaryColorDark,
+                    size: 20,
                   ),
-                )
-              : Container(
-                  width: double.maxFinite,
-                  height: 30,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: textWidget(
-                        text: 'Order accepted',
-                        color: Colors.green,
-                        fontSize: 15),
-                  ),
-                ),
-        ));
+                  textWidget(
+                      text: 'Accept Order',
+                      color: Theme.of(context).primaryColorDark,
+                      fontSize: 15),
+                ],
+              ),
+            )
+          : Container(
+              width: double.maxFinite,
+              height: 30,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.green),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Center(
+                child: textWidget(
+                    text: 'Order accepted', color: Colors.green, fontSize: 15),
+              ),
+            ),
+    ));
   }
 
   Future<void> _showDialog(BuildContext context) async {
@@ -83,21 +72,22 @@ class AcceptOrderWidget extends StatelessWidget {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return AlertDialog(
-              title: Text('Accept Order'),
+              title: const Text('Accept Order'),
               content: TextField(
+                keyboardType: TextInputType.number,
                 controller: detailsController,
                 decoration:
-                    InputDecoration(hintText: 'Enter Your Delivery Charge'),
+                    const InputDecoration(hintText: 'Enter Your Delivery Charge'),
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: Text('Save'),
+                  child: const Text('Save'),
                   onPressed: () {
                     orderController.acceptOrder(
                         order.id, detailsController.text);

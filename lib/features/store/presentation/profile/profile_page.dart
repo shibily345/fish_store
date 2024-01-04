@@ -8,8 +8,8 @@ import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/presentation/profile/widgets/option_tiles.dart';
 import 'package:betta_store/features/store/presentation/profile/widgets/user_details.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -27,14 +27,16 @@ class ProfilePage extends StatelessWidget {
         builder: (userInfo) {
           if (userLoggedIn == true) {
             return (userInfo.isLoading
-                ? ListView(
-                    children: [
-                      UserDetailsWidget(userInfo: userInfo.userModel),
-                      OptionTilesWidget(),
-                      Center(child: PrivecyLabelWidget())
-                    ],
+                ? SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        UserDetailsWidget(userInfo: userInfo.userModel),
+                        const OptionTilesWidget(),
+                        const Center(child: PrivecyLabelWidget())
+                      ],
+                    ),
                   )
-                : Center(child: CustomeLoader()));
+                : const Center(child: CustomeLoader()));
           } else {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +56,10 @@ class ProfilePage extends StatelessWidget {
                   child: textWidget(
                       text: "Login", color: Colors.black, fontSize: 16),
                 )),
-              ],
+              ]
+                  .animate(interval: 100.ms)
+                  .fade()
+                  .fadeIn(curve: Curves.easeInOutExpo),
             );
           }
         },

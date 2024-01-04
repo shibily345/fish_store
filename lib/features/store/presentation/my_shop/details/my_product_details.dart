@@ -2,7 +2,6 @@ import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
-import 'package:betta_store/features/store/domain/controller/cart_controller.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
 import 'package:betta_store/features/shop/items/presentation/controller/items_info_controller.dart';
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
@@ -19,7 +18,7 @@ import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
 class EditProductPage extends StatefulWidget {
-  EditProductPage({super.key, required this.pageId});
+  const EditProductPage({super.key, required this.pageId});
   final int pageId;
 
   @override
@@ -60,7 +59,7 @@ class _EditProductPageState extends State<EditProductPage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(IconlyBroken.edit),
+            icon: const Icon(IconlyBroken.edit),
           )
         ],
       ),
@@ -69,7 +68,7 @@ class _EditProductPageState extends State<EditProductPage> {
         children: [
           bigSpace,
           bigSpace,
-          Divider(),
+          const Divider(),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,16 +85,16 @@ class _EditProductPageState extends State<EditProductPage> {
                                 AppConstents.UPLOAD_URL +
                                 product.img!),
                             fit: BoxFit.cover)),
-                    child: Container(),
                     height: 120.h,
                     width: 120.w,
+                    child: Container(),
                   ),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 190.w,
                       child: textWidget(
                         text: product.name!,
@@ -105,7 +104,7 @@ class _EditProductPageState extends State<EditProductPage> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: 120,
                       child: textWidget(
                         text: product.breeder!,
@@ -117,7 +116,7 @@ class _EditProductPageState extends State<EditProductPage> {
                       ),
                     ),
                     bigSpace,
-                    Container(
+                    SizedBox(
                       width: 170,
                       child: textWidget(
                         text: product.description!,
@@ -131,7 +130,7 @@ class _EditProductPageState extends State<EditProductPage> {
                   ],
                 )
               ]),
-          Divider(),
+          const Divider(),
           bigSpace,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +172,7 @@ class _EditProductPageState extends State<EditProductPage> {
                   Get.find<ProductInfoController>()
                       .deleteProduct(widget.pageId)
                       .then((value) {
-                    Get.to(() => ProductAdded());
+                    Get.to(() => const ProductAdded());
                     loadResources();
                   });
                 },
@@ -198,7 +197,7 @@ class _EditProductPageState extends State<EditProductPage> {
             ],
           ),
           bigSpace,
-          Divider(),
+          const Divider(),
           bigSpace,
           ListTile(
             title: Container(

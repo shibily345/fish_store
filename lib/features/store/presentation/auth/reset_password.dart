@@ -6,12 +6,11 @@ import 'package:betta_store/core/utils/widgets/privacy_terms.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
-import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/store/presentation/auth/widgets/psd_reset_content.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -505,7 +504,10 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
                 const Align(
                     alignment: Alignment.bottomCenter,
                     child: PrivecyLabelWidget())
-              ],
+              ]
+                  .animate(interval: 100.ms)
+                  .fade()
+                  .fadeIn(curve: Curves.easeInOutExpo),
             )),
       ),
     );

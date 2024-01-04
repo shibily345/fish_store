@@ -1,17 +1,11 @@
-import 'dart:convert';
-import 'dart:ffi';
 
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/features/store/domain/data/repository/review_repo.dart';
-import 'package:betta_store/features/store/domain/data/repository/user_repo.dart';
 import 'package:betta_store/features/store/domain/models/respones_model.dart';
 import 'package:betta_store/features/store/domain/models/review_model.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
-import 'package:http/http.dart' as http;
 
 class ReviewController extends GetxController implements GetxService {
   final ReviewRepo reviewRepo;
@@ -31,8 +25,7 @@ class ReviewController extends GetxController implements GetxService {
       _allReviews = [];
       _allReviews.addAll(Review.fromJson(response.body).reviews!);
       debugPrint(
-          "..........................................................................Got reviews." +
-              allReviews.toString());
+          "..........................................................................Got reviews.$allReviews");
       responesModel = ResponesModel(true, "SuccessFull");
     } else {
       print("Getting ----${response.statusCode}--token");

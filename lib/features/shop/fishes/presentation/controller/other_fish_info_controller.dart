@@ -103,11 +103,11 @@ class OtherFishInfoController extends GetxController {
     _cart = cart;
 
     _exist = _cart.existInCart(otherFish);
-    print(exist.toString() + ".............................");
+    print("$exist.............................");
     if (exist) {
       _inCartItemCount = _cart.getQuantity(otherFish);
     }
-    print(_inCartItemCount.toString() + ".............................");
+    print("$_inCartItemCount.............................");
   }
 
   void addItem(ProductModel otherFish) {

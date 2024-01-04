@@ -1,6 +1,5 @@
 import 'package:betta_store/features/store/domain/controller/cart_controller.dart';
 import 'package:betta_store/features/shop/items/data/repositories/items_info_repo.dart';
-import 'package:betta_store/features/shop/items/data/repositories/items_info_repo.dart';
 import 'package:betta_store/features/store/domain/models/cart_model.dart';
 import 'package:betta_store/features/store/domain/models/products_model.dart';
 import 'package:get/get.dart';
@@ -78,11 +77,11 @@ class ItemsInfoController extends GetxController {
     _cart = cart;
 
     _exist = _cart.existInCart(items);
-    print(exist.toString() + ".............................");
+    print("$exist.............................");
     if (exist) {
       _inCartItemCount = _cart.getQuantity(items);
     }
-    print(_inCartItemCount.toString() + ".............................");
+    print("$_inCartItemCount.............................");
   }
 
   void addItem(ProductModel items) {

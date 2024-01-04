@@ -3,7 +3,6 @@ import 'package:betta_store/features/store/domain/models/cart_model.dart';
 import 'package:betta_store/features/store/domain/models/products_model.dart';
 import 'package:betta_store/features/store/presentation/booking/placed_page.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CartController extends GetxController {
   final CartRepository cartRepo;

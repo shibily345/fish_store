@@ -1,21 +1,21 @@
-import 'dart:io';
-
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:iconly/iconly.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUsPage extends StatelessWidget {
+  const AboutUsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About Us'),
+        title: const Text('About Us'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +27,7 @@ class AboutUsPage extends StatelessWidget {
                   width: 150,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Welcome to BettaStore',
                 style: TextStyle(
@@ -36,7 +36,7 @@ class AboutUsPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'BettaStore is the ultimate destination for aqua lovers, fish breeders, and enthusiasts. Our app version 1.0.0 is specially crafted for aqua lovers and aqua fish stores, providing a platform to buy and sell high-quality aquatic fishes. Dive into the fascinating world of aquatic life with our extensive collection of Betta fishes - the Siamese fighting fish that holds a significant economic value in our area.',
                 style: TextStyle(
@@ -45,7 +45,7 @@ class AboutUsPage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.left,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Key Features:',
                 style: TextStyle(
@@ -54,7 +54,7 @@ class AboutUsPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 '- Buy and sell high-quality Betta fishes',
                 style: TextStyle(
@@ -76,7 +76,7 @@ class AboutUsPage extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Join us in creating a vibrant community of aqua enthusiasts. Let BettaStore be your gateway to a world filled with stunning aquatic creatures.',
                 style: TextStyle(
@@ -94,7 +94,7 @@ class AboutUsPage extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Icon(Iconsax.instagram),
+                    const Icon(Iconsax.instagram),
                     smallwidth,
                     Text(
                       '- Follow us on Instagram',
@@ -114,7 +114,7 @@ class AboutUsPage extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Icon(FontAwesomeIcons.youtube),
+                    const Icon(FontAwesomeIcons.youtube),
                     smallwidth,
                     Text(
                       '- Subscribe us on Youtube',
@@ -135,7 +135,7 @@ class AboutUsPage extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Icon(FontAwesomeIcons.whatsapp),
+                    const Icon(FontAwesomeIcons.whatsapp),
                     smallwidth,
                     Text(
                       '- Join whatsapp commuity',
@@ -147,7 +147,10 @@ class AboutUsPage extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
+            ]
+                .animate(interval: 100.ms)
+                .fade()
+                .fadeIn(curve: Curves.easeInOutExpo),
           ),
         ),
       ),

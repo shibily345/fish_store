@@ -2,7 +2,6 @@ import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/domain/controller/review_controller.dart';
-import 'package:betta_store/features/store/domain/models/review_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -25,16 +24,16 @@ class ReviweBoxWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(20)),
-        child: productReviews.length != 0
+        child: productReviews.isNotEmpty
             ? ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap:
                     true, // Setting shrinkWrap to true enables the ListView to take only the space it needs.
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 itemCount: productReviews.length,
                 itemBuilder: (context, int index) {
                   return Container(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Theme.of(context).splashColor,
                       borderRadius: BorderRadius.circular(16),
@@ -59,7 +58,7 @@ class ReviweBoxWidget extends StatelessWidget {
                                 direction: Axis.horizontal,
                                 itemCount: 5,
                                 itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 1.0),
+                                    const EdgeInsets.symmetric(horizontal: 1.0),
                                 itemBuilder: (context, _) => Icon(
                                   Icons.star,
                                   color: Theme.of(context).indicatorColor,
@@ -93,12 +92,12 @@ class ReviweBoxWidget extends StatelessWidget {
                                           .scaffoldBackgroundColor,
                                       borderRadius: BorderRadius.circular(15)),
                                 ),
-                                placeholder: (context, url) => Center(
+                                placeholder: (context, url) => const Center(
                                     child: CustomeLoader(
                                   bg: Colors.transparent,
                                 )),
                                 errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
+                                    const Icon(Icons.error),
                               ),
                             ),
                             Padding(

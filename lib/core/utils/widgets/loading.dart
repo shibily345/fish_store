@@ -18,18 +18,27 @@ class CustomeLoader extends StatefulWidget {
 
 class _CustomeLoaderState extends State<CustomeLoader> {
   bool timeout = false;
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
-    startLoading();
+    _timer = Timer(
+      const Duration(seconds: 10),
+      () {
+        if (mounted) {
+          setState(() {
+            timeout = true;
+          });
+        }
+      },
+    );
   }
 
-  void startLoading() {
-    Timer(
-        const Duration(seconds: 20),
-        () => setState(() {
-              timeout = true;
-            }));
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
   }
 
   @override
@@ -38,22 +47,29 @@ class _CustomeLoaderState extends State<CustomeLoader> {
       child: timeout == false
           ? Container(
               decoration: BoxDecoration(
-                  color: widget.bg, borderRadius: BorderRadius.circular(20.h)),
+                color: widget.bg,
+                borderRadius: BorderRadius.circular(20.h),
+              ),
               height: 80.h,
               width: 80.w,
               child: Lottie.asset(
                   'assets/ui_elementsbgon/animation_lmeiawsk.json'),
             )
-          : Container(
-              child: SimpleButton(
-                  onPress: () {
-                    setState(() {
-                      loadResources();
-                      timeout = false;
-                      startLoading();
-                    });
-                  },
-                  label: "Retry "),
+          : SimpleButton(
+              onPress: () {
+                setState(() {
+                  loadResources();
+                  timeout = false;
+                  _timer = Timer(const Duration(seconds: 10), () {
+                    if (mounted) {
+                      setState(() {
+                        timeout = true;
+                      });
+                    }
+                  });
+                });
+              },
+              label: "Retry ",
             ),
     );
   }

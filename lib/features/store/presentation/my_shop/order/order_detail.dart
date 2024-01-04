@@ -1,4 +1,4 @@
-import 'package:betta_store/core/utils/widgets/loading.dart';
+import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
@@ -20,7 +20,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopsOrderPage extends StatefulWidget {
-  ShopsOrderPage({super.key, required this.pageId});
+  const ShopsOrderPage({super.key, required this.pageId});
   final int pageId;
 
   @override
@@ -59,53 +59,90 @@ class _ShopsOrderPageState extends State<ShopsOrderPage> {
         ? Scaffold(
             appBar: AppBar(),
             body: GetBuilder<OrderController>(builder: (orderController) {
-              return ListView(
+              return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                children: [
-                  Divider(),
-                  ProductDetailWidget(
-                    product: product,
-                    order: order,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Divider(),
+                      ProductDetailWidget(
+                        product: product,
+                        order: order,
+                      ),
+                      const Divider(),
+                      OrderFromWidget(order: order, product: product),
+                      const Divider(),
+                      bigSpace,
+                      AcceptOrderWidget(
+                          order: order,
+                          product: product,
+                          orderController: orderController),
+                      if (order.accepted != null)
+                        ProcessOrderWidget(
+                            order: order,
+                            product: product,
+                            orderController: orderController)
+                      else
+                        Container(),
+                      if (order.processing != null)
+                        SendOrderWidget(
+                            order: order,
+                            product: product,
+                            orderController: orderController)
+                      else
+                        Container(),
+                      if (order.handover != null)
+                        DeliveredOrderWidget(
+                            order: order,
+                            product: product,
+                            orderController: orderController)
+                      else
+                        Container(),
+                      bigSpace,
+                      const Divider(),
+                      if (order.accepted == null)
+                        CancellWidget(
+                            order: order,
+                            product: product,
+                            orderController: orderController)
+                      else
+                        Container(),
+                      if (order.paymentStatus == 'done')
+                        Container(
+                          width: double.maxFinite,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.green),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                            child: textWidget(
+                                text: 'Payment successfully recived',
+                                color: Colors.green,
+                                fontSize: 15),
+                          ),
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: double.maxFinite,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.amber),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                              child: textWidget(
+                                  text: 'Payment pending',
+                                  color: Colors.amber,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-                  Divider(),
-                  OrderFromWidget(order: order, product: product),
-                  Divider(),
-                  bigSpace,
-                  AcceptOrderWidget(
-                      order: order,
-                      product: product,
-                      orderController: orderController),
-                  if (order.accepted != null)
-                    ProcessOrderWidget(
-                        order: order,
-                        product: product,
-                        orderController: orderController)
-                  else
-                    Container(),
-                  if (order.processing != null)
-                    SendOrderWidget(
-                        order: order,
-                        product: product,
-                        orderController: orderController)
-                  else
-                    Container(),
-                  if (order.handover != null)
-                    DeliveredOrderWidget(
-                        order: order,
-                        product: product,
-                        orderController: orderController)
-                  else
-                    Container(),
-                  bigSpace,
-                  const Divider(),
-                  if (order.accepted == null)
-                    CancellWidget(
-                        order: order,
-                        product: product,
-                        orderController: orderController)
-                  else
-                    Container(),
-                ],
+                ),
               );
             }),
           )

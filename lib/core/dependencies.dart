@@ -76,6 +76,7 @@ Future<void> loadResources() async {
   await Get.find<ItemsInfoController>().getItemsInfoList();
   await Get.find<FeedsInfoController>().getfeedsInfoList();
   await Get.find<OrderController>().getOrderList();
+  await Get.find<UserInfoController>().getBreedersList();
   await Get.find<OrderController>().getOrderListForSeller();
   await Get.find<ReviewController>().getReview();
 }

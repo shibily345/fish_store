@@ -10,6 +10,7 @@ import 'package:betta_store/features/store/domain/controller/cart_controller.dar
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +37,7 @@ class ShopCartPage extends StatelessWidget {
                   children: [
                     SizedBox(
                       child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: carts.getItems.length,
                           itemBuilder: (context, index) {
@@ -83,13 +84,13 @@ class ShopCartPage extends StatelessWidget {
                                                 ),
                                               ),
                                               placeholder: (context, url) =>
-                                                  Center(
+                                                  const Center(
                                                       child: CustomeLoader(
                                                 bg: Colors.transparent,
                                               )),
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      Icon(Icons.error),
+                                                      const Icon(Icons.error),
                                             )),
                                       ),
                                       SizedBox(
@@ -200,7 +201,7 @@ class ShopCartPage extends StatelessWidget {
                             );
                           }),
                     ),
-                    Divider(),
+                    const Divider(),
                     GetBuilder<CartController>(builder: (cartCon) {
                       return cartCon.getItems.isNotEmpty
                           ? SizedBox(
@@ -337,10 +338,13 @@ class ShopCartPage extends StatelessWidget {
                               ),
                             );
                     }),
-                    Divider(),
+                    const Divider(),
                     bigSpace,
                     bigSpace,
-                  ],
+                  ]
+                      .animate(interval: 100.ms)
+                      .fade()
+                      .fadeIn(curve: Curves.easeInOutExpo),
                 )
               : const NoDataPage(infoText: "");
         }));

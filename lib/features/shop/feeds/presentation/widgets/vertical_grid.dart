@@ -1,18 +1,15 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
-import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
-import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FeedsGrid extends StatefulWidget {
   const FeedsGrid({super.key});
@@ -150,10 +147,17 @@ class _FeedsGridState extends State<FeedsGrid> {
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) => const Center(
-                                        child: CustomeLoader(
-                                      bg: Colors.transparent,
-                                    )),
+                                    placeholder: (context, url) =>
+                                        Shimmer.fromColors(
+                                      baseColor: Colors.grey[800]!,
+                                      highlightColor: Colors.grey[700]!,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            color: Colors.black),
+                                      ),
+                                    ),
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),
                                   ),
@@ -205,14 +209,20 @@ class _FeedsGridState extends State<FeedsGrid> {
                                       ],
                                     ),
                                   ),
-                                ],
+                                ]
+                                    .animate(interval: 250.ms)
+                                    .fade()
+                                    .slideY(curve: Curves.easeInOut),
                               ),
                             ),
                           );
                         },
                       ),
                     ),
-                  ],
+                  ]
+                      .animate(interval: 300.ms)
+                      .fade()
+                      .fadeIn(curve: Curves.easeInOut),
                 ),
               )
             : const CustomeLoader();

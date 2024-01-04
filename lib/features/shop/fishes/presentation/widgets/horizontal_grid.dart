@@ -1,16 +1,14 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
+import 'package:betta_store/features/shop/fishes/presentation/pages/detail_page.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FishesHorizontslGrid extends StatefulWidget {
   const FishesHorizontslGrid({super.key});
@@ -28,37 +26,45 @@ class _FishesHorizontslGridState extends State<FishesHorizontslGrid> {
       ) {
         return productInfo.isLoaded
             ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    height: 50.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        textWidget(
-                            text: "Fishes",
-                            color: Theme.of(context)
-                                .indicatorColor
-                                .withOpacity(0.6),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600),
-                        textWidget(
-                            text: "See all >",
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
-                      ],
+                    height: 40.h,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          textWidget(
+                              text: "Fishes",
+                              color: Theme.of(context)
+                                  .indicatorColor
+                                  .withOpacity(0.6),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => const OtherFishPage());
+                            },
+                            child: textWidget(
+                                text: "See all >",
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 230,
                     child: GridView.builder(
                       scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.zero,
+                      padding: EdgeInsets.only(left: 15.w),
                       itemCount: productInfo.otherFishInfoList.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -72,7 +78,6 @@ class _FishesHorizontslGridState extends State<FishesHorizontslGrid> {
                                 productInfo.otherFishInfoList[index].id!));
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
                             width: 190.w,
                             height: 250.h,
                             margin: const EdgeInsets.all(5.0),
@@ -84,7 +89,8 @@ class _FishesHorizontslGridState extends State<FishesHorizontslGrid> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 CachedNetworkImage(
-                                  height: 105.h,
+                                  height: 115.h,
+                                  width: 160.w,
                                   imageUrl: AppConstents.BASE_URL +
                                       AppConstents.UPLOAD_URL +
                                       productInfo.otherFishInfoList[index].img!,
@@ -98,10 +104,17 @@ class _FishesHorizontslGridState extends State<FishesHorizontslGrid> {
                                       ),
                                     ),
                                   ),
-                                  placeholder: (context, url) => const Center(
-                                      child: CustomeLoader(
-                                    bg: Colors.transparent,
-                                  )),
+                                  placeholder: (context, url) =>
+                                      Shimmer.fromColors(
+                                    baseColor: Colors.grey[800]!,
+                                    highlightColor: Colors.grey[700]!,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
+                                          color: Colors.black),
+                                    ),
+                                  ),
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.error),
                                 ),

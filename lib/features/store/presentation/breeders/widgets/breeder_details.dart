@@ -1,15 +1,12 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/store/domain/models/user_model.dart';
-import 'package:betta_store/features/store/presentation/profile/edit_profile_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BreedersDetailsWidget extends StatelessWidget {
   const BreedersDetailsWidget({super.key, required this.userInfo});
@@ -31,7 +28,7 @@ class BreedersDetailsWidget extends StatelessWidget {
                   backgroundColor: Colors.amber,
                   foregroundColor: Theme.of(context).indicatorColor,
                   radius: 40.h,
-                  child: FaIcon(FontAwesomeIcons.user),
+                  child: const FaIcon(FontAwesomeIcons.user),
                 )
               : Positioned(
                   left: 30.w,
@@ -45,11 +42,17 @@ class BreedersDetailsWidget extends StatelessWidget {
                     imageBuilder: (context, imageProvider) => CircleAvatar(
                       backgroundImage: imageProvider,
                     ),
-                    placeholder: (context, url) => Center(
-                        child: CustomeLoader(
-                      bg: Colors.transparent,
-                    )),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[800]!,
+                      highlightColor: Colors.grey[700]!,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18.0),
+                            color: Colors.black),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                 ),
           Positioned(
@@ -66,7 +69,7 @@ class BreedersDetailsWidget extends StatelessWidget {
             top: 165.h,
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.location_on_outlined,
                   size: 15,
                 ),

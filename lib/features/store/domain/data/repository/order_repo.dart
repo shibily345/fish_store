@@ -32,6 +32,10 @@ class OrderRepo {
     return await apiClint.putData('/api/v1/customer/order/processing', data);
   }
 
+  Future<Response> payOrder(dynamic data) async {
+    return await apiClint.putData('/api/v1/customer/order/pay', data);
+  }
+
   Future<Response> sendOrder(dynamic data) async {
     return await apiClint.putData('/api/v1/customer/order/handover', data);
   }

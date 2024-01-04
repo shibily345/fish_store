@@ -1,10 +1,7 @@
-import 'dart:convert';
 
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/features/store/domain/data/api/api_clint.dart';
 import 'package:betta_store/features/store/domain/models/signup_body_model.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +18,7 @@ class AuthRepo {
   }
 
   Future<String> getUserToken() async {
-    return await sharedPreferences.getString(AppConstents.TOKEN) ?? "none";
+    return sharedPreferences.getString(AppConstents.TOKEN) ?? "none";
   }
 
   bool userLogedIn() {
@@ -44,7 +41,7 @@ class AuthRepo {
       await sharedPreferences.setString("", number);
       await sharedPreferences.setString("", password);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -64,25 +61,25 @@ class AuthRepo {
   }
 
   Future<Response> updateToken() async {
-    String? _deviceToken;
-    _deviceToken = await _saveDeviceToken();
-    print("Token is $_deviceToken");
+    String? deviceToken;
+    deviceToken = await _saveDeviceToken();
+    print("Token is $deviceToken");
     return await apiClint
-        .putData(AppConstents.tokenUri, {"cm_firebase_token": _deviceToken});
+        .putData(AppConstents.tokenUri, {"cm_firebase_token": deviceToken});
   }
 
   Future<String?> _saveDeviceToken() async {
-    String? _deviceToken = '@';
+    String? deviceToken = '@';
     if (!GetPlatform.isWeb) {
       try {
         FirebaseMessaging.instance.requestPermission();
-        _deviceToken = await FirebaseMessaging.instance.getToken();
+        deviceToken = await FirebaseMessaging.instance.getToken();
       } catch (e) {}
     }
-    if (_deviceToken != null) {
-      debugPrint("token--------------" + _deviceToken);
+    if (deviceToken != null) {
+      debugPrint("token--------------$deviceToken");
     }
-    return _deviceToken;
+    return deviceToken;
   }
 
   Future<Response> resetPsd(String phone, String newPsd) async {

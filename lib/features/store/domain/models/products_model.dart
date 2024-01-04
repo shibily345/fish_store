@@ -9,10 +9,10 @@ class ProductInfoModel {
       required typeId,
       required offset,
       required products}) {
-    this._totalSize = totalSize;
-    this._typeId = typeId;
-    this._offset = offset;
-    this._products = products;
+    _totalSize = totalSize;
+    _typeId = typeId;
+    _offset = offset;
+    _products = products;
   }
 
   ProductInfoModel.fromJson(Map<String, dynamic> json) {
@@ -87,22 +87,22 @@ class ProductModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['breeder'] = this.breeder;
-    data['seller_id'] = this.sellerId;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['malePrice'] = this.malePrice;
-    data['femalePrice'] = this.femalePrice;
-    data['stars'] = this.stars;
-    data['img'] = this.img;
-    data['video'] = this.video;
-    data['location'] = this.location;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['type_id'] = this.typeId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['breeder'] = breeder;
+    data['seller_id'] = sellerId;
+    data['description'] = description;
+    data['price'] = price;
+    data['malePrice'] = malePrice;
+    data['femalePrice'] = femalePrice;
+    data['stars'] = stars;
+    data['img'] = img;
+    data['video'] = video;
+    data['location'] = location;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['type_id'] = typeId;
     return data;
   }
 }

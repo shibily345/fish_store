@@ -1,19 +1,17 @@
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/privacy_terms.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/presentation/auth/reset_password.dart';
 import 'package:betta_store/features/store/presentation/auth/widgets/sign_in_fields.dart';
 import 'package:betta_store/features/store/presentation/auth/widgets/top_contents.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -45,7 +43,8 @@ class _SignInPageState extends State<SignInPage> {
             Get.toNamed(AppRouts.getSplash());
           } else {
             print("$phone--------$password");
-            showCustumeSnackBar(status.message);
+            showCustumeSnackBar(
+                "${status.message} Report now Contact bettaStore team");
           }
         });
       }
@@ -127,7 +126,10 @@ class _SignInPageState extends State<SignInPage> {
             bigSpace,
             bigSpace,
             const Center(child: PrivecyLabelWidget())
-          ],
+          ]
+              .animate(interval: 100.ms)
+              .fade()
+              .fadeIn(curve: Curves.easeInOutExpo),
         ));
   }
 }

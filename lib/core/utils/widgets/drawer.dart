@@ -1,7 +1,6 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/features/store/domain/controller/address_Info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/store/domain/controller/cart_controller.dart';
@@ -9,17 +8,17 @@ import 'package:betta_store/features/store/domain/controller/user_Info_controlle
 import 'package:betta_store/features/store/presentation/contact_about/about_us_page.dart';
 import 'package:betta_store/features/store/presentation/contact_about/contact_us_page.dart';
 import 'package:betta_store/features/store/presentation/my_shop/my_shop.dart';
-import 'package:betta_store/features/store/presentation/order/my_orders_page.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/presentation/order/order_history.dart';
 import 'package:betta_store/features/store/presentation/profile/profile_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DrawerItems extends StatefulWidget {
   const DrawerItems({
@@ -46,22 +45,34 @@ class _DrawerItemsState extends State<DrawerItems> {
                       contentPadding: EdgeInsets.only(
                         top: 18.h,
                       ),
-                      leading: CachedNetworkImage(
-                        height: 100.h,
-                        width: 100.w,
-                        imageUrl: AppConstents.BASE_URL +
-                            AppConstents.UPLOAD_URL +
-                            userInfo.userModel.logo!,
-                        imageBuilder: (context, imageProvider) => CircleAvatar(
-                          backgroundImage: imageProvider,
-                        ),
-                        placeholder: (context, url) => const Center(
-                            child: CustomeLoader(
-                          bg: Colors.transparent,
-                        )),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
+                      leading: userInfo.userModel.sellproduct == 1
+                          ? CachedNetworkImage(
+                              height: 70.h,
+                              width: 70.w,
+                              imageUrl: AppConstents.BASE_URL +
+                                  AppConstents.UPLOAD_URL +
+                                  userInfo.userModel.logo!,
+                              imageBuilder: (context, imageProvider) =>
+                                  CircleAvatar(
+                                radius: 40,
+                                backgroundImage: imageProvider,
+                              ),
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                baseColor: Colors.grey[800]!,
+                                highlightColor: Colors.grey[700]!,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      color: Colors.black),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            )
+                          : const CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              child: Icon(Icons.person)),
                       subtitle: textWidget(
                           text: userInfo.userModel.location!,
                           color:
@@ -118,17 +129,22 @@ class _DrawerItemsState extends State<DrawerItems> {
                 );
               })
             : Container(),
+        bigSpace,
         ListTile(
+          visualDensity: VisualDensity.standard,
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
           onTap: () {
             Get.to(() => const MyOrders());
           },
-          leading: const Icon(Icons.wallet),
+          leading: const Icon(Iconsax.wallet),
           title: textWidget(
               text: "My Orders",
               color: Theme.of(context).indicatorColor,
               fontSize: 13),
-          trailing: const Icon(Icons.arrow_right),
+          trailing: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 15,
+          ),
         ),
         ListTile(
           onTap: () {
@@ -140,13 +156,16 @@ class _DrawerItemsState extends State<DrawerItems> {
               text: "My Cart",
               color: Theme.of(context).indicatorColor,
               fontSize: 13),
-          trailing: const Icon(Icons.arrow_right),
+          trailing: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 15,
+          ),
         ),
         bigSpace,
         textWidget(
             text: "Settings",
             color: Theme.of(context).indicatorColor,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.normal,
             fontSize: 14),
         ListTile(
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
@@ -187,46 +206,55 @@ class _DrawerItemsState extends State<DrawerItems> {
                     },
                     label: 'Cancel'));
           },
-          leading: const Icon(Icons.logout),
+          leading: const Icon(Iconsax.logout),
           title: textWidget(
               text: "Log Out",
               color: Theme.of(context).indicatorColor,
               fontSize: 13),
-          trailing: const Icon(Icons.arrow_right),
+          trailing: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 15,
+          ),
         ),
         bigSpace,
         textWidget(
             text: "Support",
             color: Theme.of(context).indicatorColor,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.normal,
             fontSize: 14),
         ListTile(
           onTap: () {
-            Get.to(() => ContactUsPage());
+            Get.to(() => const ContactUsPage());
           },
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
-          leading: const Icon(Icons.chat),
+          leading: const Icon(Iconsax.support),
           title: textWidget(
               text: "Contact us",
               color: Theme.of(context).indicatorColor,
               fontWeight: FontWeight.normal,
               fontSize: 12),
-          trailing: const Icon(Icons.arrow_right),
+          trailing: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 15,
+          ),
         ),
         ListTile(
           onTap: () {
-            Get.to(() => AboutUsPage());
+            Get.to(() => const AboutUsPage());
           },
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
-          leading: const Icon(Icons.stay_current_landscape_outlined),
+          leading: const Icon(Icons.app_shortcut_rounded),
           title: textWidget(
               text: "About us",
               color: Theme.of(context).indicatorColor,
               fontWeight: FontWeight.normal,
               fontSize: 12),
-          trailing: const Icon(Icons.arrow_right),
+          trailing: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 15,
+          ),
         ),
-      ],
+      ].animate(interval: 60.ms).fade().slideX(curve: Curves.easeInOutExpo),
     );
   }
 }

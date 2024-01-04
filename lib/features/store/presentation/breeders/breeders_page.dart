@@ -29,6 +29,6 @@ class _BreedersPageState extends State<BreedersPage> {
             color: Theme.of(context).indicatorColor,
           ),
         ),
-        body: BreederListWidget());
+        body: const BreederListWidget());
   }
 }

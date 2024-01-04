@@ -1,22 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
 
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:video_player/video_player.dart';
 
-import 'package:betta_store/features/store/domain/models/products_model.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/core/utils/widgets/video_play.dart';
-import 'package:betta_store/core/utils/theme/constants.dart';
 
 class DetailSlides extends StatelessWidget {
   dynamic productInfo;
@@ -125,6 +119,8 @@ class DetailSlides extends StatelessWidget {
                 ),
                 child: AmbiendContainer(
                   color: Colors.transparent,
+                  width: 300,
+                  height: 300,
                   child: CachedNetworkImage(
                     width: 350.w,
                     height: 320.h,
@@ -140,21 +136,20 @@ class DetailSlides extends StatelessWidget {
                         ),
                       ),
                     ),
-                    placeholder: (context, url) => Center(
+                    placeholder: (context, url) => const Center(
                         child: CustomeLoader(
                       bg: Colors.transparent,
                     )),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
-                  width: 300,
-                  height: 300,
                 ),
               ),
-              placeholder: (context, url) => Center(
+              placeholder: (context, url) => const Center(
                   child: CustomeLoader(
                 bg: Colors.transparent,
               )),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
             if (productInfo.typeId == 4 || productInfo.typeId == 6)
               textWidget(

@@ -1,6 +1,4 @@
-import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SignInFieldWidget extends StatelessWidget {
   const SignInFieldWidget(
@@ -12,7 +10,7 @@ class SignInFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Theme.of(context).splashColor),
@@ -28,7 +26,7 @@ class SignInFieldWidget extends StatelessWidget {
                   hintStyle: TextStyle(
                       color: Theme.of(context).indicatorColor.withOpacity(0.4)),
                   hintText: 'Enter Your Phone',
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.phone,
                   ),
                   errorStyle: const TextStyle(fontSize: 18.0),

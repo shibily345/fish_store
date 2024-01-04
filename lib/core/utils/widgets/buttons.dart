@@ -32,7 +32,7 @@ class CustomMaterialButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  CustomMaterialButton({required this.text, required this.onPressed});
+  const CustomMaterialButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

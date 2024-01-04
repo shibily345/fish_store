@@ -1,7 +1,5 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
@@ -14,6 +12,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllProductGrid extends StatefulWidget {
   const AllProductGrid({super.key});
@@ -162,10 +161,15 @@ class _AllProductGridState extends State<AllProductGrid> {
                                 ),
                               ),
                             ),
-                            placeholder: (context, url) => const Center(
-                                child: CustomeLoader(
-                              bg: Colors.transparent,
-                            )),
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor: Colors.grey[800]!,
+                              highlightColor: Colors.grey[700]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    color: Colors.black),
+                              ),
+                            ),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),

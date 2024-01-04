@@ -2,7 +2,6 @@ import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/helper/notification.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/features/store/domain/controller/address_Info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
@@ -10,16 +9,13 @@ import 'package:betta_store/features/store/domain/controller/cart_controller.dar
 import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/store/domain/models/place_order_model.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
-
-import 'package:betta_store/features/store/presentation/booking/placed_page.dart';
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ConfirmBook extends StatelessWidget {
   const ConfirmBook({super.key});
@@ -44,7 +40,7 @@ class ConfirmBook extends StatelessWidget {
           NotificationHelper.sendPushNotification(
               token,
               "You have an order from ${address.name} for ${cartItem.name}",
-              "Congragulation");
+              "Got an order");
           print(
               "notified for item ${cartItem.id}.......................................tttttttttttttttttttttttttttt");
           print('Processing cart item: ${cartItem.name}');
@@ -62,7 +58,7 @@ class ConfirmBook extends StatelessWidget {
             NotificationHelper.sendPushNotification(
                 token,
                 "Order placed Successfully Seller soon will accept your order",
-                "Congradulation");
+                "Order placed");
 
             var address = Get.find<AddressInfoController>().getUserAddress();
             PlaceOrderBody placeOrderBody = PlaceOrderBody(
@@ -211,10 +207,16 @@ class ConfirmBook extends StatelessWidget {
                                           ),
                                         ),
                                         placeholder: (context, url) =>
-                                            const Center(
-                                                child: CustomeLoader(
-                                          bg: Colors.transparent,
-                                        )),
+                                            Shimmer.fromColors(
+                                          baseColor: Colors.grey[800]!,
+                                          highlightColor: Colors.grey[700]!,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                color: Colors.black),
+                                          ),
+                                        ),
                                         errorWidget: (context, url, error) =>
                                             const Icon(Icons.error),
                                       )),
@@ -313,7 +315,10 @@ class ConfirmBook extends StatelessWidget {
                         ],
                       );
                     }))
-          ],
+          ]
+              .animate(interval: 100.ms)
+              .fade()
+              .fadeIn(curve: Curves.easeInOutExpo),
         ),
       );
     });

@@ -1,7 +1,5 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
@@ -11,6 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BettaFishHorizontalGrid extends StatefulWidget {
   const BettaFishHorizontalGrid({super.key});
@@ -31,39 +30,43 @@ class _BettaFishHorizontalGridState extends State<BettaFishHorizontalGrid> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 smallSpace,
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  height: 30.h,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      textWidget(
-                          text: "Betta Fishes",
-                          color:
-                              Theme.of(context).indicatorColor.withOpacity(0.6),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => const BettaFishPage());
-                        },
-                        child: textWidget(
-                            text: "See all >",
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    height: 30.h,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        textWidget(
+                            text: "Betta Fishes",
+                            color: Theme.of(context)
+                                .indicatorColor
+                                .withOpacity(0.6),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => const BettaFishPage());
+                          },
+                          child: textWidget(
+                              text: "See all >",
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 230,
                   child: GridView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.only(left: 10.w),
                     itemCount: productInfo.productInfoList.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -78,7 +81,7 @@ class _BettaFishHorizontalGridState extends State<BettaFishHorizontalGrid> {
                               productInfo.productInfoList[index].id!));
                         },
                         child: Container(
-                          width: 190.w,
+                          width: 180.w,
                           height: 250.h,
                           margin: EdgeInsets.all(5.0.h),
                           decoration: BoxDecoration(
@@ -104,10 +107,17 @@ class _BettaFishHorizontalGridState extends State<BettaFishHorizontalGrid> {
                                     ),
                                   ),
                                 ),
-                                placeholder: (context, url) => const Center(
-                                    child: CustomeLoader(
-                                  bg: Colors.transparent,
-                                )),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[800]!,
+                                  highlightColor: Colors.grey[700]!,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        color: Colors.black),
+                                  ),
+                                ),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
                               ),
@@ -142,11 +152,8 @@ class _BettaFishHorizontalGridState extends State<BettaFishHorizontalGrid> {
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500),
                                     textWidget(
-                                        text: productInfo.productInfoList[index]
-                                                    .breeder ==
-                                                ''
-                                            ? "@Devine_Bettas"
-                                            : '@${productInfo.productInfoList[index].breeder!}',
+                                        text:
+                                            '@${productInfo.productInfoList[index].breeder!}',
                                         color: Theme.of(context).indicatorColor,
                                         fontSize: 10,
                                         fontWeight: FontWeight.w300),

@@ -8,7 +8,7 @@ class BrandingLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           // color: Theme.of(context).splashColor,
           ),
       child: Center(

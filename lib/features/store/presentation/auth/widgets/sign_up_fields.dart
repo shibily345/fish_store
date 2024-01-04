@@ -1,7 +1,5 @@
-import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class SignUpFieldWidget extends StatelessWidget {
   const SignUpFieldWidget(
@@ -19,7 +17,7 @@ class SignUpFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Theme.of(context).splashColor),

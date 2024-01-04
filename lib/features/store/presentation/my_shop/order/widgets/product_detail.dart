@@ -25,16 +25,16 @@ class ProductDetailWidget extends StatelessWidget {
                       AppConstents.UPLOAD_URL +
                       product.img!),
                   fit: BoxFit.cover)),
-          child: Container(),
           height: 120.h,
           width: 120.w,
+          child: Container(),
         ),
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 160.w,
             child: textWidget(
               text: product.name!,
@@ -44,7 +44,7 @@ class ProductDetailWidget extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          Container(
+          SizedBox(
             width: 120,
             child: textWidget(
               text: product.breeder!,
@@ -54,10 +54,10 @@ class ProductDetailWidget extends StatelessWidget {
               fontWeight: FontWeight.w300,
             ),
           ),
-          Container(
+          SizedBox(
             width: 120,
             child: textWidget(
-              text: '₹' + order.orderAmount.toString(),
+              text: '₹${order.orderAmount}',
               maxline: 3,
               fontSize: 16,
               color: Theme.of(context).indicatorColor.withOpacity(0.7),

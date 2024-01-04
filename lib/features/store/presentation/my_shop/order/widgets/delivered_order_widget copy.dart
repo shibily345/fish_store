@@ -1,13 +1,9 @@
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/helper/notification.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class DeliveredOrderWidget extends StatelessWidget {
@@ -22,10 +18,6 @@ class DeliveredOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Container(
-        width: 5,
-        color: Theme.of(context).primaryColor,
-      ),
       title: order.delivered == null
           ? MaterialButton(
               onPressed: () {
@@ -75,21 +67,21 @@ class DeliveredOrderWidget extends StatelessWidget {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return AlertDialog(
-              title: Text('Delivered Order'),
+              title: const Text('Delivered Order'),
               content: TextField(
                 controller: detailsController,
                 decoration:
-                    InputDecoration(hintText: 'Enter Instruction of package '),
+                    const InputDecoration(hintText: 'Enter Instruction of package '),
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: Text('Save'),
+                  child: const Text('Save'),
                   onPressed: () {
                     var user =
                         Get.find<UserInfoController>().breedersList.firstWhere(

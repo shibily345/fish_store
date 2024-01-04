@@ -1,9 +1,9 @@
 import 'package:betta_store/features/store/presentation/booking/address_page.dart';
 import 'package:betta_store/features/store/presentation/auth/sign_in_page.dart';
 import 'package:betta_store/features/store/presentation/auth/sign_up_page.dart';
-import 'package:betta_store/features/store/presentation/cart/shop_cart.dart';
 import 'package:betta_store/features/store/presentation/breeders/details_page.dart';
 import 'package:betta_store/features/store/presentation/my_shop/add/add_fish.dart';
+import 'package:betta_store/features/store/presentation/cart/shop_cart.dart';
 import 'package:betta_store/features/store/presentation/home/search_page.dart';
 import 'package:betta_store/features/store/presentation/my_shop/add/add_others.dart';
 import 'package:betta_store/features/store/presentation/my_shop/details/edit_product.dart';
@@ -78,7 +78,7 @@ class AppRouts {
           return FishDetilsPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
     GetPage(
@@ -88,7 +88,7 @@ class AppRouts {
           return OrderProgressPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
     GetPage(
@@ -98,7 +98,7 @@ class AppRouts {
           return ShopsOrderPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
     GetPage(
@@ -140,7 +140,7 @@ class AppRouts {
           return AddBettaPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
     GetPage(
@@ -150,7 +150,7 @@ class AppRouts {
           return AddOtherPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
     GetPage(
@@ -160,7 +160,7 @@ class AppRouts {
           return EditProductPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
     GetPage(
@@ -170,7 +170,7 @@ class AppRouts {
           return EditMainProductPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
     GetPage(
@@ -180,7 +180,7 @@ class AppRouts {
           return BreederDetailsPage(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 50)
+        transitionDuration: const Duration(milliseconds: 300)
         // binding: ChatBinding(),
         ),
   ];

@@ -1,5 +1,4 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
@@ -8,7 +7,6 @@ import 'package:betta_store/features/shop/all_products/presentation/pages/detail
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
-import 'package:betta_store/features/shop/items/data/models/fish_detile_model.dart';
 import 'package:betta_store/features/shop/items/presentation/controller/items_info_controller.dart';
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 
@@ -16,6 +14,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TopRatedProducts extends StatefulWidget {
   const TopRatedProducts({super.key});
@@ -93,7 +92,7 @@ class _TopRatedProductsState extends State<TopRatedProducts> {
                   height: 230,
                   child: GridView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.only(left: 15.w),
                     itemCount: recProduct.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -134,10 +133,17 @@ class _TopRatedProductsState extends State<TopRatedProducts> {
                                     ),
                                   ),
                                 ),
-                                placeholder: (context, url) => const Center(
-                                    child: CustomeLoader(
-                                  bg: Colors.transparent,
-                                )),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[800]!,
+                                  highlightColor: Colors.grey[700]!,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        color: Colors.black),
+                                  ),
+                                ),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
                               ),

@@ -40,13 +40,13 @@ class AddressModel {
     _secondoryPhone = json['latitude'];
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['contact_person_name'] = this._name;
-    data['address'] = this._address;
-    data['longitude'] = this._pincode;
-    data['contact_person_number'] = this._phone;
-    data['latitude'] = this._secondoryPhone;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = _id;
+    data['contact_person_name'] = _name;
+    data['address'] = _address;
+    data['longitude'] = _pincode;
+    data['contact_person_number'] = _phone;
+    data['latitude'] = _secondoryPhone;
 
     return data;
   }

@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
 
 class NotificationHelper {
   static Future<void> initialize(
@@ -135,7 +133,7 @@ class NotificationHelper {
             "to": token,
           }));
     } catch (e) {
-      print("error here........................" + e.toString());
+      print("error here........................$e");
     }
   }
 }

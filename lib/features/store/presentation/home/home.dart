@@ -1,28 +1,24 @@
 import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/utils/widgets/drawer.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/shop/all_products/presentation/widgets/horizontal.dart';
 import 'package:betta_store/features/shop/all_products/presentation/widgets/recommended_hor.dart';
-import 'package:betta_store/features/shop/all_products/presentation/widgets/top_rated.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/widgets/horizontal_grid.dart';
-import 'package:betta_store/features/shop/feeds/presentation/widgets/horizontal.dart';
 import 'package:betta_store/features/shop/fishes/presentation/widgets/horizontal_grid.dart';
 import 'package:betta_store/features/shop/items/presentation/widgets/horizontal.dart';
 import 'package:betta_store/features/shop/plants/presentation/widgets/horizontal.dart';
-import 'package:betta_store/features/store/presentation/breeders/widgets/breeder_list_widget.dart';
+import 'package:betta_store/features/store/presentation/breeders/widgets/breeder_list_for_home.dart';
 import 'package:betta_store/features/store/presentation/home/widgets/categories.dart';
 import 'package:betta_store/features/store/presentation/home/widgets/new_orders.dart';
 import 'package:betta_store/features/store/presentation/home/widgets/slider.dart';
 import 'package:betta_store/features/store/presentation/home/widgets/top_bar.dart';
 import 'package:betta_store/features/store/presentation/home/widgets/welcome_comment.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:iconly/iconly.dart';
 
 class ShopingHome extends StatefulWidget {
   const ShopingHome({super.key});
@@ -34,6 +30,13 @@ class ShopingHome extends StatefulWidget {
 class _ShopingHomeState extends State<ShopingHome> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openDrawer() {
+    print("open Drawer");
+    _scaffoldKey.currentState!.openDrawer();
+  }
+
   Future<void> _onRefresh() async {
     print("refreshed....................");
     setState(() {
@@ -52,6 +55,7 @@ class _ShopingHomeState extends State<ShopingHome> {
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
     return Scaffold(
+      key: _scaffoldKey,
       drawer: const Drawer(
         child: DrawerItems(),
       ),
@@ -60,64 +64,66 @@ class _ShopingHomeState extends State<ShopingHome> {
             key: _refreshIndicatorKey,
             onRefresh: _onRefresh,
             child: GetBuilder<ProductInfoController>(builder: (products) {
-              return !products.isLoading
-                  ? SingleChildScrollView(
-                      controller: scrollController,
+              return SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TopBar(
+                      drawerWid: GestureDetector(
+                        onTap: () {
+                          _openDrawer();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Theme.of(context).splashColor),
+                          width: 50,
+                          height: 50.h,
+                          child: const Center(
+                            child: Icon(Icons.menu_open),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const WelcomeComment(),
+                    const AdSliders(),
+                    const CategoriesWidget(),
+                    const NewOrdersWidget(),
+                    const RecomProductHorizontalGrid(),
+                    const BettaFishHorizontalGrid(),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 0.0, top: 10, bottom: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TopBar(),
-                          const WelcomeComment(),
-                          const AdSliders(),
-                          const CategoriesWidget(),
-                          const NewOrdersWidget(),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: RecomProductHorizontalGrid(),
-                          ),
                           Padding(
-                            padding: const EdgeInsets.only(
-                                left: 0.0, top: 10, bottom: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: textWidget(
-                                      text: "Breeders :",
-                                      color: Theme.of(context)
-                                          .indicatorColor
-                                          .withOpacity(0.6),
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                const BreederListWidget(),
-                              ],
-                            ),
+                            padding: const EdgeInsets.all(18.0),
+                            child: textWidget(
+                                text: "Breeders :",
+                                color: Theme.of(context)
+                                    .indicatorColor
+                                    .withOpacity(0.6),
+                                fontSize: 19,
+                                fontWeight: FontWeight.w600),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: BettaFishHorizontalGrid(),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: FishesHorizontslGrid(),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: PlantsHorizontalGrid(),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: ItemsHorizontalGrid(),
-                          ),
-                          bigSpace,
-                          bigSpace,
-                          bigSpace
+                          const HomeBreederListWidget(),
                         ],
                       ),
-                    )
-                  : const CustomeLoader();
+                    ),
+                    const FishesHorizontslGrid(),
+                    const PlantsHorizontalGrid(),
+                    const ItemsHorizontalGrid(),
+                    bigSpace,
+                    bigSpace,
+                    bigSpace
+                  ].animate(interval: 200.ms).fade().slideY(
+                      curve: Curves.easeInOut,
+                      duration: const Duration(milliseconds: 200)),
+                ),
+              );
             })),
       ),
     );

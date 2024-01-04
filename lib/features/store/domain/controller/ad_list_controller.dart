@@ -1,15 +1,9 @@
-import 'dart:convert';
 
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/features/store/domain/data/repository/ad_list_repo.dart';
-import 'package:betta_store/features/store/domain/data/repository/user_repo.dart';
-import 'package:betta_store/features/store/domain/models/ad_list.dart';
 import 'package:betta_store/features/store/domain/models/ad_list.dart';
 import 'package:betta_store/features/store/domain/models/respones_model.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:get/get.dart';
 
-import 'package:http/http.dart' as http;
 
 class AdlistController extends GetxController implements GetxService {
   final AdListRepo adListRepo;
@@ -32,7 +26,7 @@ class AdlistController extends GetxController implements GetxService {
       });
       _isLoading = true;
 
-      print("${_ads}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      print("$_ads>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
       responesModel = ResponesModel(true, "SuccessFull");
     } else {
       _ads = [];

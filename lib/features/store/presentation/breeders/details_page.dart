@@ -1,7 +1,6 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
@@ -12,11 +11,12 @@ import 'package:betta_store/features/shop/fishes/presentation/controller/other_f
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/store/presentation/breeders/widgets/breeder_details.dart';
-import 'package:betta_store/features/store/presentation/profile/widgets/user_details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BreederDetailsPage extends StatefulWidget {
   final int pageId;
@@ -110,16 +110,21 @@ class _BreederDetailsPageState extends State<BreederDetailsPage> {
                                   ),
                                 ),
                               ),
-                              placeholder: (context, url) => Center(
-                                  child: CustomeLoader(
-                                bg: Colors.transparent,
-                              )),
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                baseColor: Colors.grey[800]!,
+                                highlightColor: Colors.grey[700]!,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      color: Colors.black),
+                                ),
+                              ),
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  const Icon(Icons.error),
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 10.w),
-                              margin: EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
                               width: 175.w,
                               height: 70.h,
                               decoration: BoxDecoration(
@@ -152,10 +157,16 @@ class _BreederDetailsPageState extends State<BreederDetailsPage> {
                                       color: Theme.of(context).indicatorColor,
                                       fontSize: 10,
                                       fontWeight: FontWeight.w300),
-                                ],
+                                ]
+                                    .animate(interval: 250.ms)
+                                    .fade()
+                                    .slideY(curve: Curves.easeInOut),
                               ),
                             ),
-                          ],
+                          ]
+                              .animate(interval: 150.ms)
+                              .fade()
+                              .fadeIn(curve: Curves.easeInOutExpo),
                         ),
                       ),
                     );

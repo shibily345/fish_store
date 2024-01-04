@@ -1,9 +1,9 @@
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/features/store/presentation/my_shop/my_shop.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/store/presentation/order/my_orders_page.dart';
+import 'package:betta_store/features/store/presentation/my_shop/my_shop.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
@@ -72,7 +72,10 @@ class _ProductAddedState extends State<ProductAdded> {
                 )
               ],
             )
-          ],
+          ]
+              .animate(interval: 100.ms)
+              .fade()
+              .fadeIn(curve: Curves.easeInOutExpo),
         ),
       ),
     );

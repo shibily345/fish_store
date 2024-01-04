@@ -1,15 +1,12 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
-import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -66,7 +63,7 @@ class _PlantsGridState extends State<PlantsGrid> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 18.0),
-                      child: Container(
+                      child: SizedBox(
                         height: 35.h,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -149,17 +146,17 @@ class _PlantsGridState extends State<PlantsGrid> {
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) => Center(
+                                    placeholder: (context, url) => const Center(
                                         child: CustomeLoader(
                                       bg: Colors.transparent,
                                     )),
                                     errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
+                                        const Icon(Icons.error),
                                   ),
                                   Container(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10.w),
-                                    margin: EdgeInsets.all(10),
+                                    margin: const EdgeInsets.all(10),
                                     width: 175.w,
                                     height: 70.h,
                                     decoration: BoxDecoration(
@@ -204,14 +201,20 @@ class _PlantsGridState extends State<PlantsGrid> {
                                       ],
                                     ),
                                   ),
-                                ],
+                                ]
+                                    .animate(interval: 250.ms)
+                                    .fade()
+                                    .slideY(curve: Curves.easeInOut),
                               ),
                             ),
                           );
                         },
                       ),
                     ),
-                  ],
+                  ]
+                      .animate(interval: 300.ms)
+                      .fade()
+                      .fadeIn(curve: Curves.easeInOut),
                 ),
               )
             : const CustomeLoader();

@@ -15,8 +15,8 @@ class BettaFishPage extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.w700),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(18.0),
+        body: const Padding(
+          padding: EdgeInsets.all(18.0),
           child: BettaFishGrid(),
         ));
   }

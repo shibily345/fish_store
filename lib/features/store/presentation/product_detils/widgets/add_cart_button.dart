@@ -1,24 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
 
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:video_player/video_player.dart';
 
-import 'package:betta_store/features/store/domain/models/products_model.dart';
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/core/utils/widgets/video_play.dart';
 import 'package:betta_store/core/utils/theme/constants.dart';
 
 class AddToCartButton extends StatefulWidget {
@@ -113,7 +102,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                   onPressed: () {
                                     productInfo.setQuantity(false);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Iconsax.minus_cirlce,
                                     color: Colors.black,
                                     size: 18,
@@ -125,7 +114,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                   onPressed: () {
                                     productInfo.setQuantity(true);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Iconsax.add_circle,
                                     color: Colors.black,
                                     size: 18,
@@ -159,7 +148,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                         onPressed: () {
                                           productInfo.setmaleQuantity(false);
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Iconsax.minus_cirlce,
                                           color: Colors.black,
                                           size: 18,
@@ -172,7 +161,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                         onPressed: () {
                                           productInfo.setmaleQuantity(true);
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Iconsax.add_circle,
                                           color: Colors.black,
                                           size: 18,
@@ -203,7 +192,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                         onPressed: () {
                                           productInfo.setfeQuantity(false);
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Iconsax.minus_cirlce,
                                           color: Colors.black,
                                           size: 18,
@@ -216,7 +205,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                         onPressed: () {
                                           productInfo.setfeQuantity(true);
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Iconsax.add_circle,
                                           color: Colors.black,
                                           size: 18,

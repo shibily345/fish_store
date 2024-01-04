@@ -107,39 +107,39 @@ class OrderModel {
     detailsCount = json['details_count'];
 
     deliveryAddress = (json['delivery_address'] != null
-        ? new AddressModel.fromJson(json['delivery_address'])
+        ? AddressModel.fromJson(json['delivery_address'])
         : null)!;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['seller_id'] = this.sellerId;
-    data['order_amount'] = this.orderAmount;
-    data['payment_status'] = this.paymentStatus;
-    data['total_tax_amount'] = this.totalTaxAmount;
-    data['order_note'] = this.orderNote;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['delivery_charge'] = this.deliveryCharge;
-    data['schedule_at'] = this.scheduleAt;
-    data['otp'] = this.otp;
-    data['pending'] = this.pending;
-    data['accepted'] = this.accepted;
-    data['confirmed'] = this.confirmed;
-    data['processing'] = this.processing;
-    data['handover'] = this.handover;
-    data['picked_up'] = this.pickedUp;
-    data['delivered'] = this.delivered;
-    data['canceled'] = this.canceled;
-    data['refund_requested'] = this.refundRequested;
-    data['refunded'] = this.refunded;
-    data['scheduled'] = this.scheduled;
-    data['failed'] = this.failed;
-    data['details_count'] = this.detailsCount;
-    if (this.deliveryAddress != null) {
-      data['delivery_address'] = this.deliveryAddress?.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['seller_id'] = sellerId;
+    data['order_amount'] = orderAmount;
+    data['payment_status'] = paymentStatus;
+    data['total_tax_amount'] = totalTaxAmount;
+    data['order_note'] = orderNote;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['delivery_charge'] = deliveryCharge;
+    data['schedule_at'] = scheduleAt;
+    data['otp'] = otp;
+    data['pending'] = pending;
+    data['accepted'] = accepted;
+    data['confirmed'] = confirmed;
+    data['processing'] = processing;
+    data['handover'] = handover;
+    data['picked_up'] = pickedUp;
+    data['delivered'] = delivered;
+    data['canceled'] = canceled;
+    data['refund_requested'] = refundRequested;
+    data['refunded'] = refunded;
+    data['scheduled'] = scheduled;
+    data['failed'] = failed;
+    data['details_count'] = detailsCount;
+    if (deliveryAddress != null) {
+      data['delivery_address'] = deliveryAddress?.toJson();
     }
     return data;
   }

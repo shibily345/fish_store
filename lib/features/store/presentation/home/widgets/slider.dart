@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
+import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/features/store/domain/controller/ad_list_controller.dart';
-import 'package:betta_store/features/store/domain/data/repository/ad_list_repo.dart';
 import 'package:betta_store/features/store/domain/models/ad_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AdSliders extends StatefulWidget {
   const AdSliders({super.key});
@@ -20,13 +19,13 @@ class AdSliders extends StatefulWidget {
 class _AdSlidersState extends State<AdSliders> {
   int _currentPage = 0;
   List<String> imgList = [];
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   // static final customeCacheManager = Basecache;
   @override
   void initState() {
     super.initState();
     // Auto-play the slider every 3 seconds
-    Timer.periodic(Duration(seconds: 6), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 6), (Timer timer) {
       if (_currentPage < Get.find<AdlistController>().ads.length - 1) {
         _currentPage++;
       } else {
@@ -34,7 +33,7 @@ class _AdSlidersState extends State<AdSliders> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
     });
@@ -48,23 +47,49 @@ class _AdSlidersState extends State<AdSliders> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            height: 200.0, width: Get.width, // Adjust the height as needed
-            child: PageView.builder(
-              itemCount: ad.ads.length,
-              controller: _pageController,
-              onPageChanged: (int index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              itemBuilder: (context, index) {
-                return _buildImageSliderItem(adsfirst[index].img!, index);
-              },
-            ),
-          ),
-          SizedBox(height: 10.0),
-          _buildIndicators(ad.ads.length),
+          ad.ads.isNotEmpty
+              ? SizedBox(
+                  height: 200.0,
+                  width: Get.width, // Adjust the height as needed
+                  child: PageView.builder(
+                    itemCount: ad.ads.length,
+                    controller: _pageController,
+                    onPageChanged: (int index) {
+                      setState(() {
+                        _currentPage = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onTap: () {
+                            if (adsfirst[index].productId != 0) {
+                              Get.toNamed(AppRouts.getProductDetailPage(
+                                  adsfirst[index].productId!));
+                            } else if (adsfirst[index].userId != 0) {
+                              Get.toNamed(AppRouts.getBreederDetails(
+                                  adsfirst[index].userId!));
+                            }
+                          },
+                          child: _buildImageSliderItem(
+                              adsfirst[index].img!, index));
+                    },
+                  ))
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[800]!,
+                    highlightColor: Colors.grey[700]!,
+                    child: Container(
+                      height: 200.0,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18.0),
+                          color: Colors.black),
+                    ),
+                  ),
+                ),
+          const SizedBox(height: 10.0),
+          _buildIndicators(ad.ads.isNotEmpty ? ad.ads.length : 5),
         ],
       );
     });
@@ -106,10 +131,15 @@ class _AdSlidersState extends State<AdSliders> {
                     )),
               ),
             ),
-            placeholder: (context, url) => Center(
-                child: CustomeLoader(
-              bg: Colors.transparent,
-            )),
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.grey[800]!,
+              highlightColor: Colors.grey[700]!,
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.0),
+                    color: Colors.black),
+              ),
+            ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ));
@@ -121,10 +151,10 @@ class _AdSlidersState extends State<AdSliders> {
       children: List.generate(
         length,
         (index) => AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           width: _currentPage == index ? 16.0 : 8.0,
           height: 8.0,
-          margin: EdgeInsets.symmetric(horizontal: 4.0),
+          margin: const EdgeInsets.symmetric(horizontal: 4.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: _currentPage == index

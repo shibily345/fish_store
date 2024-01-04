@@ -1,13 +1,9 @@
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/helper/notification.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SendOrderWidget extends StatelessWidget {
@@ -22,10 +18,6 @@ class SendOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Container(
-        width: 5,
-        color: Colors.red,
-      ),
       title: order.handover == null
           ? MaterialButton(
               onPressed: () {
@@ -76,30 +68,30 @@ class SendOrderWidget extends StatelessWidget {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return AlertDialog(
-              title: Text('Send Order'),
+              title: const Text('Send Order'),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
                     controller: deliveryIDController,
-                    decoration: InputDecoration(hintText: 'Enter tracking ID'),
+                    decoration: const InputDecoration(hintText: 'Enter tracking ID'),
                   ),
                   TextField(
                     controller: partnerController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: 'Enter Delivery Partner Name'),
                   ),
                 ],
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: Text('Save'),
+                  child: const Text('Save'),
                   onPressed: () {
                     var user =
                         Get.find<UserInfoController>().breedersList.firstWhere(

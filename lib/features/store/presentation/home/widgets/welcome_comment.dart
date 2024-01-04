@@ -10,7 +10,7 @@ class WelcomeComment extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<UserInfoController>().getUserInfo();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
       child: SizedBox(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

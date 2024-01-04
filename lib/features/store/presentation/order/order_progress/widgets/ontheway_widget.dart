@@ -1,11 +1,8 @@
-import 'package:betta_store/core/utils/widgets/custom.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 class OntheWayWidget extends StatelessWidget {
@@ -42,10 +39,6 @@ class OntheWayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(vertical: 15.h),
-      leading: Container(
-        width: 5,
-        color: Colors.red,
-      ),
       title: textWidget(
         text: "Item On the way",
         maxline: 3,
@@ -89,9 +82,7 @@ class OntheWayWidget extends StatelessWidget {
   }
 
   void _copyToClipboard(String text) {
-    FlutterClipboard.copy(text)
-        .then((value) => showCustumeSnackBar(
-            title: 'Copied', 'Id copied to clipboard: $text'))
-        .catchError((error) => print('Error: $error'));
+    FlutterClipboard.copy(text).then((value) => Fluttertoast.showToast(
+        msg: 'Id copied to clipboard: $text', toastLength: Toast.LENGTH_SHORT));
   }
 }

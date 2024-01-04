@@ -11,13 +11,15 @@ import 'package:betta_store/features/store/domain/controller/cart_controller.dar
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
+import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 
 import 'package:betta_store/features/store/domain/data/repository/cart_repo.dart';
 import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/store/presentation/onBoarding/on_boarding.dart';
+import 'package:betta_store/features/onBoarding/on_boarding.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,13 +51,15 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.lazyPut(() => OtherFishInfoController(otherFishInfoRepo: Get.find()));
       Get.lazyPut(() => ItemsInfoController(itemsInfoRepo: Get.find()));
       Get.lazyPut(() => FeedsInfoController(feedsInfoRepo: Get.find()));
+      Get.lazyPut(() => OrderController(orderRepo: Get.find()));
+      Get.find<OrderController>().getOrderListForSeller();
       loadResources();
       Get.find<AuthController>().updateToken();
       Timer(const Duration(seconds: 3),
           () => Get.offAllNamed(AppRouts.getinitial()));
     } else {
       // Get.lazyPut(() => AuthController(authRepo: Get.find()));
-      Timer(const Duration(seconds: 3), () => Get.offAll(OnboardingScreen()));
+      Timer(const Duration(seconds: 3), () => Get.offAll(const OnboardingScreen()));
     }
   }
 
@@ -89,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 120.w,
                 ),
               ],
-            ),
+            ).animate().fade().fadeIn(curve: Curves.easeInOutExpo),
           )
         ],
       ),

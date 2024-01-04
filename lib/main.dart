@@ -12,7 +12,6 @@ import 'package:betta_store/features/shop/plants/presentation/controller/plants_
 
 import 'package:betta_store/core/dependencies.dart' as dep;
 import 'package:betta_store/core/utils/theme/light_theme.dart';
-import 'package:betta_store/features/store/presentation/onBoarding/on_boarding.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -20,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/utils/theme/dark_theme.dart';
@@ -40,7 +38,7 @@ Future<void> main() async {
   Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Get.put(prefs);
-  // CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
+  CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
   try {
     if (GetPlatform.isMobile) {
       final RemoteMessage? remoteMessage =

@@ -1,4 +1,3 @@
-import 'package:betta_store/features/store/domain/models/products_model.dart';
 
 class CartModel {
   int? id;
@@ -44,18 +43,18 @@ class CartModel {
   }
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "name": this.name,
-      "breeder": this.breeder,
-      "price": this.price,
-      "img": this.img,
-      "totquantity": this.totquantity,
-      "pquantity": this.pquantity,
-      "mquantity": this.mquantity,
-      "fquantity": this.fquantity,
-      "isExisted": this.isExisted,
-      "time": this.time,
-      "typeId": this.typeId,
+      "id": id,
+      "name": name,
+      "breeder": breeder,
+      "price": price,
+      "img": img,
+      "totquantity": totquantity,
+      "pquantity": pquantity,
+      "mquantity": mquantity,
+      "fquantity": fquantity,
+      "isExisted": isExisted,
+      "time": time,
+      "typeId": typeId,
     };
   }
 }

@@ -2,21 +2,19 @@ import 'dart:io';
 
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:betta_store/features/store/presentation/my_shop/add/suucess_add_page.dart';
-import 'package:betta_store/features/store/presentation/my_shop/my_shop.dart';
 import 'package:betta_store/features/store/presentation/profile/widgets/edit_fields_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shimmer/shimmer.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -27,27 +25,65 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   XFile? _image;
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = pickedFile;
-      } else {
-        print('No image selected.');
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.gallery)
+        .then((value) {
+      if (value != null) {
+        _cropImage(File(value.path));
       }
     });
+  }
+
+  _cropImage(File imgFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+        sourcePath: imgFile.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Image Cropper",
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: "Image Cropper",
+          )
+        ]);
+    if (croppedFile != null) {
+      imageCache.clear();
+      setState(() {
+        _image = XFile(croppedFile.path);
+      });
+      // reload();
+    }
   }
 
   @override
   void initState() {
     Get.find<UserInfoController>().getUserInfo();
     _nameController.text = Get.find<UserInfoController>().userModel.name!;
-    _phoneController.text = Get.find<UserInfoController>().userModel.phone!;
     _locationController.text =
         Get.find<UserInfoController>().userModel.location!;
     _emailController.text = Get.find<UserInfoController>().userModel.email!;
@@ -60,16 +96,15 @@ class _EditProfileState extends State<EditProfile> {
     }
 
     Map<String, dynamic> detils = {
-      'phone': _phoneController.text,
       'logo': _image != null
-          ? 'images/' + _image!.name
+          ? 'images/${_image!.name}'
           : Get.find<UserInfoController>().userModel.logo!,
       'email': _emailController.text,
       'location': _locationController.text,
     };
     await Get.find<UserInfoController>().updateUserProfile(
         Get.find<UserInfoController>().userModel.id!, detils);
-    Get.to(() => ProductAdded());
+    Get.to(() => const ProductAdded());
   }
 
   @override
@@ -115,12 +150,19 @@ class _EditProfileState extends State<EditProfile> {
                                     CircleAvatar(
                                   backgroundImage: imageProvider,
                                 ),
-                                placeholder: (context, url) => Center(
-                                    child: CustomeLoader(
-                                  bg: Colors.transparent,
-                                )),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[800]!,
+                                  highlightColor: Colors.grey[700]!,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        color: Colors.black),
+                                  ),
+                                ),
                                 errorWidget: (context, url, error) =>
-                                    Icon(Icons.image),
+                                    const Icon(Icons.image),
                               )
                             : Image.file(File(_image!.path)))),
               ],

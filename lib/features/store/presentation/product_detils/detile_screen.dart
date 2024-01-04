@@ -1,34 +1,31 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:ui';
 
 import 'package:betta_store/core/helper/notification.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
+import 'package:betta_store/features/shop/all_products/presentation/widgets/recommended_hor.dart';
 
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/features/shop/betta_fishes/presentation/widgets/horizontal_grid.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
 import 'package:betta_store/features/shop/items/presentation/controller/items_info_controller.dart';
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/cart_controller.dart';
-import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/features/store/domain/controller/review_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/store/domain/models/products_model.dart';
-import 'package:betta_store/features/store/domain/models/review_model.dart';
+
+import 'package:betta_store/features/store/presentation/product_detils/widgets/detile_slides.dart';
 import 'package:betta_store/features/store/presentation/product_detils/widgets/review_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:item_count_number_button/item_count_number_button.dart';
 
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/store/presentation/product_detils/widgets/detile_slides.dart';
 import 'package:betta_store/core/utils/theme/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FishDetilsPage extends StatefulWidget {
   int pageId;
@@ -167,7 +164,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 200.w,
                             child: textWidget(
                                 text: product.name!,
@@ -180,7 +177,8 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                             rating: double.parse(product.stars),
                             direction: Axis.horizontal,
                             itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                            itemPadding:
+                                const EdgeInsets.symmetric(horizontal: 1.0),
                             itemBuilder: (context, _) => Icon(
                               Icons.star,
                               color: Theme.of(context).indicatorColor,
@@ -273,7 +271,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                       SizedBox(
                         height: 20.w,
                       ),
-                      Divider(),
+                      const Divider(),
                       bigSpace,
                       textWidget(
                           text: 'Description',
@@ -287,7 +285,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                           color: Theme.of(context)
                               .indicatorColor
                               .withOpacity(0.7)),
-                      Divider(),
+                      const Divider(),
                       bigSpace,
                       bigSpace,
                       textWidget(
@@ -298,9 +296,14 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                       smallSpace,
                       ReviweBoxWidget(id: widget.pageId),
                       bigSpace,
+                      const RecomProductHorizontalGrid(),
+                      const BettaFishHorizontalGrid(),
                       bigSpace,
                       bigSpace
-                    ],
+                    ]
+                        .animate(interval: 100.ms)
+                        .fade()
+                        .slideY(curve: Curves.easeInOut),
                   ))),
         ),
         GetBuilder<ProductInfoController>(builder: (productInfo) {
@@ -321,7 +324,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                         }
                       : _toggleExpanded,
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 500),
                     // height: _expanded ? 280.0.h : 50.0,
                     width: _expanded ? 230.0.w : 230.0.w,
                     decoration: BoxDecoration(
@@ -374,7 +377,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                             onPressed: () {
                                               productInfo.setQuantity(false);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Iconsax.minus_cirlce,
                                               color: Colors.black,
                                               size: 18,
@@ -387,7 +390,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                             onPressed: () {
                                               productInfo.setQuantity(true);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Iconsax.add_circle,
                                               color: Colors.black,
                                               size: 18,
@@ -423,7 +426,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                               productInfo
                                                   .setmaleQuantity(false);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Iconsax.minus_cirlce,
                                               color: Colors.black,
                                               size: 18,
@@ -436,7 +439,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                             onPressed: () {
                                               productInfo.setmaleQuantity(true);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Iconsax.add_circle,
                                               color: Colors.black,
                                               size: 18,
@@ -468,7 +471,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                             onPressed: () {
                                               productInfo.setfeQuantity(false);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Iconsax.minus_cirlce,
                                               color: Colors.black,
                                               size: 18,
@@ -481,7 +484,7 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                                             onPressed: () {
                                               productInfo.setfeQuantity(true);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Iconsax.add_circle,
                                               color: Colors.black,
                                               size: 18,

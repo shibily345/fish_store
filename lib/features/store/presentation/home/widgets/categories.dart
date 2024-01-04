@@ -6,6 +6,7 @@ import 'package:betta_store/features/shop/items/presentation/pages/detail_page.d
 import 'package:betta_store/features/shop/plants/presentation/pages/detail_page.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -16,32 +17,36 @@ class CategoriesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<UserInfoController>().getUserInfo();
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, bottom: 15, top: 15),
+      padding: const EdgeInsets.only(left: 0.0, bottom: 0, top: 15),
       child: SizedBox(
           height: 90,
-          child: ListView(scrollDirection: Axis.horizontal, children: [
-            categoryBox(
-                context, 'assets/ui_elementsbgon/betta.png', "Betta Fishes",
-                () {
-              Get.to(() => BettaFishPage());
-            }),
-            categoryBox(context, 'assets/ui_elementsbgon/fish.png', "Fishes",
-                () {
-              Get.to(() => OtherFishPage());
-            }),
-            categoryBox(context, 'assets/ui_elementsbgon/plant.png', "Plants",
-                () {
-              Get.to(() => PlantsPage());
-            }),
-            categoryBox(
-                context, 'assets/ui_elementsbgon/tank.png', "Aqua Items", () {
-              Get.to(() => ItemsPage());
-            }),
-            categoryBox(
-                context, 'assets/ui_elementsbgon/feed.png', "Fish feeds", () {
-              Get.to(() => FeedsFishPage());
-            }),
-          ])),
+          child: ListView(
+            padding: EdgeInsets.only(left: 10.w),
+            scrollDirection: Axis.horizontal,
+            children: [
+              categoryBox(
+                  context, 'assets/ui_elementsbgon/betta.png', "Betta Fishes",
+                  () {
+                Get.to(() => const BettaFishPage());
+              }),
+              categoryBox(context, 'assets/ui_elementsbgon/fish.png', "Fishes",
+                  () {
+                Get.to(() => const OtherFishPage());
+              }),
+              categoryBox(context, 'assets/ui_elementsbgon/plant.png', "Plants",
+                  () {
+                Get.to(() => const PlantsPage());
+              }),
+              categoryBox(
+                  context, 'assets/ui_elementsbgon/tank.png', "Aqua Items", () {
+                Get.to(() => const ItemsPage());
+              }),
+              categoryBox(
+                  context, 'assets/ui_elementsbgon/feed.png', "Fish feeds", () {
+                Get.to(() => const FeedsFishPage());
+              }),
+            ].animate(interval: 1000.ms).fade().slideX(curve: Curves.easeIn),
+          )),
     );
   }
 

@@ -1,12 +1,10 @@
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
-import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AddOtherFielsWidgets extends StatefulWidget {
-  AddOtherFielsWidgets({
+  const AddOtherFielsWidgets({
     super.key,
     required this.nameController,
     required this.discriptionController,
@@ -43,7 +41,7 @@ class _AddFielsWidgetsState extends State<AddOtherFielsWidgets> {
         children: [
           Padding(
             padding: EdgeInsets.all(5.0.w),
-            child: Container(
+            child: SizedBox(
               width: Get.width,
               height: 50.h,
               child: TextFormField(
@@ -70,7 +68,7 @@ class _AddFielsWidgetsState extends State<AddOtherFielsWidgets> {
           ),
           Padding(
             padding: EdgeInsets.all(5.0.w),
-            child: Container(
+            child: SizedBox(
               width: Get.width,
               height: 150.h,
               child: TextFormField(
@@ -109,7 +107,7 @@ class _AddFielsWidgetsState extends State<AddOtherFielsWidgets> {
               children: [
                 smallwidth,
                 widget.dropdown,
-                Container(
+                SizedBox(
                   width: 150.w,
                   height: 50.h,
                   child: TextFormField(

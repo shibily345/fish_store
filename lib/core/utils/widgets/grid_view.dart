@@ -1,7 +1,6 @@
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class AnimatedGridView extends StatelessWidget {
   const AnimatedGridView({super.key});

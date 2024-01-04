@@ -9,15 +9,15 @@ class Review {
     if (json['reviews'] != null) {
       reviews = <ReviewModel>[];
       json['reviews'].forEach((v) {
-        reviews!.add(new ReviewModel.fromJson(v));
+        reviews!.add(ReviewModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.reviews != null) {
-      data['reviews'] = this.reviews!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (reviews != null) {
+      data['reviews'] = reviews!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -54,16 +54,16 @@ class ReviewModel {
     comment = json['comment'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    user = json['user'] != null ? new UserModel.fromJson(json['user']) : null;
+    user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['product_id'] = this.productId;
-    data['img'] = this.img;
-    data['rating'] = this.rating;
-    data['comment'] = this.comment;
+    data['product_id'] = productId;
+    data['img'] = img;
+    data['rating'] = rating;
+    data['comment'] = comment;
 
     return data;
   }

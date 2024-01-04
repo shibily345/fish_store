@@ -1,21 +1,21 @@
-import 'dart:io';
-
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:iconly/iconly.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsPage extends StatelessWidget {
+  const ContactUsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact Us'),
+        title: const Text('Contact Us'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -26,7 +26,7 @@ class ContactUsPage extends StatelessWidget {
                 width: 150,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Contact BettaStore support',
               style: TextStyle(
@@ -35,14 +35,14 @@ class ContactUsPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             GestureDetector(
               onTap: () {
                 makePhoneCall("+917510620508");
               },
               child: Row(
                 children: [
-                  Icon(Iconsax.call),
+                  const Icon(Iconsax.call),
                   smallwidth,
                   Text(
                     '- Contact us on Phone',
@@ -62,7 +62,7 @@ class ContactUsPage extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Icon(Icons.email),
+                  const Icon(Icons.email),
                   smallwidth,
                   Text(
                     '- Contact us on Email',
@@ -82,7 +82,7 @@ class ContactUsPage extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Icon(FontAwesomeIcons.whatsapp),
+                  const Icon(FontAwesomeIcons.whatsapp),
                   smallwidth,
                   Text(
                     '- Chat us on Watsapp',
@@ -103,7 +103,7 @@ class ContactUsPage extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Icon(Iconsax.instagram),
+                  const Icon(Iconsax.instagram),
                   smallwidth,
                   Text(
                     '- Follow us on Instagram',
@@ -123,7 +123,7 @@ class ContactUsPage extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Icon(FontAwesomeIcons.youtube),
+                  const Icon(FontAwesomeIcons.youtube),
                   smallwidth,
                   Text(
                     '- Subscribe us on Youtube',
@@ -144,7 +144,7 @@ class ContactUsPage extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Icon(FontAwesomeIcons.whatsapp),
+                  const Icon(FontAwesomeIcons.whatsapp),
                   smallwidth,
                   Text(
                     '- Join whatsapp commuity',
@@ -156,7 +156,10 @@ class ContactUsPage extends StatelessWidget {
                 ],
               ),
             ),
-          ],
+          ]
+              .animate(interval: 100.ms)
+              .fade()
+              .fadeIn(curve: Curves.easeInOutExpo),
         ),
       ),
     );

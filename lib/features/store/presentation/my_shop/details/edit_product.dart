@@ -10,7 +10,6 @@ import 'package:betta_store/features/shop/fishes/presentation/controller/other_f
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 
 import 'package:betta_store/features/store/domain/models/products_model.dart';
-import 'package:betta_store/features/store/presentation/my_shop/add/suucess_add_page.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
@@ -21,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -62,21 +62,54 @@ class _EditMainProductPageState extends State<EditMainProductPage> {
   }
 
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = pickedFile;
-        () {
-          //for loading
-          setState(() {
-            processingStatus = ProcessingStatus.processing;
-          });
-        };
-      } else {
-        print('No image selected.');
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.gallery)
+        .then((value) {
+      if (value != null) {
+        _cropImage(File(value.path));
       }
     });
+  }
+
+  _cropImage(File imgFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+        sourcePath: imgFile.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Image Cropper",
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: "Image Cropper",
+          )
+        ]);
+    if (croppedFile != null) {
+      imageCache.clear();
+      setState(() {
+        _image = XFile(croppedFile.path);
+      });
+      // reload();
+    }
   }
 
   Future<void> _pickVideo() async {
@@ -132,14 +165,14 @@ class _EditMainProductPageState extends State<EditMainProductPage> {
     if (_image == null) {
       image = product.img!;
     } else {
-      image = 'images/' + _image!.name;
+      image = 'images/${_image!.name}';
     }
     if (_video == null) {
       video = product.video!;
     } else if (product.typeId != 4 || product.typeId != 6) {
       video = product.video ?? selectedOption;
     } else {
-      video = 'files/' + _video!.name;
+      video = 'files/${_video!.name}';
     }
     super.initState();
   }

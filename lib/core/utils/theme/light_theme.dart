@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'constants.dart';
 
 ThemeData lightTheme(BuildContext context) {
   return ThemeData(
-      primaryColorLight: const Color.fromARGB(255, 119, 119, 119),
+      primaryColorLight: const Color.fromARGB(255, 221, 220, 220),
       primaryColor: const Color.fromARGB(255, 196, 124, 0),
       primarySwatch: Colors.amber,
       indicatorColor: const Color.fromARGB(255, 0, 0, 0),
@@ -16,6 +14,7 @@ ThemeData lightTheme(BuildContext context) {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
+      primaryColorDark: Colors.black,
       appBarTheme:
           const AppBarTheme(backgroundColor: Colors.transparent, elevation: 0)
       // textTheme: const TextTheme(

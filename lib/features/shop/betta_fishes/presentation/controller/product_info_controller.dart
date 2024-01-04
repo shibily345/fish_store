@@ -40,7 +40,7 @@ class ProductInfoController extends GetxController {
   File? get image => _image;
   File? _video;
   File? get video => _video;
-  String _thumbnailPath = "";
+  final String _thumbnailPath = "";
   String get thumbnailPath => _thumbnailPath;
   Future<void> getProductInfoList() async {
     Response response = await productInfoRepo.getProductList();
@@ -116,11 +116,11 @@ class ProductInfoController extends GetxController {
     _cart = cart;
     // exist = false;
     _exist = _cart.existInCart(product);
-    print(exist.toString() + ".............................");
+    print("$exist.............................");
     if (exist) {
       _inCartItemCount = _cart.getQuantity(product);
     }
-    print(_inCartItemCount.toString() + ".............................");
+    print("$_inCartItemCount.............................");
   }
 
   void addItem(ProductModel product, double priceInTotel) {
@@ -166,7 +166,7 @@ class ProductInfoController extends GetxController {
 
   Future<void> deleteProduct(int productId) async {
     final response = await http.delete(
-      Uri.parse(AppConstents.BASE_URL + '/api/v1/products/products/$productId'),
+      Uri.parse('${AppConstents.BASE_URL}/api/v1/products/products/$productId'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         // Add any additional headers as needed
@@ -185,7 +185,7 @@ class ProductInfoController extends GetxController {
   Future<void> updateProduct(
       int productId, ProductModel updatedProductData) async {
     final response = await http.patch(
-      Uri.parse(AppConstents.BASE_URL + '/api/v1/products/products/$productId'),
+      Uri.parse('${AppConstents.BASE_URL}/api/v1/products/products/$productId'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         // Add any additional headers as needed
@@ -196,7 +196,7 @@ class ProductInfoController extends GetxController {
     if (response.statusCode == 200) {
       // Product updated successfully
       print('Product updated successfully');
-      Get.to(() => ProductAdded());
+      Get.to(() => const ProductAdded());
     } else {
       // Failed to update the product
       print('Failed to update product. Status code: ${response.statusCode}');

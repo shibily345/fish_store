@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/features/store/domain/models/cart_model.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartRepository {
@@ -14,11 +13,11 @@ class CartRepository {
   Future<void> addToCartList(List<CartModel> cartList) async {
     var time = DateTime.now().toString();
     cart = [];
-    cartList.forEach((element) {
+    for (var element in cartList) {
       element.time = time;
 
-      return cart.add(jsonEncode(element));
-    });
+      continue;
+    }
     print(cart.toString());
     await sharedPreferences.setStringList(AppConstents.Cart_list, cart);
     print(sharedPreferences.getStringList(AppConstents.Cart_list));
@@ -30,8 +29,9 @@ class CartRepository {
       carts = sharedPreferences.getStringList(AppConstents.Cart_list)!;
     }
     List<CartModel> cartList = [];
-    carts.forEach(
-        (element) => cartList.add(CartModel.fromJson(jsonDecode(element))));
+    for (var element in carts) {
+      cartList.add(CartModel.fromJson(jsonDecode(element)));
+    }
 
     return cartList;
   }
@@ -43,11 +43,11 @@ class CartRepository {
           sharedPreferences.getStringList(AppConstents.Cart_history_list)!;
     }
     List<CartModel> cartListHistory = [];
-    cartHistory.forEach((element) =>
-        cartListHistory.add(CartModel.fromJson(jsonDecode(element))));
+    for (var element in cartHistory) {
+      cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
+    }
     print(
-        "saved list....................'''''''''''''''''''''''''''''''''''''''''''''''''''''''" +
-            cartListHistory.toString());
+        "saved list....................'''''''''''''''''''''''''''''''''''''''''''''''''''''''$cartListHistory");
     return cartListHistory;
   }
 
@@ -60,8 +60,7 @@ class CartRepository {
       // Add the cart item to the cart history list, if it is not already in the list
       if (!cartHistory.contains(cart[i])) {
         cartHistory.add(cart[i]);
-        print(cart[i] +
-            '................................... itemssssssssssadded');
+        print('${cart[i]}................................... itemssssssssssadded');
       }
     }
 
@@ -83,7 +82,7 @@ class CartRepository {
         return cartItem.id == itemToRemove.id;
       });
 
-      print("-----------------------item removed" + itemToRemove.toString());
+      print("-----------------------item removed$itemToRemove");
 
       await sharedPreferences.setStringList(AppConstents.Cart_list, cart);
       print(sharedPreferences.getStringList(AppConstents.Cart_list));

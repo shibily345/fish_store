@@ -6,19 +6,15 @@ import 'package:betta_store/features/shop/items/presentation/controller/items_in
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/features/store/domain/controller/order_controller.dart';
-import 'package:betta_store/features/store/presentation/my_shop/order/widgets/accept_order_widget.dart';
-import 'package:betta_store/features/store/presentation/my_shop/order/widgets/delivered_order_widget%20copy.dart';
 import 'package:betta_store/features/store/presentation/my_shop/order/widgets/order_from.dart';
-import 'package:betta_store/features/store/presentation/my_shop/order/widgets/process_order_widget.dart';
 import 'package:betta_store/features/store/presentation/my_shop/order/widgets/product_detail.dart';
-import 'package:betta_store/features/store/presentation/my_shop/order/widgets/send_order_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class CacelledPage extends StatefulWidget {
-  CacelledPage({super.key, required this.pageId});
+  const CacelledPage({super.key, required this.pageId});
   final int pageId;
 
   @override
@@ -59,14 +55,14 @@ class _CacelledPageState extends State<CacelledPage> {
         return ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           children: [
-            Divider(),
+            const Divider(),
             ProductDetailWidget(
               product: product,
               order: order,
             ),
-            Divider(),
+            const Divider(),
             OrderFromWidget(order: order, product: product),
-            Divider(),
+            const Divider(),
             bigSpace,
             Container(
               height: 80.h,
@@ -81,7 +77,7 @@ class _CacelledPageState extends State<CacelledPage> {
             bigSpace,
             const Divider(),
             textWidget(
-                text: 'Case : ' + order.orderNote!,
+                text: 'Case : ${order.orderNote!}',
                 color: Colors.red,
                 fontSize: 13),
           ],

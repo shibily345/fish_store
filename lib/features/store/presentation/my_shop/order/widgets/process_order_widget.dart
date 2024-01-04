@@ -1,6 +1,4 @@
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/helper/notification.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
@@ -8,9 +6,7 @@ import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:intl/intl.dart';
 
 class ProcessOrderWidget extends StatefulWidget {
@@ -43,10 +39,6 @@ class _ProcessOrderWidgetState extends State<ProcessOrderWidget> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Container(
-        width: 5,
-        color: Theme.of(context).primaryColor,
-      ),
       title: widget.order.processing == null
           ? MaterialButton(
               onPressed: () {
@@ -100,7 +92,7 @@ class _ProcessOrderWidgetState extends State<ProcessOrderWidget> {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return AlertDialog(
-              title: Text('Expecting Date'),
+              title: const Text('Expecting Date'),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -129,13 +121,13 @@ class _ProcessOrderWidgetState extends State<ProcessOrderWidget> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: Text('Save'),
+                  child: const Text('Save'),
                   onPressed: () {
                     var user =
                         Get.find<UserInfoController>().breedersList.firstWhere(
@@ -147,8 +139,7 @@ class _ProcessOrderWidgetState extends State<ProcessOrderWidget> {
                         String token = user.fcmToken!;
                         NotificationHelper.sendPushNotification(
                             token,
-                            "Your Order redy to ship and it delivered on" +
-                                dateWidget(selectedDate.toString()),
+                            "Your Order redy to ship and it delivered on${dateWidget(selectedDate.toString())}",
                             "Order packed");
                       } else {
                         print(

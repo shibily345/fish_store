@@ -1,22 +1,19 @@
 import 'dart:io';
 
 import 'package:betta_store/core/utils/widgets/buttons.dart';
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
-import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/review_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/store/domain/models/review_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class WriteAreviewWidget extends StatefulWidget {
   const WriteAreviewWidget({
@@ -36,15 +33,52 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
   // String timeWidget(String time) {
   Future<void> _pickImage() async {
     final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        // _cropImage(pickedFile.path);
-        _image = pickedFile;
-      } else {
-        print('No image selected.');
+        await ImagePicker().pickImage(source: ImageSource.camera).then((value) {
+      if (value != null) {
+        _cropImage(File(value.path));
       }
     });
+  }
+
+  _cropImage(File imgFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+        sourcePath: imgFile.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Image Cropper",
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: "Image Cropper",
+          )
+        ]);
+    if (croppedFile != null) {
+      imageCache.clear();
+      setState(() {
+        _image = XFile(croppedFile.path);
+      });
+      // reload();
+    }
   }
 
   @override
@@ -63,10 +97,11 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
               return StatefulBuilder(
                 builder: (BuildContext context, setState) {
                   return AlertDialog(
-                    title: Text('Review '),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
+                    title: const Text('Review '),
+                    content: ListView(
+                      shrinkWrap: true,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisSize: MainAxisSize.min,
                       children: [
                         textWidget(
                             text: 'Swipe to rate',
@@ -83,11 +118,11 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
                             direction: Axis.horizontal,
                             //  allowHalfRating: true,
                             itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                             itemBuilder: (context, _) => Icon(
                               Icons.star,
                               color: Theme.of(context).primaryColor,
-                              size: 20,
+                              size: 15,
                             ),
                             onRatingUpdate: (rating) {
                               setState(() {
@@ -95,7 +130,7 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
                               });
                               print(ratingOn);
                             },
-                            itemSize: 40,
+                            itemSize: 30,
                           ),
                         ),
                         InkWell(
@@ -154,19 +189,19 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: Text('Cancel'),
+                        child: const Text('Cancel'),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       TextButton(
-                        child: Text('Save'),
+                        child: const Text('Save'),
                         onPressed: () {
                           Get.find<ProductInfoController>().uploadFile(_image!);
                           ReviewModel details = ReviewModel(
                             productId: widget.order.productId,
                             rating: ratingOn,
-                            img: 'images/' + _image!.name,
+                            img: 'images/${_image!.name}',
                             comment: detailsController.text,
                           );
                           Get.find<ReviewController>().addReview(details);

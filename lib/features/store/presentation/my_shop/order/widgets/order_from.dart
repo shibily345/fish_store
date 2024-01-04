@@ -1,10 +1,5 @@
-import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class OrderFromWidget extends StatelessWidget {
   const OrderFromWidget(

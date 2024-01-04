@@ -1,7 +1,6 @@
 import 'package:betta_store/features/store/domain/data/repository/auth_repo.dart';
 import 'package:betta_store/features/store/domain/models/respones_model.dart';
 import 'package:betta_store/features/store/domain/models/signup_body_model.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController implements GetxService {
@@ -29,7 +28,7 @@ class AuthController extends GetxController implements GetxService {
 
   Future<ResponesModel> login(String phone, String password) async {
     print("Getting -----------------------token");
-    print(authRepo.getUserToken().toString() + "=======================");
+    print("${authRepo.getUserToken()}=======================");
     _isLoading = true;
     update();
     Response response = await authRepo.login(phone, password);

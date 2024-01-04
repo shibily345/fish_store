@@ -1,11 +1,11 @@
 import 'package:betta_store/features/store/domain/controller/address_Info_controller.dart';
 import 'package:betta_store/features/store/domain/models/address_model.dart';
-import 'package:betta_store/features/store/presentation/booking/confirm_book.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/store/presentation/booking/confirm_book.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -293,7 +293,10 @@ class _AddressPageState extends State<AddressPage> {
                     ),
                   ),
                 )),
-              ],
+              ]
+                  .animate(interval: 100.ms)
+                  .fade()
+                  .fadeIn(curve: Curves.easeInOutExpo),
             ),
           ),
         ));

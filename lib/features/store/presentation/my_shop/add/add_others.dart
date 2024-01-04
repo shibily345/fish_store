@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:betta_store/core/dependencies.dart';
@@ -9,7 +8,6 @@ import 'package:betta_store/features/shop/items/presentation/controller/items_in
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:betta_store/features/store/presentation/my_shop/add/suucess_add_page.dart';
 
 import 'package:betta_store/features/store/domain/models/products_model.dart';
@@ -21,13 +19,12 @@ import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/store/presentation/my_shop/add/widgets/add_other_fields_widget%20copy.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:iconsax/iconsax.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AddOtherPage extends StatefulWidget {
   const AddOtherPage({super.key, required this.pageId});
@@ -53,21 +50,54 @@ class _AddOtherPageState extends State<AddOtherPage> {
   ProcessingStatus processingStatus = ProcessingStatus.notstarted;
   Uint8List? imgInBytes;
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = pickedFile;
-        () {
-          //for loading
-          setState(() {
-            processingStatus = ProcessingStatus.processing;
-          });
-        };
-      } else {
-        print('No image selected.');
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.gallery)
+        .then((value) {
+      if (value != null) {
+        _cropImage(File(value.path));
       }
     });
+  }
+
+  _cropImage(File imgFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+        sourcePath: imgFile.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Image Cropper",
+              toolbarColor: Theme.of(context).primaryColor,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: "Image Cropper",
+          )
+        ]);
+    if (croppedFile != null) {
+      imageCache.clear();
+      setState(() {
+        _image = XFile(croppedFile.path);
+      });
+      // reload();
+    }
   }
 
   var fishes = Get.find<ProductInfoController>();
@@ -121,7 +151,7 @@ class _AddOtherPageState extends State<AddOtherPage> {
             price: int.parse(pairPrice),
             malePrice: 0,
             femalePrice: 0,
-            img: 'images/' + _image!.name,
+            img: 'images/${_image!.name}',
             video: selectedOption,
             stars: "5",
             typeId: widget.pageId);
@@ -130,23 +160,23 @@ class _AddOtherPageState extends State<AddOtherPage> {
             token,
             "Your product published successfully  wait for customer response",
             "Added succeffully");
-        print(_image!.name +
-            "............................................============================");
+        print(
+            "${_image!.name}............................................============================");
         Get.find<ProductInfoController>()
             .addProduct(productDetails)
             .then((response) {
           if (response.isSuccess) {
             Get.find<ProductInfoController>().uploadFile(_image!);
             Get.snackbar("Added", "SuccessFully");
-            Get.to(() => ProductAdded());
+            Get.to(() => const ProductAdded());
           } else {
             Get.snackbar(
                 "Error Occurred", "Report us immidietly Profil>Contact us");
           }
         });
         print(
-          '${allProducts.where((products) => products.breeder == Get.find<UserInfoController>().userModel.name).toList().length + 1}' +
-              '......................]]]]]]]]]]]]]]]]]]]]]]',
+          '${allProducts.where((products) => products.breeder == Get.find<UserInfoController>().userModel.name).toList().length + 1}'
+          '......................]]]]]]]]]]]]]]]]]]]]]]',
         );
         Map<String, dynamic> detils = {
           'product_count':
@@ -268,7 +298,10 @@ class _AddOtherPageState extends State<AddOtherPage> {
             bigSpace,
             bigSpace,
             bigSpace
-          ],
+          ]
+              .animate(interval: 100.ms)
+              .fade()
+              .fadeIn(curve: Curves.easeInOutExpo),
         ),
       ),
     ));

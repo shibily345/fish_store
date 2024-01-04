@@ -1,5 +1,6 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/shop/feeds/presentation/controller/feeds_info_controller.dart';
@@ -12,9 +13,11 @@ import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/store/presentation/my_shop/withdraw_page.dart';
 import 'package:betta_store/features/store/presentation/my_shop/create_shop_page.dart';
 import 'package:betta_store/features/store/presentation/my_shop/order/shop_orders_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -68,35 +71,66 @@ class _MyShopState extends State<MyShop> {
                       child: ListView(
                         padding: const EdgeInsets.all(10),
                         children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              width: Get.width,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Theme.of(context).splashColor),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 18.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      textWidget(
+                                          text:
+                                              "Balence : ₹ ${Get.find<UserInfoController>().userModel.balance!}",
+                                          color:
+                                              Theme.of(context).indicatorColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600),
+                                      SimpleButton(
+                                          onPress: () {
+                                            Get.to(() => const WithdrawPage());
+                                          },
+                                          label: "Withdraw")
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                           ListTile(
                             onTap: () {
-                              Get.to(() => ShopOrders());
+                              Get.to(() => const ShopOrders());
                             },
                             title: Stack(
                               children: [
                                 Container(
-                                  child: Center(
-                                    child: textWidget(
-                                        text: "New Orders ",
-                                        color: Theme.of(context).indicatorColor,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600),
-                                  ),
                                   width: Get.width,
                                   height: 120,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Theme.of(context).splashColor),
+                                  child: Center(
+                                    child: textWidget(
+                                        text: "All Orders ",
+                                        color: Theme.of(context).indicatorColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ),
                                 Positioned(
                                     bottom: 10,
                                     right: 20,
                                     child: textWidget(
-                                        text: Get.find<OrderController>()
-                                                .sellerOrderList
-                                                .length
-                                                .toString() +
-                                            "  New Orders",
+                                        text:
+                                            "${Get.find<OrderController>().sellerOrderList.length}   Orders",
                                         color: Theme.of(context)
                                             .indicatorColor
                                             .withOpacity(0.4),
@@ -323,7 +357,7 @@ class _MyShopState extends State<MyShop> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                    padding: EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                         color: Theme.of(context).splashColor,
                                         borderRadius:
@@ -370,7 +404,10 @@ class _MyShopState extends State<MyShop> {
                               );
                             },
                           )
-                        ],
+                        ]
+                            .animate(interval: 100.ms)
+                            .fade()
+                            .fadeIn(curve: Curves.easeInOutExpo),
                       ),
                     )
                   : const CustomeLoader())

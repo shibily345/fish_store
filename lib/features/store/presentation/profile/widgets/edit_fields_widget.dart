@@ -1,6 +1,3 @@
-import 'package:betta_store/core/utils/widgets/containers.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
-import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -43,37 +40,37 @@ class _EditProfileFielsWidgetsState extends State<EditProfileFielsWidgets> {
           borderRadius: BorderRadius.circular(20)),
       child: Column(
         children: [
-          SizedBox(
-            width: Get.width,
-            height: 70.h,
-            child: TextFormField(
-              focusNode: emailFocus,
-              textInputAction: TextInputAction.next,
-              onEditingComplete: () {
-                FocusScope.of(context).requestFocus(locationFocus);
-              },
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              expands: true,
-              style: TextStyle(color: Theme.of(context).indicatorColor),
-              controller: widget.phoneController,
-              decoration: InputDecoration(
-                  hintStyle:
-                      TextStyle(color: Theme.of(context).primaryColorLight),
-                  hintText: ' Phone',
-                  // prefixIcon: Icon(
-                  //   Icons.home,
-                  //   color: Colors.grey,
-                  // ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                  border: InputBorder.none),
-            ),
-          ),
-          Divider(
-            thickness: 4,
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
+          // SizedBox(
+          //   width: Get.width,
+          //   height: 70.h,
+          //   child: TextFormField(
+          //     focusNode: emailFocus,
+          //     textInputAction: TextInputAction.next,
+          //     onEditingComplete: () {
+          //       FocusScope.of(context).requestFocus(locationFocus);
+          //     },
+          //     keyboardType: TextInputType.multiline,
+          //     maxLines: null,
+          //     expands: true,
+          //     style: TextStyle(color: Theme.of(context).indicatorColor),
+          //     controller: widget.phoneController,
+          //     decoration: InputDecoration(
+          //         hintStyle:
+          //             TextStyle(color: Theme.of(context).primaryColorLight),
+          //         hintText: ' Phone',
+          //         // prefixIcon: Icon(
+          //         //   Icons.home,
+          //         //   color: Colors.grey,
+          //         // ),
+          //         contentPadding:
+          //             const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          //         border: InputBorder.none),
+          //   ),
+          // ),
+          // Divider(
+          //   thickness: 4,
+          //   color: Theme.of(context).scaffoldBackgroundColor,
+          // ),
           SizedBox(
             width: Get.width,
             height: 70.h,

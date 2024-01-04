@@ -1,6 +1,5 @@
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/store/domain/controller/order_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -39,10 +38,6 @@ class OrderArrivedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(vertical: 15.h),
-      leading: Container(
-        width: 5,
-        color: Theme.of(context).primaryColor,
-      ),
       title: textWidget(
         text: "item arrived",
         maxline: 3,

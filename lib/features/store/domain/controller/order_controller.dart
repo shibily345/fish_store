@@ -1,5 +1,4 @@
 import 'package:betta_store/core/dependencies.dart';
-import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/features/store/domain/data/repository/order_repo.dart';
 import 'package:betta_store/features/store/domain/models/order_model.dart';
 import 'package:betta_store/features/store/domain/models/place_order_model.dart';
@@ -11,9 +10,9 @@ class OrderController extends GetxController implements GetxService {
   OrderController({required this.orderRepo});
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  late List<OrderModel> _currentOrderList;
+  List<OrderModel> _currentOrderList = [];
   List<OrderModel> get currentOrderList => _currentOrderList;
-  late List<OrderModel> _sellerOrderList;
+  List<OrderModel> _sellerOrderList = [];
   List<OrderModel> get sellerOrderList => _sellerOrderList;
   Future<void> placeOrder(
       Function callback, PlaceOrderBody placeOrderBody) async {
@@ -38,7 +37,7 @@ class OrderController extends GetxController implements GetxService {
         OrderModel orderModel = OrderModel.fromJson(order);
 
         _currentOrderList.add(orderModel);
-        print("__________________________ success" + orderModel.toString());
+        print("__________________________ success$orderModel");
       });
     } else {
       print("__________________________ failed......");
@@ -58,7 +57,7 @@ class OrderController extends GetxController implements GetxService {
         OrderModel orderModel = OrderModel.fromJson(order);
 
         _sellerOrderList.add(orderModel);
-        print("__________________________ success" + orderModel.toString());
+        print("__________________________ success$orderModel");
       });
     } else {
       print("__________________________ failed......");
@@ -83,7 +82,7 @@ class OrderController extends GetxController implements GetxService {
       loadResources();
       print("__________________________ Accepted Successfully......");
     } else {
-      print("__________________________ failed......" + response.statusText!);
+      print("__________________________ failed......${response.statusText!}");
     }
     _isLoading = false;
     update();
@@ -102,8 +101,28 @@ class OrderController extends GetxController implements GetxService {
       loadResources();
       print("__________________________ proccess Successfully......");
     } else {
-      print("__________________________ failed......" +
-          response.statusText!.toString());
+      print("__________________________ failed......${response.statusText!}");
+    }
+
+    _isLoading = false;
+    update();
+  }
+
+  Future<void> payOrder(int orderId, String amount, String sellerId) async {
+    _isLoading = true;
+    Map<String, dynamic> data = {
+      'order_id': orderId,
+      'amount': amount,
+      'sellerId': sellerId,
+    };
+    Response response = await orderRepo.payOrder(data);
+    if (response.statusCode == 200) {
+      Get.snackbar('Payment Done SuccessFully',
+          "Payment Done SuccessFully Congradulation");
+      loadResources();
+      print("__________________________ proccess Successfully......");
+    } else {
+      print("__________________________ failed......${response.statusText!}");
     }
 
     _isLoading = false;
@@ -125,7 +144,7 @@ class OrderController extends GetxController implements GetxService {
       loadResources();
       print("__________________________ send Successfully......");
     } else {
-      print("__________________________ failed......" + response.statusText!);
+      print("__________________________ failed......${response.statusText!}");
     }
 
     _isLoading = false;
@@ -146,7 +165,7 @@ class OrderController extends GetxController implements GetxService {
       loadResources();
       print("__________________________ send Successfully......");
     } else {
-      print("__________________________ failed......" + response.statusText!);
+      print("__________________________ failed......${response.statusText!}");
     }
     Get.snackbar('Delivered SuccessFully',
         "Order Delivered successfully Congradulations");
@@ -170,7 +189,7 @@ class OrderController extends GetxController implements GetxService {
       loadResources();
       print("__________________________ send Successfully......");
     } else {
-      print("__________________________ failed......" + response.statusText!);
+      print("__________________________ failed......${response.statusText!}");
     }
 
     _isLoading = false;

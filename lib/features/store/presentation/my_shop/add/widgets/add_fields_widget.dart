@@ -1,4 +1,3 @@
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +49,7 @@ class _AddFielsWidgetsState extends State<AddFielsWidgets> {
         children: [
           Padding(
             padding: EdgeInsets.all(5.0.w),
-            child: Container(
+            child: SizedBox(
               width: Get.width,
               height: 50.h,
               child: TextFormField(
@@ -77,7 +76,7 @@ class _AddFielsWidgetsState extends State<AddFielsWidgets> {
           ),
           Padding(
             padding: EdgeInsets.all(5.0.w),
-            child: Container(
+            child: SizedBox(
               width: Get.width,
               height: 150.h,
               child: TextFormField(
@@ -120,7 +119,7 @@ class _AddFielsWidgetsState extends State<AddFielsWidgets> {
                     color: Theme.of(context).indicatorColor,
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
-                Container(
+                SizedBox(
                   width: 150.w,
                   height: 50.h,
                   child: TextFormField(
@@ -167,7 +166,7 @@ class _AddFielsWidgetsState extends State<AddFielsWidgets> {
                   fontSize: 12,
                 ),
                 smallwidth,
-                Container(
+                SizedBox(
                   width: 150.w,
                   height: 50.h,
                   child: TextFormField(
@@ -214,7 +213,7 @@ class _AddFielsWidgetsState extends State<AddFielsWidgets> {
                   fontSize: 12,
                 ),
                 smallwidth,
-                Container(
+                SizedBox(
                   width: 150.w,
                   height: 50.h,
                   child: TextFormField(

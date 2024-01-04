@@ -54,7 +54,7 @@ class _EditFielsWidgetsState extends State<EditFielsWidgets> {
         children: [
           Padding(
             padding: EdgeInsets.all(5.0.w),
-            child: Container(
+            child: SizedBox(
               width: Get.width,
               height: 50.h,
               child: TextFormField(
@@ -81,7 +81,7 @@ class _EditFielsWidgetsState extends State<EditFielsWidgets> {
           ),
           Padding(
             padding: EdgeInsets.all(5.0.w),
-            child: Container(
+            child: SizedBox(
               width: Get.width,
               height: 150.h,
               child: TextFormField(

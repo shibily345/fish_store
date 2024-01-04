@@ -7,16 +7,13 @@ import 'package:betta_store/features/shop/items/presentation/controller/items_in
 import 'package:betta_store/features/shop/fishes/presentation/controller/other_fish_info_controller.dart';
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
 
-import 'package:betta_store/features/store/domain/models/products_model.dart';
-import 'package:betta_store/core/utils/widgets/containers.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class SerachPage extends StatefulWidget {
   const SerachPage({super.key});
@@ -51,7 +48,6 @@ class _SerachPageState extends State<SerachPage> {
     List<dynamic> results = [];
 
     if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
       results = allProducts;
     } else {
       results = allProducts
@@ -107,41 +103,41 @@ class _SerachPageState extends State<SerachPage> {
                           left: 10.w,
                           child: Padding(
                             padding: EdgeInsets.all(18.0.h),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  height: 45.0,
+                            child: Container(
+                              height: 45.0,
 
-                                  padding: EdgeInsets.all(2.0.h),
-                                  // margin: EdgeInsets.zero,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Theme.of(context).primaryColor),
-                                    borderRadius: BorderRadius.circular(
-                                      20.0,
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    autofocus: true,
-                                    focusNode: serchFocus,
-                                    onChanged: (value) => _runFilter(value),
-                                    style: TextStyle(
-                                        color:
-                                            Theme.of(context).indicatorColor),
-                                    // controller: nameController,
-                                    decoration: InputDecoration(
-                                        hintStyle: TextStyle(
-                                            color: Theme.of(context)
-                                                .indicatorColor
-                                                .withOpacity(0.4)),
-                                        hintText: ' search "Full red ohm"',
-                                        prefixIcon: Icon(
-                                          CupertinoIcons.search,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        border: InputBorder.none),
-                                  ),
-                                )),
+                              padding: EdgeInsets.all(2.0.h),
+                              // margin: EdgeInsets.zero,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(
+                                  20.0,
+                                ),
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: TextFormField(
+                                  autofocus: true,
+                                  focusNode: serchFocus,
+                                  onChanged: (value) => _runFilter(value),
+                                  style: TextStyle(
+                                      color: Theme.of(context).indicatorColor),
+                                  // controller: nameController,
+                                  decoration: InputDecoration(
+                                      hintStyle: TextStyle(
+                                          color: Theme.of(context)
+                                              .indicatorColor
+                                              .withOpacity(0.2)),
+                                      hintText: ' search "Full red ohm"',
+                                      prefixIcon: Icon(
+                                        CupertinoIcons.search,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      border: InputBorder.none),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -153,7 +149,7 @@ class _SerachPageState extends State<SerachPage> {
           },
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-            child: _foundResults.length != 0
+            child: _foundResults.isNotEmpty
                 ? GridView.builder(
                     padding: EdgeInsets.zero,
                     itemCount: _foundResults.length,
@@ -195,16 +191,16 @@ class _SerachPageState extends State<SerachPage> {
                                     ),
                                   ),
                                 ),
-                                placeholder: (context, url) => Center(
+                                placeholder: (context, url) => const Center(
                                     child: CustomeLoader(
                                   bg: Colors.transparent,
                                 )),
                                 errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
+                                    const Icon(Icons.error),
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                margin: EdgeInsets.all(10),
+                                margin: const EdgeInsets.all(10),
                                 width: 175.w,
                                 height: 70.h,
                                 decoration: BoxDecoration(
@@ -237,15 +233,21 @@ class _SerachPageState extends State<SerachPage> {
                                         color: Theme.of(context).indicatorColor,
                                         fontSize: 10,
                                         fontWeight: FontWeight.w300),
-                                  ],
+                                  ]
+                                      .animate(interval: 200.ms)
+                                      .fade()
+                                      .fadeIn(curve: Curves.easeInOutExpo),
                                 ),
                               ),
-                            ],
+                            ]
+                                .animate(interval: 100.ms)
+                                .fade()
+                                .fadeIn(curve: Curves.easeInOutExpo),
                           ),
                         ),
                       );
                     })
-                : SerchTile(),
+                : const SerchTile(),
           )),
     );
   }

@@ -1,14 +1,10 @@
 import 'dart:convert';
 
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/features/store/domain/data/repository/address_repo.dart';
-import 'package:betta_store/features/store/domain/data/repository/user_repo.dart';
 import 'package:betta_store/features/store/domain/models/address_model.dart';
 import 'package:betta_store/features/store/domain/models/respones_model.dart';
 import 'package:betta_store/features/store/domain/models/user_model.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/interceptors/get_modifiers.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressInfoController extends GetxController implements GetxService {
   final AddressRepo addressRepo;
@@ -38,8 +34,8 @@ class AddressInfoController extends GetxController implements GetxService {
   // }
 
   AddressModel getUserAddress() {
-    final String? userAddressJson = addressRepo.getUserAddress();
-    if (userAddressJson == null || userAddressJson.isEmpty) {
+    final String userAddressJson = addressRepo.getUserAddress();
+    if (userAddressJson.isEmpty) {
       // Handle empty or null response
       return AddressModel(
         name: "",
@@ -51,11 +47,11 @@ class AddressInfoController extends GetxController implements GetxService {
       );
     }
 
-    AddressModel _addressModel;
+    AddressModel addressModel;
     try {
       // Validate JSON data
       json.decode(userAddressJson);
-      _addressModel = AddressModel.fromJson(jsonDecode(userAddressJson));
+      addressModel = AddressModel.fromJson(jsonDecode(userAddressJson));
     } catch (e) {
       print("Error parsing or validating user address JSON: $e");
       // Handle parsing error, e.g., return a default AddressModel or throw an exception
@@ -68,7 +64,7 @@ class AddressInfoController extends GetxController implements GetxService {
         secondoryPhone: "",
       ); // Default AddressModel object
     }
-    return _addressModel;
+    return addressModel;
   }
 
   Future<ResponesModel> addAddress(AddressModel addressModel) async {

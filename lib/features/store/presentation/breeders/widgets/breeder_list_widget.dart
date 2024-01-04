@@ -1,13 +1,14 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/store/domain/controller/user_Info_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BreederListWidget extends StatefulWidget {
   const BreederListWidget({super.key});
@@ -31,7 +32,7 @@ class _BreederListWidgetState extends State<BreederListWidget> {
   Widget build(BuildContext context) {
     return GetBuilder<UserInfoController>(builder: (breeders) {
       List<dynamic> filteredBreedersList = breeders.breedersList
-          .where((breeder) => breeder.sellproduct == 1)
+          .where((breeder) => breeder.productCount > 0)
           .toList();
       return breeders.isLoaded
           ? RefreshIndicator(
@@ -73,10 +74,17 @@ class _BreederListWidgetState extends State<BreederListWidget> {
                                       CircleAvatar(
                                     backgroundImage: imageProvider,
                                   ),
-                                  placeholder: (context, url) => const Center(
-                                      child: CustomeLoader(
-                                    bg: Colors.transparent,
-                                  )),
+                                  placeholder: (context, url) =>
+                                      Shimmer.fromColors(
+                                    baseColor: Colors.grey[800]!,
+                                    highlightColor: Colors.grey[700]!,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
+                                          color: Colors.black),
+                                    ),
+                                  ),
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.error),
                                 ),
@@ -86,7 +94,10 @@ class _BreederListWidgetState extends State<BreederListWidget> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Theme.of(context).indicatorColor),
-                              ],
+                              ]
+                                  .animate(interval: 100.ms)
+                                  .fade()
+                                  .fadeIn(curve: Curves.easeInOutExpo),
                             ),
                           ),
                           Positioned(
