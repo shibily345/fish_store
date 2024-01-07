@@ -72,10 +72,7 @@ class _OrderPlacedState extends State<OrderPlaced> {
                 )
               ],
             )
-          ]
-              .animate(interval: 100.ms)
-              .fade()
-              .fadeIn(curve: Curves.easeInOutExpo),
+          ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOut),
         ),
       ),
     );

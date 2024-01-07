@@ -94,7 +94,7 @@ class _EditMainProductPageState extends State<EditMainProductPage> {
               ],
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: "Image Cropper",
+              toolbarTitle: "Crop Image ",
               toolbarColor: Colors.deepOrange,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.original,

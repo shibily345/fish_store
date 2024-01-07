@@ -45,7 +45,7 @@ class CategoriesWidget extends StatelessWidget {
                   context, 'assets/ui_elementsbgon/feed.png', "Fish feeds", () {
                 Get.to(() => const FeedsFishPage());
               }),
-            ].animate(interval: 1000.ms).fade().slideX(curve: Curves.easeIn),
+            ].animate(interval: 300.ms).fade().slideX(curve: Curves.easeInOut),
           )),
     );
   }

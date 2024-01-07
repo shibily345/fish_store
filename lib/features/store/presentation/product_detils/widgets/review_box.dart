@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ReviweBoxWidget extends StatelessWidget {
   const ReviweBoxWidget({
@@ -92,10 +93,17 @@ class ReviweBoxWidget extends StatelessWidget {
                                           .scaffoldBackgroundColor,
                                       borderRadius: BorderRadius.circular(15)),
                                 ),
-                                placeholder: (context, url) => const Center(
-                                    child: CustomeLoader(
-                                  bg: Colors.transparent,
-                                )),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[800]!,
+                                  highlightColor: Colors.grey[700]!,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        color: Colors.black),
+                                  ),
+                                ),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
                               ),

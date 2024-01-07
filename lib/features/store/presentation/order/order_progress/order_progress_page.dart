@@ -19,6 +19,7 @@ import 'package:betta_store/features/store/presentation/order/order_progress/wid
 import 'package:betta_store/features/store/presentation/order/order_progress/widgets/processing_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -122,7 +123,10 @@ class _OrderProgressPageState extends State<OrderProgressPage> {
                                         order: order, product: product)
                                   else
                                     Container(),
-                                ],
+                                ]
+                                    .animate(interval: 100.ms)
+                                    .fade()
+                                    .slideX(curve: Curves.easeInOut),
                               ),
                             ),
                             bigSpace,

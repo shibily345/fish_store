@@ -50,7 +50,7 @@ class _AdSlidersState extends State<AdSliders> {
           ad.ads.isNotEmpty
               ? SizedBox(
                   height: 200.0,
-                  width: Get.width, // Adjust the height as needed
+                  width: Get.width,
                   child: PageView.builder(
                     itemCount: ad.ads.length,
                     controller: _pageController,

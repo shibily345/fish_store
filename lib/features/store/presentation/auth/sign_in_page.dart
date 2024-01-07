@@ -126,10 +126,7 @@ class _SignInPageState extends State<SignInPage> {
             bigSpace,
             bigSpace,
             const Center(child: PrivecyLabelWidget())
-          ]
-              .animate(interval: 100.ms)
-              .fade()
-              .fadeIn(curve: Curves.easeInOutExpo),
+          ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOut),
         ));
   }
 }

@@ -4,7 +4,9 @@ import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CustomeLoader extends StatefulWidget {
   final bool isloading;

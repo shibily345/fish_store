@@ -1,8 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
 
+import 'package:betta_store/core/constents.dart';
+import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BlurContainer extends StatelessWidget {
   BlurContainer({
@@ -175,5 +184,211 @@ class BrickGridViewDelegate extends SliverGridDelegateWithFixedCrossAxisCount {
   @override
   bool shouldRelayout(SliverGridDelegateWithFixedCrossAxisCount oldDelegate) {
     return offset != oldDelegate.mainAxisSpacing;
+  }
+}
+
+class ProductTileHor extends StatelessWidget {
+  const ProductTileHor({
+    Key? key,
+    required this.productInfoList,
+  }) : super(key: key);
+  final dynamic productInfoList;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 240.h,
+      child: GridView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(left: 10.w),
+        itemCount: productInfoList.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          childAspectRatio: 2.5 / 2, // Number of columns
+        ),
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Get.toNamed(
+                  AppRouts.getProductDetailPage(productInfoList[index].id!));
+            },
+            child: Container(
+              margin: EdgeInsets.all(5.0.h),
+              decoration: BoxDecoration(
+                color: Theme.of(context).splashColor,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 130.h,
+                    margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                    child: CachedNetworkImage(
+                      imageUrl: AppConstents.BASE_URL +
+                          AppConstents.UPLOAD_URL +
+                          productInfoList[index].img!,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[800]!,
+                        highlightColor: Colors.grey[700]!,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18.0),
+                              color: Colors.black),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      margin: const EdgeInsets.all(10),
+                      // height: 70.h,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            //width: 120.w,
+                            child: textWidget(
+                                text: productInfoList[index].name!,
+                                color: Theme.of(context).indicatorColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          textWidget(
+                              text: '₹ ${productInfoList[index].price!} /pair',
+                              color: Theme.of(context).indicatorColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                          textWidget(
+                              text: '@${productInfoList[index].breeder!}',
+                              color: Theme.of(context).indicatorColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w300),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ProductTileGrid extends StatelessWidget {
+  ProductTileGrid({
+    Key? key,
+    required this.productInfoList,
+    required this.index,
+  }) : super(key: key);
+  final dynamic productInfoList;
+  int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(AppRouts.getProductDetailPage(productInfoList[index].id!));
+      },
+      child: Container(
+        margin: EdgeInsets.all(5.0.h),
+        decoration: BoxDecoration(
+          color: Theme.of(context).splashColor,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 110.h,
+              margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: CachedNetworkImage(
+                imageUrl: AppConstents.BASE_URL +
+                    AppConstents.UPLOAD_URL +
+                    productInfoList[index].img!,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.grey[800]!,
+                  highlightColor: Colors.grey[700]!,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18.0),
+                        color: Colors.black),
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                margin: const EdgeInsets.all(10),
+                // height: 70.h,
+                width: Get.width,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      //width: 120.w,
+                      child: textWidget(
+                          text: productInfoList[index].name!,
+                          color: Theme.of(context).indicatorColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    textWidget(
+                        text: '₹ ${productInfoList[index].price!} /pair',
+                        color: Theme.of(context).indicatorColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
+                    textWidget(
+                        text: '@${productInfoList[index].breeder!}',
+                        color: Theme.of(context).indicatorColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w300),
+                  ].animate(interval: 200.ms).fade().slideY(
+                      curve: Curves.easeInOut,
+                      duration: const Duration(milliseconds: 200)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

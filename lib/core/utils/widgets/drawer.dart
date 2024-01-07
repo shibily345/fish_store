@@ -37,97 +37,102 @@ class _DrawerItemsState extends State<DrawerItems> {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       children: [
-        Get.find<AuthController>().userLogedIn()
-            ? GetBuilder<UserInfoController>(builder: (userInfo) {
-                return Column(
-                  children: [
-                    ListTile(
-                      contentPadding: EdgeInsets.only(
-                        top: 18.h,
-                      ),
-                      leading: userInfo.userModel.sellproduct == 1
-                          ? CachedNetworkImage(
-                              height: 70.h,
-                              width: 70.w,
-                              imageUrl: AppConstents.BASE_URL +
-                                  AppConstents.UPLOAD_URL +
-                                  userInfo.userModel.logo!,
-                              imageBuilder: (context, imageProvider) =>
-                                  CircleAvatar(
-                                radius: 40,
-                                backgroundImage: imageProvider,
-                              ),
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Shimmer.fromColors(
-                                baseColor: Colors.grey[800]!,
-                                highlightColor: Colors.grey[700]!,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      color: Colors.black),
-                                ),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            )
-                          : const CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              child: Icon(Icons.person)),
-                      subtitle: textWidget(
-                          text: userInfo.userModel.location!,
-                          color:
-                              Theme.of(context).indicatorColor.withOpacity(0.6),
-                          fontSize: 13),
-                      title: textWidget(
-                          text: userInfo.userModel.name!,
-                          color: Theme.of(context).indicatorColor,
-                          fontSize: 15),
-                      onTap: () {
-                        Get.to(() => const ProfilePage());
-                        // Handle menu item 2 press
-                      },
+        Get.find<UserInfoController>().isLoading
+            ? Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.only(
+                      top: 18.h,
                     ),
-                    if (userInfo.userModel.sellproduct == 1)
-                      ListTile(
-                        onTap: () {
-                          Get.to(() => const MyShop());
-                        },
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 23.0),
-                        title: Container(
-                          height: 80,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).splashColor,
-                              borderRadius: BorderRadius.circular(40)),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Image.asset(
-                                  'assets/bstore logos/logowhite.png',
-                                  height: 60,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                textWidget(
-                                    text: "My Shop",
-                                    color: Theme.of(context).indicatorColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                                const Icon(
-                                  Icons.add_circle_rounded,
-                                  size: 40,
-                                ),
-                              ],
+                    leading: Get.find<UserInfoController>().isLoading ||
+                            Get.find<UserInfoController>()
+                                    .userModel
+                                    .sellproduct ==
+                                1
+                        ? CachedNetworkImage(
+                            height: 70.h,
+                            width: 70.w,
+                            imageUrl: AppConstents.BASE_URL +
+                                AppConstents.UPLOAD_URL +
+                                Get.find<UserInfoController>().userModel.logo!,
+                            imageBuilder: (context, imageProvider) =>
+                                CircleAvatar(
+                              radius: 40,
+                              backgroundImage: imageProvider,
                             ),
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor: Colors.grey[800]!,
+                              highlightColor: Colors.grey[700]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    color: Colors.black),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          )
+                        : const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            child: Icon(Icons.person)),
+                    subtitle: textWidget(
+                        text:
+                            Get.find<UserInfoController>().userModel.location!,
+                        color:
+                            Theme.of(context).indicatorColor.withOpacity(0.6),
+                        fontSize: 13),
+                    title: textWidget(
+                        text: Get.find<UserInfoController>().userModel.name!,
+                        color: Theme.of(context).indicatorColor,
+                        fontSize: 15),
+                    onTap: () {
+                      Get.to(() => const ProfilePage());
+                      // Handle menu item 2 press
+                    },
+                  ),
+                  if (Get.find<UserInfoController>().userModel.sellproduct ==
+                          1 ||
+                      Get.find<UserInfoController>().isLoading)
+                    ListTile(
+                      onTap: () {
+                        Get.to(() => const MyShop());
+                      },
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 23.0),
+                      title: Container(
+                        height: 80,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).splashColor,
+                            borderRadius: BorderRadius.circular(40)),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Image.asset(
+                                'assets/bstore logos/logowhite.png',
+                                height: 60,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              textWidget(
+                                  text: "My Shop",
+                                  color: Theme.of(context).indicatorColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                              const Icon(
+                                Icons.add_circle_rounded,
+                                size: 40,
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    else
-                      Container()
-                  ],
-                );
-              })
+                      ),
+                    )
+                  else
+                    Container()
+                ],
+              )
             : Container(),
         bigSpace,
         ListTile(
@@ -254,7 +259,7 @@ class _DrawerItemsState extends State<DrawerItems> {
             size: 15,
           ),
         ),
-      ].animate(interval: 60.ms).fade().slideX(curve: Curves.easeInOutExpo),
+      ].animate(interval: 60.ms).fade().slideX(curve: Curves.easeInOut),
     );
   }
 }

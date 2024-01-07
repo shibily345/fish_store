@@ -1,4 +1,3 @@
-
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/features/store/domain/data/repository/user_repo.dart';
 import 'package:betta_store/features/store/domain/models/respones_model.dart';
@@ -55,10 +54,6 @@ class UserInfoController extends GetxController implements GetxService {
     try {
       final response = await http.put(
         Uri.parse('${AppConstents.BASE_URL}/api/v1/auth/user/$userId/update'),
-        // headers: <String, String>{
-        //   'Content-Type': 'application/json',
-        //   // Include the user's authentication token here
-        // },
         body: data,
       );
       print(

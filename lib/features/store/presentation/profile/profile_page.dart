@@ -59,7 +59,7 @@ class ProfilePage extends StatelessWidget {
               ]
                   .animate(interval: 100.ms)
                   .fade()
-                  .fadeIn(curve: Curves.easeInOutExpo),
+                  .fadeIn(curve: Curves.easeInOut),
             );
           }
         },

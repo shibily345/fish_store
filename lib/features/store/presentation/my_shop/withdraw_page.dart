@@ -136,10 +136,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
                     ],
                   ),
                 ))),
-          ]
-              .animate(interval: 100.ms)
-              .fade()
-              .fadeIn(curve: Curves.easeInOutExpo),
+          ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOut),
         ),
       ),
     );

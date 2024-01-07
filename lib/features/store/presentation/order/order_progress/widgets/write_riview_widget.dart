@@ -32,8 +32,9 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
   XFile? _image;
   // String timeWidget(String time) {
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera).then((value) {
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.gallery)
+        .then((value) {
       if (value != null) {
         _cropImage(File(value.path));
       }
@@ -63,7 +64,7 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
               ],
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: "Image Cropper",
+              toolbarTitle: "Crop Image ",
               toolbarColor: Colors.deepOrange,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.original,
@@ -118,7 +119,8 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
                             direction: Axis.horizontal,
                             //  allowHalfRating: true,
                             itemCount: 5,
-                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            itemPadding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
                             itemBuilder: (context, _) => Icon(
                               Icons.star,
                               color: Theme.of(context).primaryColor,

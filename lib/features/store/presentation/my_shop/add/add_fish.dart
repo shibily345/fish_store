@@ -97,7 +97,7 @@ class _AddBettaPageState extends State<AddBettaPage> {
               ],
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: "Image Cropper",
+              toolbarTitle: "Crop Image ",
               toolbarColor: Colors.deepOrange,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.original,
@@ -310,7 +310,7 @@ class _AddBettaPageState extends State<AddBettaPage> {
               ]
                   .animate(interval: 100.ms)
                   .fade()
-                  .fadeIn(curve: Curves.easeInOutExpo),
+                  .fadeIn(curve: Curves.easeInOut),
             ),
           ),
         ));

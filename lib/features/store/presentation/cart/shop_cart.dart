@@ -2,6 +2,7 @@ import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/no_data_page.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
+import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/features/store/domain/controller/auth_controller.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShopCartPage extends StatelessWidget {
   const ShopCartPage({super.key});
@@ -84,10 +86,18 @@ class ShopCartPage extends StatelessWidget {
                                                 ),
                                               ),
                                               placeholder: (context, url) =>
-                                                  const Center(
-                                                      child: CustomeLoader(
-                                                bg: Colors.transparent,
-                                              )),
+                                                  Shimmer.fromColors(
+                                                baseColor: Colors.grey[800]!,
+                                                highlightColor:
+                                                    Colors.grey[700]!,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              18.0),
+                                                      color: Colors.black),
+                                                ),
+                                              ),
                                               errorWidget:
                                                   (context, url, error) =>
                                                       const Icon(Icons.error),
@@ -344,9 +354,9 @@ class ShopCartPage extends StatelessWidget {
                   ]
                       .animate(interval: 100.ms)
                       .fade()
-                      .fadeIn(curve: Curves.easeInOutExpo),
+                      .slideX(curve: Curves.easeInOut),
                 )
-              : const NoDataPage(infoText: "");
+              : emptyWid(text: 'Add something to cart');
         }));
   }
 }

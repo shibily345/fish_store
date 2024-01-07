@@ -49,9 +49,16 @@ class OrderArrivedWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           textWidget(
+            text: timeWidget(order.delivered),
+            maxline: 3,
+            fontSize: 15,
+            color: Theme.of(context).indicatorColor.withOpacity(0.4),
+            fontWeight: FontWeight.w500,
+          ),
+          textWidget(
             text: "You can pickup from near or home delivery soon will get you",
             maxline: 3,
-            fontSize: 10,
+            fontSize: 13,
             color: Theme.of(context).indicatorColor.withOpacity(0.4),
             fontWeight: FontWeight.w300,
           ),

@@ -59,7 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
           () => Get.offAllNamed(AppRouts.getinitial()));
     } else {
       // Get.lazyPut(() => AuthController(authRepo: Get.find()));
-      Timer(const Duration(seconds: 3), () => Get.offAll(const OnboardingScreen()));
+      Timer(const Duration(seconds: 3),
+          () => Get.offAll(const OnboardingScreen()));
     }
   }
 
@@ -93,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 120.w,
                 ),
               ],
-            ).animate().fade().fadeIn(curve: Curves.easeInOutExpo),
+            ).animate().fade().fadeIn(curve: Curves.easeInOut),
           )
         ],
       ),

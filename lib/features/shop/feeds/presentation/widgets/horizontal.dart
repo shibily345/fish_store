@@ -1,5 +1,6 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
@@ -64,117 +65,7 @@ class _FeedsHorizontalGridState extends State<FeedsHorizontalGrid> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 230,
-                    child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.only(left: 15.w),
-                      itemCount: productInfo.feedsInfoList.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: 2.5 / 2,
-                      ),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(AppRouts.getProductDetailPage(
-                                productInfo.feedsInfoList[index].id!));
-                          },
-                          child: Container(
-                            width: 190.w,
-                            height: 250.h,
-                            margin: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).splashColor,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CachedNetworkImage(
-                                  height: 115.h,
-                                  width: 160.w,
-                                  imageUrl: AppConstents.BASE_URL +
-                                      AppConstents.UPLOAD_URL +
-                                      productInfo.feedsInfoList[index].img!,
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  placeholder: (context, url) =>
-                                      Shimmer.fromColors(
-                                    baseColor: Colors.grey[800]!,
-                                    highlightColor: Colors.grey[700]!,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(18.0),
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                                Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.w),
-                                  margin: const EdgeInsets.all(10),
-                                  width: 175.w,
-                                  height: 70.h,
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 120.w,
-                                        child: textWidget(
-                                            text: productInfo
-                                                .feedsInfoList[index].name!,
-                                            color: Theme.of(context)
-                                                .indicatorColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      textWidget(
-                                          text:
-                                              '₹ ${productInfo.feedsInfoList[index].price!} /-',
-                                          color:
-                                              Theme.of(context).indicatorColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500),
-                                      textWidget(
-                                          text: productInfo.feedsInfoList[index]
-                                                      .breeder ==
-                                                  ''
-                                              ? "@Devine_Bettas"
-                                              : '@${productInfo.feedsInfoList[index].breeder!}',
-                                          color:
-                                              Theme.of(context).indicatorColor,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w300),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  ProductTileHor(productInfoList: productInfo.feedsInfoList),
                 ],
               )
             : const CustomeLoader();

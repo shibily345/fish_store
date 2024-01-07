@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShopOrders extends StatefulWidget {
   const ShopOrders({super.key});
@@ -98,10 +99,16 @@ class _ShopOrdersState extends State<ShopOrders> {
                                           ),
                                         ),
                                         placeholder: (context, url) =>
-                                            const Center(
-                                                child: CustomeLoader(
-                                          bg: Colors.transparent,
-                                        )),
+                                            Shimmer.fromColors(
+                                          baseColor: Colors.grey[800]!,
+                                          highlightColor: Colors.grey[700]!,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                color: Colors.black),
+                                          ),
+                                        ),
                                         errorWidget: (context, url, error) =>
                                             const Icon(Icons.error),
                                       )),

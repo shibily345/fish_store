@@ -14,13 +14,13 @@ class BreedersDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200.h,
+      height: 110.h,
       width: Get.width,
       child: Stack(
         children: [
           Container(
             color: Theme.of(context).splashColor,
-            height: 160.h,
+            height: 70.h,
             width: Get.width,
           ),
           userInfo.sellproduct == 0
@@ -32,7 +32,7 @@ class BreedersDetailsWidget extends StatelessWidget {
                 )
               : Positioned(
                   left: 30.w,
-                  top: 100.h,
+                  top: 10.h,
                   child: CachedNetworkImage(
                     height: 100.h,
                     width: 100.w,
@@ -55,9 +55,17 @@ class BreedersDetailsWidget extends StatelessWidget {
                         const Icon(Icons.error),
                   ),
                 ),
+          // Positioned(
+          //     left: 20.w,
+          //     top: 50.h,
+          //     child: IconButton(
+          //         onPressed: () {
+          //           Get.back();
+          //         },
+          //         icon: const Icon(Icons.arrow_back_ios_new_rounded))),
           Positioned(
             left: 140.w,
-            top: 125.h,
+            top: 40.h,
             child: textWidget(
               text: "@${userInfo.name}",
               fontSize: 17,
@@ -66,7 +74,7 @@ class BreedersDetailsWidget extends StatelessWidget {
           ),
           Positioned(
             left: 140.w,
-            top: 165.h,
+            top: 75.h,
             child: Row(
               children: [
                 const Icon(

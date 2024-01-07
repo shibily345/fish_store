@@ -171,7 +171,7 @@ class _MyOrdersState extends State<MyOrders> {
                         ],
                       );
                     },
-                  ).animate().fade().fadeIn(curve: Curves.easeInOutExpo)
+                  ).animate().fade().slideX(curve: Curves.easeInOut)
                 : emptyWid();
           } else {
             return const LoadingShimPage();

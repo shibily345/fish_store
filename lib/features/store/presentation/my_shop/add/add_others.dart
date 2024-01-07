@@ -82,7 +82,7 @@ class _AddOtherPageState extends State<AddOtherPage> {
               ],
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: "Image Cropper",
+              toolbarTitle: "Crop Image ",
               toolbarColor: Theme.of(context).primaryColor,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.original,
@@ -298,10 +298,7 @@ class _AddOtherPageState extends State<AddOtherPage> {
             bigSpace,
             bigSpace,
             bigSpace
-          ]
-              .animate(interval: 100.ms)
-              .fade()
-              .fadeIn(curve: Curves.easeInOutExpo),
+          ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOut),
         ),
       ),
     ));

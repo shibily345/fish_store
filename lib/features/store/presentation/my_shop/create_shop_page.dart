@@ -73,7 +73,7 @@ class _CreateShopState extends State<CreateShop> {
               ],
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: "Image Cropper",
+              toolbarTitle: "Crop Image ",
               toolbarColor: const Color.fromARGB(238, 193, 190, 25),
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.original,
@@ -281,7 +281,7 @@ class _CreateShopState extends State<CreateShop> {
                   ]
                       .animate(interval: 100.ms)
                       .fade()
-                      .fadeIn(curve: Curves.easeInOutExpo),
+                      .fadeIn(curve: Curves.easeInOut),
                 ),
               ),
             ),
@@ -357,7 +357,7 @@ class StartPage extends StatelessWidget {
           ),
           bigSpace,
           const Center(child: PrivecyLabelWidget()),
-        ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOutExpo),
+        ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOut),
       ),
     );
   }

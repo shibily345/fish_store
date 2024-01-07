@@ -1,5 +1,6 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/shop/plants/presentation/controller/plants_info_controller.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PlantsGrid extends StatefulWidget {
   const PlantsGrid({super.key});
@@ -114,100 +116,9 @@ class _PlantsGridState extends State<PlantsGrid> {
                           childAspectRatio: 2 / 2.5,
                         ),
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(AppRouts.getProductDetailPage(
-                                  productInfo.plantsInfoList[index].id!));
-                            },
-                            child: Container(
-                              width: 190.w,
-                              height: 250.h,
-                              margin: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).splashColor,
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  CachedNetworkImage(
-                                    height: 105.h,
-                                    width: 160.w,
-                                    imageUrl: AppConstents.BASE_URL +
-                                        AppConstents.UPLOAD_URL +
-                                        productInfo.plantsInfoList[index].img!,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    placeholder: (context, url) => const Center(
-                                        child: CustomeLoader(
-                                      bg: Colors.transparent,
-                                    )),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                  ),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10.w),
-                                    margin: const EdgeInsets.all(10),
-                                    width: 175.w,
-                                    height: 70.h,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: 120.w,
-                                          child: textWidget(
-                                              text: productInfo
-                                                  .plantsInfoList[index].name!,
-                                              color: Theme.of(context)
-                                                  .indicatorColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        textWidget(
-                                            text:
-                                                '₹ ${productInfo.plantsInfoList[index].price!} /-',
-                                            color: Theme.of(context)
-                                                .indicatorColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500),
-                                        textWidget(
-                                            text: productInfo
-                                                        .plantsInfoList[index]
-                                                        .breeder ==
-                                                    ''
-                                                ? "@Devine_Bettas"
-                                                : '@${productInfo.plantsInfoList[index].breeder!}',
-                                            color: Theme.of(context)
-                                                .indicatorColor,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w300),
-                                      ],
-                                    ),
-                                  ),
-                                ]
-                                    .animate(interval: 250.ms)
-                                    .fade()
-                                    .slideY(curve: Curves.easeInOut),
-                              ),
-                            ),
-                          );
+                          return ProductTileGrid(
+                              productInfoList: productInfo.plantsInfoList,
+                              index: index);
                         },
                       ),
                     ),

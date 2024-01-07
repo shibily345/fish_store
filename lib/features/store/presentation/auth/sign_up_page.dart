@@ -174,7 +174,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ]
                       .animate(interval: 100.ms)
                       .fade()
-                      .fadeIn(curve: Curves.easeInOutExpo),
+                      .fadeIn(curve: Curves.easeInOut),
                 )),
           ),
         );

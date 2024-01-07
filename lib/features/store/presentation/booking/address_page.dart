@@ -296,7 +296,7 @@ class _AddressPageState extends State<AddressPage> {
               ]
                   .animate(interval: 100.ms)
                   .fade()
-                  .fadeIn(curve: Curves.easeInOutExpo),
+                  .fadeIn(curve: Curves.easeInOut),
             ),
           ),
         ));

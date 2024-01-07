@@ -177,9 +177,7 @@ class _AllProductHorizontalGridState extends State<AllProductHorizontalGrid> {
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500),
                                     textWidget(
-                                        text: allProducts[index].breeder == ''
-                                            ? "@Devine_Bettas"
-                                            : '@${allProducts[index].breeder!}',
+                                        text: '@${allProducts[index].breeder!}',
                                         color: Theme.of(context).indicatorColor,
                                         fontSize: 10,
                                         fontWeight: FontWeight.w300),

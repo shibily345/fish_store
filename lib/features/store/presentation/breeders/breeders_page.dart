@@ -23,9 +23,11 @@ class _BreedersPageState extends State<BreedersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: const Icon(Icons.shopping_cart_rounded),
           title: textWidget(
-            text: "Breeders ",
-            fontSize: 17,
+            text: "Shops ",
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
             color: Theme.of(context).indicatorColor,
           ),
         ),
