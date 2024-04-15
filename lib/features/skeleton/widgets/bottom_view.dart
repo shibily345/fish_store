@@ -1,7 +1,7 @@
-import 'package:betta_store/features/store/presentation/breeders/breeders_page.dart';
-import 'package:betta_store/features/store/presentation/cart/shop_cart.dart';
-import 'package:betta_store/features/store/presentation/home/home.dart';
-import 'package:betta_store/features/store/presentation/profile/profile_page.dart';
+import 'package:betta_store/features/Pages/presentation/breeders/breeders_page.dart';
+import 'package:betta_store/features/Pages/presentation/cart/shop_cart.dart';
+import 'package:betta_store/features/Pages/presentation/home/home.dart';
+import 'package:betta_store/features/Pages/presentation/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';

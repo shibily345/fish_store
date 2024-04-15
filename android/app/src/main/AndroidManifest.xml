@@ -4,7 +4,7 @@
    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
    <uses-permission android:name="android.permission.CAMERA" /> 
     <application
-        android:label="betta_store"
+        android:label="Betta Store(beta)"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
@@ -54,9 +54,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
+        <meta-data 
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1634533782017400~9400751794"/>
            
 </application>
+
 <queries>
   <!-- If your app checks for SMS support -->
             <intent>
@@ -73,4 +76,6 @@
               <action android:name="android.support.customtabs.action.CustomTabsService" />
             </intent>
  </queries>     
+
 </manifest>
+  

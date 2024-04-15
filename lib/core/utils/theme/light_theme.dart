@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
-
 ThemeData lightTheme(BuildContext context) {
   return ThemeData(
-      primaryColorLight: const Color.fromARGB(255, 221, 220, 220),
-      primaryColor: const Color.fromARGB(255, 196, 124, 0),
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.amber,
+        brightness: Brightness.light,
+      ),
+      primaryColorLight: Color.fromARGB(255, 245, 208, 148),
+      primaryColor: Color.fromARGB(255, 142, 90, 1),
       primarySwatch: Colors.amber,
       indicatorColor: const Color.fromARGB(255, 0, 0, 0),
-      splashColor: const Color.fromARGB(255, 255, 240, 205),
+      splashColor: Color.fromARGB(222, 242, 235, 224),
       shadowColor: const Color.fromARGB(255, 233, 227, 194),
-      scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: Colors.transparent,
         elevation: 0,

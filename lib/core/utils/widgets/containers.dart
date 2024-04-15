@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/shop/betta_fishes/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -272,11 +272,21 @@ class ProductTileHor extends StatelessWidget {
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700),
                           ),
-                          textWidget(
-                              text: '₹ ${productInfoList[index].price!} /pair',
-                              color: Theme.of(context).indicatorColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
+                          if (productInfoList[index].typeId != 4 &&
+                              productInfoList[index].typeId != 6)
+                            textWidget(
+                                text:
+                                    '₹ ${productInfoList[index].price!} /${productInfoList[index].video!} ',
+                                color: Theme.of(context).indicatorColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500)
+                          else
+                            textWidget(
+                                text:
+                                    '₹ ${productInfoList[index].price!} /pair',
+                                color: Theme.of(context).indicatorColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
                           textWidget(
                               text: '@${productInfoList[index].breeder!}',
                               color: Theme.of(context).indicatorColor,
@@ -388,6 +398,103 @@ class ProductTileGrid extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ProductTileLoading extends StatelessWidget {
+  const ProductTileLoading({
+    Key? key,
+  }) : super(key: key);
+  // final dynamic productInfoList;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 240.h,
+      child: GridView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(left: 10.w),
+        itemCount: 5,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          childAspectRatio: 2.5 / 2, // Number of columns
+        ),
+        itemBuilder: (context, index) {
+          return Container(
+            margin: EdgeInsets.all(5.0.h),
+            decoration: BoxDecoration(
+              color: Theme.of(context).splashColor,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: 130.h,
+                  margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[800]!,
+                    highlightColor: Colors.grey[700]!,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18.0),
+                          color: Colors.black),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    margin: const EdgeInsets.all(10),
+                    // height: 70.h,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10.h,
+                          width: 120.w,
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey[800]!,
+                            highlightColor: Colors.grey[700]!,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                         // width: 120.w,
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey[800]!,
+                            highlightColor: Colors.grey[700]!,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

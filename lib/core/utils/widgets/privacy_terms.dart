@@ -1,5 +1,5 @@
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/store/presentation/contact_about/tos_pp_page.dart';
+import 'package:betta_store/features/Pages/presentation/contact_about/tos_pp_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

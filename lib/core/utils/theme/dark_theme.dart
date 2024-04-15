@@ -4,8 +4,15 @@ import 'constants.dart';
 
 ThemeData darkTheme(BuildContext context) {
   return ThemeData(
+    useMaterial3: true,
+
+    // Define the default brightness and colors.
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.amber,
+      brightness: Brightness.dark,
+    ),
     brightness: Brightness.dark,
-    primaryColorLight: Colors.grey,
+    primaryColorLight: Color.fromARGB(255, 125, 82, 2),
     primaryColorDark: const Color.fromARGB(255, 0, 0, 0),
     primaryColor: const Color(0xFFE8BD70),
     primarySwatch: Colors.yellow,

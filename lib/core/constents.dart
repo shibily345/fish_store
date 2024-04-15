@@ -1,8 +1,9 @@
 class AppConstents {
   static const String APP_NAME = "BettaStore";
   static const int APP_VERSION = 1;
-  static const String BASE_URL = "http://54.79.200.242/public";
+  static const String BASE_URL = "http://192.168.100.30:8000";
   static const String PRODUCT_URI = "/api/v1/products/popular";
+  static const String allProductUri = "/api/v1/products/all";
   static const String Betta_Fish_URI = "/api/v1/products/betta";
   static const String Plants_URI = "/api/v1/products/plant";
   static const String OtherFishes_URI = "/api/v1/products/otherfish";
