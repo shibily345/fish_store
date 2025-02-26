@@ -27,8 +27,8 @@ class AuthController extends GetxController implements GetxService {
   }
 
   Future<ResponesModel> login(String phone, String password) async {
-    print("Getting -----------------------token");
-    print("${authRepo.getUserToken()}=======================");
+    // print("Getting -----------------------token");
+    // print("${authRepo.getUserToken()}=======================");
     _isLoading = true;
     update();
     Response response = await authRepo.login(phone, password);

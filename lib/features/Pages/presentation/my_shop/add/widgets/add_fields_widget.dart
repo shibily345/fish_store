@@ -197,7 +197,7 @@ class _AddFielsWidgetsState extends State<AddFielsWidgets> {
             color: Theme.of(context).scaffoldBackgroundColor,
           ),
           Padding(
-            padding: EdgeInsets.all(5.0.w),
+            padding: const EdgeInsets.all(5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -207,10 +207,13 @@ class _AddFielsWidgetsState extends State<AddFielsWidgets> {
                     color: Theme.of(context).indicatorColor,
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
-                textWidget(
-                  text: "(optional)",
-                  color: Theme.of(context).indicatorColor.withOpacity(0.4),
-                  fontSize: 12,
+                SizedBox(
+                  width: 50,
+                  child: textWidget(
+                    text: "(optional)",
+                    color: Theme.of(context).indicatorColor.withOpacity(0.4),
+                    fontSize: 12,
+                  ),
                 ),
                 smallwidth,
                 SizedBox(

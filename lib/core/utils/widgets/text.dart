@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marquee/marquee.dart';
 
 Widget textWidget(
     {required String text,
@@ -19,34 +18,6 @@ Widget textWidget(
         color: color,
         decoration: TextDecoration.none),
   );
-}
-
-class autsctext extends StatelessWidget {
-  final String text;
-  final double width;
-  const autsctext({super.key, required this.text, required this.width});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 20,
-      width: width,
-      child: Marquee(
-        text: text,
-        style: const TextStyle(fontSize: 16.0),
-        scrollAxis: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        blankSpace: 20.0,
-        velocity: 70.0,
-        pauseAfterRound: const Duration(seconds: 2),
-        startPadding: 10.0,
-        accelerationDuration: const Duration(seconds: 2),
-        accelerationCurve: Curves.linear,
-        decelerationDuration: const Duration(milliseconds: 500),
-        decelerationCurve: Curves.easeOut,
-      ),
-    );
-  }
 }
 
 class RichTextWidget extends StatelessWidget {

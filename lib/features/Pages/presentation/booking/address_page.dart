@@ -3,7 +3,9 @@ import 'package:betta_store/features/Pages/domain/models/address_model.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/Pages/presentation/booking/confirm_book.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -113,6 +115,12 @@ class _AddressPageState extends State<AddressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
+        bottomNavigationBar: Container(
+          child: kIsWeb
+              ? const SizedBox()
+              : BannerAdWId(
+                  unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(12.0.w),

@@ -4,6 +4,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'dart:io' show Platform;
 
 class NativeAdWidget extends StatefulWidget {
+  const NativeAdWidget({super.key});
+
   @override
   _NativeAdWidgetState createState() => _NativeAdWidgetState();
 }
@@ -18,8 +20,8 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: _nativeAdIsLoaded && nativeAd != null
-            ? Container(width: 250, height: 350, child: AdWidget(ad: nativeAd))
-            : SizedBox());
+            ? SizedBox(width: 250, height: 350, child: AdWidget(ad: nativeAd))
+            : const SizedBox());
   }
 
   @override
@@ -30,7 +32,7 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
       adUnitId: Platform.isAndroid
           ? 'ca-app-pub-3940256099942544/2247696110'
           : 'ca-app-pub-1634533782017400/3717180277',
-      request: AdRequest(),
+      request: const AdRequest(),
       factoryId: 'adFactoryExample',
       listener: NativeAdListener(
         onAdLoaded: (Ad ad) {

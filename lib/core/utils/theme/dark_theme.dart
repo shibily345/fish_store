@@ -11,8 +11,9 @@ ThemeData darkTheme(BuildContext context) {
       seedColor: Colors.amber,
       brightness: Brightness.dark,
     ),
+    highlightColor: Colors.white,
     brightness: Brightness.dark,
-    primaryColorLight: Color.fromARGB(255, 125, 82, 2),
+    primaryColorLight: const Color.fromARGB(255, 125, 82, 2),
     primaryColorDark: const Color.fromARGB(255, 0, 0, 0),
     primaryColor: const Color(0xFFE8BD70),
     primarySwatch: Colors.yellow,
@@ -38,7 +39,7 @@ ThemeData darkTheme(BuildContext context) {
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
             foregroundColor:
-                MaterialStateColor.resolveWith((states) => primaryColor))),
+                WidgetStateColor.resolveWith((states) => primaryColor))),
     dialogTheme: DialogTheme(
       surfaceTintColor: primaryColor,
       iconColor: primaryColor,

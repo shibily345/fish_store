@@ -1,5 +1,7 @@
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/products/presentation/all/widgets/vertical_grid.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,10 @@ class AllProductsPage extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.w700),
         ),
+        bottomNavigationBar: kIsWeb
+            ? const SizedBox()
+            : BannerAdWId(
+                unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
         body: const Padding(
           padding: EdgeInsets.all(18.0),
           child: AllProductsGrid(),

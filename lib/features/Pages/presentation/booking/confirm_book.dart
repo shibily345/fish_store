@@ -10,7 +10,9 @@ import 'package:betta_store/features/Pages/domain/controller/order_controller.da
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/Pages/domain/models/place_order_model.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,6 +90,10 @@ class ConfirmBook extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.w500),
         ),
+        bottomNavigationBar: kIsWeb
+            ? const SizedBox()
+            : BannerAdWId(
+                unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
         body: Column(
           children: [
             GetBuilder<AddressInfoController>(builder: (

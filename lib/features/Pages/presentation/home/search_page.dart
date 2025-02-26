@@ -1,17 +1,13 @@
-import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SerachPage extends StatefulWidget {
   const SerachPage({super.key});
@@ -56,6 +52,10 @@ class _SerachPageState extends State<SerachPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: kIsWeb
+          ? const SizedBox()
+          : BannerAdWId(
+              unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
       body: NestedScrollView(
           clipBehavior: Clip.antiAlias,
           physics: const BouncingScrollPhysics(),
@@ -148,18 +148,7 @@ class _SerachPageState extends State<SerachPage> {
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0.w),
             child: _foundResults.isNotEmpty
-                ? GridView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: _foundResults.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 2 / 2.5,
-                    ),
-                    itemBuilder: (context, index) {
-                      return ProductTileGrid(
-                          productInfoList: _foundResults, index: index);
-                    })
+                ? ProductTileGrid(productInfoList: _foundResults)
                 : const SerchTile(),
           )),
     );
@@ -175,11 +164,19 @@ class SerchTile extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(top: 18.0),
         child: Center(
-          child: textWidget(
-              text: 'Search product not availeble',
-              color: Theme.of(context).indicatorColor,
-              fontSize: 10,
-              fontWeight: FontWeight.w300),
+          child: Column(
+            children: [
+              textWidget(
+                  text: 'Search product not availeble',
+                  color: Theme.of(context).indicatorColor,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w300),
+              kIsWeb
+                  ? const SizedBox()
+                  : BannerAdWId(
+                      unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
+            ],
+          ),
         ));
   }
 }

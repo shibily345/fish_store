@@ -1,4 +1,5 @@
 import 'package:betta_store/core/constents.dart';
+import 'package:betta_store/features/Pages/presentation/ads/ad_controller.dart';
 import 'package:betta_store/features/products/data/repositories/product_info_repo.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/ad_list_controller.dart';
@@ -44,6 +45,7 @@ Future<void> init() async {
 //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => AdlistController(adListRepo: Get.find()));
+  Get.lazyPut(() => IntsAdController());
   Get.lazyPut(() => UserInfoController(userRepo: Get.find()));
   Get.lazyPut(() => ProductInfoController(productInfoRepo: Get.find()));
 

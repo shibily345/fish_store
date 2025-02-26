@@ -5,10 +5,11 @@ import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/privacy_terms.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-
-import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/add/suucess_add_page.dart';
+import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,16 +53,12 @@ class _CreateShopState extends State<CreateShop> {
 
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(
-        cropStyle: CropStyle.circle,
-        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        // cropStyle: CropStyle.circle,
+        // aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
         sourcePath: imgFile.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-              ]
-            : [
-                CropAspectRatioPreset.square,
-              ],
+        aspectRatio: Platform.isAndroid
+            ? const CropAspectRatio(ratioX: 4, ratioY: 3)
+            : const CropAspectRatio(ratioX: 4, ratioY: 3),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "Crop Image ",
@@ -114,6 +111,10 @@ class _CreateShopState extends State<CreateShop> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
+      bottomNavigationBar: kIsWeb
+          ? const SizedBox()
+          : BannerAdWId(
+              unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
       body: SizedBox(
         // height: 740,
         child: PageView(
@@ -272,21 +273,21 @@ class _CreateShopState extends State<CreateShop> {
                             label: "Submit")),
                     bigSpace,
                     bigSpace,
-                    Divider(),
+                    const Divider(),
                     bigSpace,
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.check_circle_outline),
                       title: Text('Verify Your Name'),
                       subtitle: Text(
                           'Please ensure your name is correctly entered as it cannot be modified later due to security reasons.'),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.photo),
                       title: Text('Profile Picture Guidelines'),
                       subtitle: Text(
                           'Upload a proper profile picture or your original logo. Ensure there is no nudity to comply with our guidelines.'),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.payment),
                       title: Text('Manage UPI ID and Profile Picture'),
                       subtitle: Text(

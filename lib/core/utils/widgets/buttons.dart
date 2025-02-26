@@ -15,7 +15,8 @@ class SimpleButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).primaryColor, // Background color
+        backgroundColor:
+            Theme.of(context).primaryColorLight, // Background color
         foregroundColor: Theme.of(context).splashColor,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10)), // Text color
@@ -23,7 +24,7 @@ class SimpleButton extends StatelessWidget {
       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       //primery: Theme.of(context).splashColor,
       child: textWidget(
-          text: label, color: Theme.of(context).primaryColorDark, fontSize: 16),
+          text: label, color: Theme.of(context).primaryColor, fontSize: 16),
     );
   }
 }
@@ -32,7 +33,8 @@ class CustomMaterialButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const CustomMaterialButton({super.key, required this.text, required this.onPressed});
+  const CustomMaterialButton(
+      {super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

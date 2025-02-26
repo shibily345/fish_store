@@ -38,7 +38,7 @@ class _ItemsGridState extends State<ItemsGrid> {
           .where((product) => product.typeId == 7)
           .toList();
 
-      void _sortData(SortOption selectedOption) {
+      void sortData(SortOption selectedOption) {
         setState(() {
           switch (selectedOption) {
             case SortOption.priceHighToLow:
@@ -78,7 +78,7 @@ class _ItemsGridState extends State<ItemsGrid> {
                       onTap: () {
                         setState(() {
                           _selectedSortOption = option;
-                          _sortData(_selectedSortOption);
+                          sortData(_selectedSortOption);
                         });
                       },
                       child: Padding(
@@ -109,19 +109,7 @@ class _ItemsGridState extends State<ItemsGrid> {
                 ),
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: items.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2 / 2.5, // Number of columns
-                ),
-                itemBuilder: (context, index) {
-                  return ProductTileGrid(productInfoList: items, index: index);
-                },
-              ),
-            ),
+            Expanded(child: ProductTileGrid(productInfoList: items)),
           ].animate(interval: 300.ms).fade().fadeIn(curve: Curves.easeInOut),
         ),
       );

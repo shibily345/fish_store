@@ -1,3 +1,4 @@
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 
 import 'package:betta_store/core/utils/widgets/spaces.dart';
@@ -14,6 +15,7 @@ import 'package:betta_store/features/Pages/presentation/order/order_progress/wid
 import 'package:betta_store/features/Pages/presentation/order/order_progress/widgets/order_accepted_widget.dart';
 import 'package:betta_store/features/Pages/presentation/order/order_progress/widgets/own_review.dart';
 import 'package:betta_store/features/Pages/presentation/order/order_progress/widgets/processing_widget.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -53,6 +55,12 @@ class _OrderProgressPageState extends State<OrderProgressPage> {
     return order.canceled == null
         ? Scaffold(
             appBar: AppBar(),
+            bottomNavigationBar: Container(
+              child: kIsWeb
+                  ? const SizedBox()
+                  : BannerAdWId(
+                      unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
+            ),
             body: GetBuilder<OrderController>(builder: (orderController) {
               return order.canceled == null
                   ? SingleChildScrollView(

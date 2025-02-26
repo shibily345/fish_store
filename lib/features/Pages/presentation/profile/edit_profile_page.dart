@@ -4,10 +4,10 @@ import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/add/suucess_add_page.dart';
 import 'package:betta_store/features/Pages/presentation/profile/widgets/edit_fields_widget.dart';
+import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,24 +42,9 @@ class _EditProfileState extends State<EditProfile> {
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(
         sourcePath: imgFile.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9
-              ]
-            : [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio5x3,
-                CropAspectRatioPreset.ratio5x4,
-                CropAspectRatioPreset.ratio7x5,
-                CropAspectRatioPreset.ratio16x9
-              ],
+        aspectRatio: Platform.isAndroid
+            ? const CropAspectRatio(ratioX: 4, ratioY: 3)
+            : const CropAspectRatio(ratioX: 4, ratioY: 3),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "Crop Image ",

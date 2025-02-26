@@ -2,8 +2,11 @@ import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -48,16 +51,18 @@ class _WithdrawPageState extends State<WithdrawPage> {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             textWidget(
-                text:
-                    'Withdraw money:   ₹  ${amount.toInt() - donation.toInt()}.0',
+                text: 'Withdraw: ₹ ${amount.toInt() - donation.toInt()}.0',
                 color: Theme.of(context).indicatorColor,
                 fontSize: 15),
             const SizedBox(
               height: 16.0,
             ),
-            SimpleButton(
-              onPress: () {},
-              label: "Withdraw now",
+            SizedBox(
+              width: 150.w,
+              child: SimpleButton(
+                onPress: () {},
+                label: "Withdraw now",
+              ),
             ),
           ]),
         ),
@@ -136,6 +141,11 @@ class _WithdrawPageState extends State<WithdrawPage> {
                     ],
                   ),
                 ))),
+            smallSpace,
+            kIsWeb
+                ? const SizedBox()
+                : BannerAdWId(
+                    unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
           ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOut),
         ),
       ),

@@ -26,7 +26,7 @@ class _SignInPageState extends State<SignInPage> {
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    void _login(AuthController auth) {
+    void login(AuthController auth) {
       String phone = phoneController.text.trim();
       String password = passwordController.text.trim();
       if (phone.isEmpty) {
@@ -90,7 +90,7 @@ class _SignInPageState extends State<SignInPage> {
                   builder: (auth) {
                     return MaterialButton(
                       onPressed: () {
-                        _login(auth);
+                        login(auth);
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40)),

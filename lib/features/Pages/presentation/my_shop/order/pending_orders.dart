@@ -4,9 +4,11 @@ import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/Pages/domain/controller/order_controller.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/Pages/presentation/home/widgets/shimmer_loading.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/order/order_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -49,6 +51,10 @@ class _PendingOrdersState extends State<PendingOrders> {
               fontSize: 16,
               fontWeight: FontWeight.bold),
         ),
+        bottomNavigationBar: kIsWeb
+            ? const SizedBox()
+            : BannerAdWId(
+                unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
         body: GetBuilder<OrderController>(builder: (
           orders,
         ) {

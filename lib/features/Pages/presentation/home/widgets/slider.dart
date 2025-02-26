@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AdSliders extends StatefulWidget {
-  const AdSliders({super.key});
-
+  AdSliders({super.key, this.height});
+  double? height;
   @override
   State<AdSliders> createState() => _AdSlidersState();
 }
@@ -49,8 +49,8 @@ class _AdSlidersState extends State<AdSliders> {
         children: [
           ad.ads.isNotEmpty
               ? SizedBox(
-                  height: 200.0,
-                  width: Get.width,
+                  height: widget.height ?? 200.0,
+                  //  width: Get.width,
                   child: PageView.builder(
                     itemCount: ad.ads.length,
                     controller: _pageController,
@@ -108,7 +108,7 @@ class _AdSlidersState extends State<AdSliders> {
             }
             return Center(
               child: SizedBox(
-                height: Curves.easeInOut.transform(value) * 200.0,
+                height: widget.height ?? 200.0,
                 width: Curves.easeInOut.transform(value) *
                     Get.width, // Adjust the width as needed
                 child: child,

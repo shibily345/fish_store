@@ -1,6 +1,7 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
@@ -8,6 +9,7 @@ import 'package:betta_store/features/Pages/domain/controller/user_Info_controlle
 import 'package:betta_store/features/Pages/presentation/my_shop/add/suucess_add_page.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,6 +49,10 @@ class _EditProductPageState extends State<EditProductPage> {
           )
         ],
       ),
+      bottomNavigationBar: kIsWeb
+          ? const SizedBox()
+          : BannerAdWId(
+              unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         children: [

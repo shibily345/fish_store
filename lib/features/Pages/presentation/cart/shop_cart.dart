@@ -1,15 +1,15 @@
 import 'package:betta_store/core/constents.dart';
-import 'package:betta_store/core/no_data_page.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/features/Pages/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/cart_controller.dart';
 
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -352,6 +352,11 @@ class ShopCartPage extends StatelessWidget {
                     }),
                     const Divider(),
                     bigSpace,
+                    kIsWeb
+                        ? const SizedBox()
+                        : BannerAdWId(
+                            unitIdAndroid:
+                                "ca-app-pub-1634533782017400/3914305606"),
                     bigSpace,
                   ]
                       .animate(interval: 100.ms)

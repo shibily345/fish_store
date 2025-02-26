@@ -28,11 +28,11 @@ class _BannerAdWIdState extends State<BannerAdWId> {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: _bannerAdIsLoaded && bannerAd != null && !kIsWeb
-            ? Container(
+            ? SizedBox(
                 height: bannerAd.size.height.toDouble(),
                 width: bannerAd.size.width.toDouble(),
                 child: AdWidget(ad: bannerAd))
-            : SizedBox());
+            : const SizedBox());
   }
 
   @override
@@ -59,7 +59,7 @@ class _BannerAdWIdState extends State<BannerAdWId> {
           onAdOpened: (Ad ad) => print('$BannerAd onAdOpened.'),
           onAdClosed: (Ad ad) => print('$BannerAd onAdClosed.'),
         ),
-        request: AdRequest())
+        request: const AdRequest())
       ..load();
   }
 

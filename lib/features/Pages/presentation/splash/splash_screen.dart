@@ -4,12 +4,13 @@ import 'package:betta_store/core/constents.dart';
 
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/features/Pages/domain/data/repository/auth_repo.dart';
+import 'package:betta_store/features/Pages/presentation/ads/ad_controller.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/ad_list_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/cart_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/order_controller.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:betta_store/features/Pages/domain/data/repository/cart_repo.dart';
 import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
@@ -38,11 +39,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _logInto() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(AppConstents.TOKEN)) {
+    if (kIsWeb) {
+      Get.lazyPut(() => ProductInfoController(productInfoRepo: Get.find()));
+      Get.lazyPut(() => CartRepository(sharedPreferences: Get.find()));
+      Get.lazyPut(() => CartController(cartRepo: Get.find()));
+
+      Get.lazyPut(() => AdlistController(adListRepo: Get.find()));
+      Get.lazyPut(() => IntsAdController());
+      loadResources();
+      Timer(const Duration(seconds: 3),
+          () => Get.offAllNamed(AppRouts.getinitial()));
+    } else if (prefs.containsKey(AppConstents.TOKEN)) {
       Get.lazyPut(() => CartRepository(sharedPreferences: Get.find()));
       Get.lazyPut(() => CartController(cartRepo: Get.find()));
       Get.lazyPut(() => ProductInfoController(productInfoRepo: Get.find()));
       Get.lazyPut(() => AdlistController(adListRepo: Get.find()));
+      Get.lazyPut(() => IntsAdController());
       Get.lazyPut(() => OrderController(orderRepo: Get.find()));
       loadResources();
       Get.find<AuthController>().updateToken();
@@ -65,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Positioned(
             bottom: 380.h,
-            left: 120.w,
+            left: MediaQuery.of(context).size.width * 0.47,
             child: Center(
               child: Image.asset(
                 color: Theme.of(context).indicatorColor,
@@ -76,18 +88,18 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           Positioned(
             bottom: 40.h,
-            left: 150.w,
+            left: MediaQuery.of(context).size.width * 0.49,
             child: Column(
               children: [
                 textWidget(
                   text: "From",
                   color: Theme.of(context).indicatorColor.withOpacity(0.5),
-                  fontSize: ScreenUtil().setSp(16),
+                  fontSize: 16,
                 ),
                 Image.asset(
                   color: Theme.of(context).indicatorColor,
                   "assets/bstore logos/C-logo.png",
-                  width: 120.w,
+                  width: 120,
                 ),
               ],
             ).animate().fade().fadeIn(curve: Curves.easeInOut),

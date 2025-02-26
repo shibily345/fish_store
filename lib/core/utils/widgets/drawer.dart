@@ -5,6 +5,7 @@ import 'package:betta_store/features/Pages/domain/controller/address_Info_contro
 import 'package:betta_store/features/Pages/domain/controller/auth_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/cart_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
+import 'package:betta_store/features/Pages/presentation/ads/ad_controller.dart';
 import 'package:betta_store/features/Pages/presentation/contact_about/about_us_page.dart';
 import 'package:betta_store/features/Pages/presentation/contact_about/contact_us_page.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/my_shop.dart';
@@ -17,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconly/iconly.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DrawerItems extends StatefulWidget {
@@ -140,8 +141,9 @@ class _DrawerItemsState extends State<DrawerItems> {
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
           onTap: () {
             Get.to(() => const MyOrders());
+            Get.find<IntsAdController>().showInterstitialAd();
           },
-          leading: const Icon(Iconsax.wallet),
+          leading: const Icon(IconlyBroken.wallet),
           title: textWidget(
               text: "My Orders",
               color: Theme.of(context).indicatorColor,
@@ -156,7 +158,7 @@ class _DrawerItemsState extends State<DrawerItems> {
             Get.toNamed(AppRouts.cartPage);
           },
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
-          leading: const Icon(Iconsax.shopping_cart),
+          leading: const Icon(IconlyBroken.buy),
           title: textWidget(
               text: "My Cart",
               color: Theme.of(context).indicatorColor,
@@ -211,7 +213,7 @@ class _DrawerItemsState extends State<DrawerItems> {
                     },
                     label: 'Cancel'));
           },
-          leading: const Icon(Iconsax.logout),
+          leading: const Icon(IconlyBroken.logout),
           title: textWidget(
               text: "Log Out",
               color: Theme.of(context).indicatorColor,
@@ -232,7 +234,7 @@ class _DrawerItemsState extends State<DrawerItems> {
             Get.to(() => const ContactUsPage());
           },
           contentPadding: EdgeInsets.only(top: 8.h, left: 15.w),
-          leading: const Icon(Iconsax.support),
+          leading: const Icon(IconlyBroken.chat),
           title: textWidget(
               text: "Contact us",
               color: Theme.of(context).indicatorColor,

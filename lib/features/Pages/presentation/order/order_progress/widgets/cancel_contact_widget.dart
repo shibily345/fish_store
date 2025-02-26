@@ -81,19 +81,15 @@ class CancellOrContactWidget extends StatelessWidget {
                                     (user) => user.name == order.sellerId,
                                   );
 
-                              if (breedersList != null) {
-                                if (user != null && user.fcmToken != null) {
-                                  String token = user.fcmToken!;
-                                  NotificationHelper.sendPushNotification(
-                                      token,
-                                      "Your Order Cancelled by User for ${detailsController.text}",
-                                      "Order cancelled");
-                                } else {
-                                  print(
-                                      "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                                }
+                              if (user != null && user.fcmToken != null) {
+                                String token = user.fcmToken!;
+                                NotificationHelper.sendPushNotification(
+                                    token,
+                                    "Your Order Cancelled by User for ${detailsController.text}",
+                                    "Order cancelled");
                               } else {
-                                // Handle the case where breedersList is null
+                                print(
+                                    "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                               }
                               orderController.calncellCoriour(
                                   order.id, detailsController.text);

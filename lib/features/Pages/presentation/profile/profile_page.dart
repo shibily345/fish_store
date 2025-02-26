@@ -5,8 +5,10 @@ import 'package:betta_store/features/Pages/domain/controller/auth_controller.dar
 import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/Pages/presentation/profile/widgets/option_tiles.dart';
 import 'package:betta_store/features/Pages/presentation/profile/widgets/user_details.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -32,7 +34,13 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         UserDetailsWidget(userInfo: userInfo.userModel),
                         const OptionTilesWidget(),
-                        const Center(child: PrivecyLabelWidget())
+                        kIsWeb
+                            ? const SizedBox()
+                            : BannerAdWId(
+                                unitIdAndroid:
+                                    "ca-app-pub-1634533782017400/3914305606"),
+                        const Center(child: PrivecyLabelWidget()),
+                        bigSpace
                       ],
                     ),
                   )
@@ -41,8 +49,9 @@ class ProfilePage extends StatelessWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Lottie.asset('assets/ui_elementsbgon/login.json'),
-                smallSpace,
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: Lottie.asset('assets/ui_elementsbgon/login.json')),
                 Center(
                     child: MaterialButton(
                   height: 60,

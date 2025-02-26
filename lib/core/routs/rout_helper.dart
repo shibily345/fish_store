@@ -9,8 +9,8 @@ import 'package:betta_store/features/Pages/presentation/my_shop/add/add_others.d
 import 'package:betta_store/features/Pages/presentation/my_shop/details/edit_product.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/details/my_product_details.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/order/order_detail.dart';
-import 'package:betta_store/features/Pages/presentation/product_detils/detile_screen.dart';
 import 'package:betta_store/features/Pages/presentation/order/order_progress/order_progress_page.dart';
+import 'package:betta_store/features/Pages/presentation/product_detils/main_sc.dart';
 import 'package:betta_store/features/Pages/presentation/splash/splash_screen.dart';
 import 'package:betta_store/features/skeleton/skeleton.dart';
 
@@ -75,7 +75,7 @@ class AppRouts {
         name: fishDetails,
         page: () {
           var pageId = Get.parameters['pageId'];
-          return FishDetilsPage(pageId: int.parse(pageId!));
+          return ProductDetailsscreen(pageId: int.parse(pageId!));
         },
         transition: Transition.rightToLeft,
         transitionDuration: const Duration(milliseconds: 300)

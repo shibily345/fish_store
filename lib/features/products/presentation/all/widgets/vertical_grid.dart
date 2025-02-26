@@ -34,7 +34,7 @@ class _AllProductsGridState extends State<AllProductsGrid> {
     return GetBuilder<ProductInfoController>(builder: (
       productInfo,
     ) {
-      void _sortData(SortOption selectedOption) {
+      void sortData(SortOption selectedOption) {
         setState(() {
           switch (selectedOption) {
             case SortOption.priceHighToLow:
@@ -74,7 +74,7 @@ class _AllProductsGridState extends State<AllProductsGrid> {
                       onTap: () {
                         setState(() {
                           _selectedSortOption = option;
-                          _sortData(_selectedSortOption);
+                          sortData(_selectedSortOption);
                         });
                       },
                       child: Padding(
@@ -106,20 +106,8 @@ class _AllProductsGridState extends State<AllProductsGrid> {
               ),
             ),
             Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: productInfo.productInfoList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2 / 2.5, // Number of columns
-                ),
-                itemBuilder: (context, index) {
-                  return ProductTileGrid(
-                      productInfoList: productInfo.productInfoList,
-                      index: index);
-                },
-              ),
-            ),
+                child: ProductTileGrid(
+                    productInfoList: productInfo.productInfoList)),
           ].animate(interval: 300.ms).fade().fadeIn(curve: Curves.easeInOut),
         ),
       );

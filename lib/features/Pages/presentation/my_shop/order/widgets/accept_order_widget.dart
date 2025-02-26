@@ -97,19 +97,15 @@ class AcceptOrderWidget extends StatelessWidget {
                               (user) => user.id == order.userId,
                             );
 
-                    if (breedersList != null) {
-                      if (user != null && user.fcmToken != null) {
-                        String token = user.fcmToken!;
-                        NotificationHelper.sendPushNotification(
-                            token,
-                            "Your Order accepted by seller pay now And contineu ",
-                            "Order accepted");
-                      } else {
-                        print(
-                            "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                      }
+                    if (user != null && user.fcmToken != null) {
+                      String token = user.fcmToken!;
+                      NotificationHelper.sendPushNotification(
+                          token,
+                          "Your Order accepted by seller pay now And contineu ",
+                          "Order accepted");
                     } else {
-                      // Handle the case where breedersList is null
+                      print(
+                          "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                     }
 
                     Navigator.of(context).pop();

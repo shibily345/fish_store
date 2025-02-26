@@ -2,24 +2,22 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:betta_store/core/dependencies.dart';
-import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
-import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
-
-import 'package:betta_store/features/Pages/domain/models/products_model.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
+import 'package:betta_store/features/Pages/domain/models/products_model.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/details/widgets/edit_fields_widget.dart';
-
+import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_thumbnail_video/video_thumbnail.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 class EditMainProductPage extends StatefulWidget {
   const EditMainProductPage({super.key, required this.pageId});
@@ -69,24 +67,9 @@ class _EditMainProductPageState extends State<EditMainProductPage> {
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(
         sourcePath: imgFile.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9
-              ]
-            : [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio5x3,
-                CropAspectRatioPreset.ratio5x4,
-                CropAspectRatioPreset.ratio7x5,
-                CropAspectRatioPreset.ratio16x9
-              ],
+        aspectRatio: Platform.isAndroid
+            ? const CropAspectRatio(ratioX: 4, ratioY: 3)
+            : const CropAspectRatio(ratioX: 4, ratioY: 3),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "Crop Image ",
@@ -114,20 +97,15 @@ class _EditMainProductPageState extends State<EditMainProductPage> {
       final thumbnailPath = await VideoThumbnail.thumbnailFile(
         video: pickedFile.path,
         thumbnailPath: (await getTemporaryDirectory()).path,
-        imageFormat: ImageFormat.JPEG,
         maxHeight: 100,
         quality: 50,
       );
 
       setState(() {
-        if (pickedFile != null) {
-          _thumbnailPath = thumbnailPath!;
-          _video = pickedFile;
-          print(_video);
-          print("------------------");
-        } else {
-          print('No image selected.');
-        }
+        _thumbnailPath = thumbnailPath.path;
+        _video = pickedFile;
+        print(_video);
+        print("------------------");
       });
     }
   }

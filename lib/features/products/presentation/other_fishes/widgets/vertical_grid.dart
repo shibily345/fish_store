@@ -38,7 +38,7 @@ class _OtherFishesGridState extends State<OtherFishesGrid> {
           .where((product) => product.typeId == 6)
           .toList();
 
-      void _sortData(SortOption selectedOption) {
+      void sortData(SortOption selectedOption) {
         setState(() {
           switch (selectedOption) {
             case SortOption.priceHighToLow:
@@ -78,7 +78,7 @@ class _OtherFishesGridState extends State<OtherFishesGrid> {
                       onTap: () {
                         setState(() {
                           _selectedSortOption = option;
-                          _sortData(_selectedSortOption);
+                          sortData(_selectedSortOption);
                         });
                       },
                       child: Padding(
@@ -109,20 +109,7 @@ class _OtherFishesGridState extends State<OtherFishesGrid> {
                 ),
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: otherFishes.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2 / 2.5, // Number of columns
-                ),
-                itemBuilder: (context, index) {
-                  return ProductTileGrid(
-                      productInfoList: otherFishes, index: index);
-                },
-              ),
-            ),
+            Expanded(child: ProductTileGrid(productInfoList: otherFishes)),
           ].animate(interval: 300.ms).fade().fadeIn(curve: Curves.easeInOut),
         ),
       );

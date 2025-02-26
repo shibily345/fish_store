@@ -1,20 +1,18 @@
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:betta_store/core/dependencies.dart';
 import 'package:betta_store/core/helper/notification.dart';
-
-import 'package:betta_store/features/Pages/domain/controller/auth_controller.dart';
-import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/Pages/presentation/my_shop/add/suucess_add_page.dart';
-
-import 'package:betta_store/features/Pages/domain/models/products_model.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
-
-import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/features/Pages/domain/controller/auth_controller.dart';
+import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
+import 'package:betta_store/features/Pages/domain/models/products_model.dart';
+import 'package:betta_store/features/Pages/presentation/my_shop/add/suucess_add_page.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/add/widgets/add_other_fields_widget%20copy.dart';
+import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,24 +57,9 @@ class _AddOtherPageState extends State<AddOtherPage> {
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(
         sourcePath: imgFile.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9
-              ]
-            : [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio5x3,
-                CropAspectRatioPreset.ratio5x4,
-                CropAspectRatioPreset.ratio7x5,
-                CropAspectRatioPreset.ratio16x9
-              ],
+        aspectRatio: Platform.isAndroid
+            ? const CropAspectRatio(ratioX: 4, ratioY: 3)
+            : const CropAspectRatio(ratioX: 4, ratioY: 3),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "Crop Image ",
@@ -116,7 +99,7 @@ class _AddOtherPageState extends State<AddOtherPage> {
     final FocusNode malePriceFocus = FocusNode();
     final FocusNode femalePriceFocus = FocusNode();
     final FocusNode ageFocus = FocusNode();
-    _adddiscription() async {
+    adddiscription() async {
       String name = _nameController.text.trim();
       String discription = _discriptionController.text.trim();
       String pairPrice = _pairPriceController.text.trim();
@@ -272,7 +255,7 @@ class _AddOtherPageState extends State<AddOtherPage> {
                 height: 50.h,
                 child: MaterialButton(
                   onPressed: () {
-                    _adddiscription();
+                    adddiscription();
                     loadResources();
                   },
                   shape: RoundedRectangleBorder(

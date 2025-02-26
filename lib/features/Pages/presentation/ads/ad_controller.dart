@@ -18,7 +18,7 @@ class IntsAdController extends GetxController implements GetxService {
         adUnitId: Platform.isAndroid
             ? 'ca-app-pub-1634533782017400/7630632213'
             : 'ca-app-pub-3940256099942544/4411468910',
-        request: AdRequest(),
+        request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
             print('$ad loaded');

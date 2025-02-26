@@ -1,7 +1,6 @@
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/custom.dart';
-import 'package:betta_store/core/utils/widgets/loading.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/Pages/domain/controller/order_controller.dart';
 import 'package:betta_store/features/Pages/presentation/home/widgets/shimmer_loading.dart';

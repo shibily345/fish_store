@@ -44,24 +44,9 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(
         sourcePath: imgFile.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9
-              ]
-            : [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio5x3,
-                CropAspectRatioPreset.ratio5x4,
-                CropAspectRatioPreset.ratio7x5,
-                CropAspectRatioPreset.ratio16x9
-              ],
+        aspectRatio: Platform.isAndroid
+            ? const CropAspectRatio(ratioX: 4, ratioY: 3)
+            : const CropAspectRatio(ratioX: 4, ratioY: 3),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "Crop Image ",
@@ -99,95 +84,100 @@ class _WriteAreviewWidgetState extends State<WriteAreviewWidget> {
                 builder: (BuildContext context, setState) {
                   return AlertDialog(
                     title: const Text('Review '),
-                    content: ListView(
-                      shrinkWrap: true,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisSize: MainAxisSize.min,
-                      children: [
-                        textWidget(
-                            text: 'Swipe to rate',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            color: Theme.of(context).indicatorColor),
-                        Padding(
-                          padding: const EdgeInsets.all(18.0),
-                          child: RatingBar.builder(
-                            glow: true,
-                            glowColor: Theme.of(context).primaryColor,
-                            initialRating: 0,
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            //  allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Theme.of(context).primaryColor,
-                              size: 15,
-                            ),
-                            onRatingUpdate: (rating) {
-                              setState(() {
-                                ratingOn = rating;
-                              });
-                              print(ratingOn);
-                            },
-                            itemSize: 30,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            _pickImage();
-                            setState(() {});
-                          },
-                          child: Container(
-                              width: 80,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                // border: Border.all(),
-                                color: Theme.of(context).splashColor,
-                                borderRadius: BorderRadius.circular(10),
+                    content: SizedBox(
+                      height: Get.height * 0.6,
+                      width: Get.width * 0.95,
+                      child: ListView(
+                        shrinkWrap: true,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                          textWidget(
+                              text: 'Swipe to rate',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).indicatorColor),
+                          Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: RatingBar.builder(
+                              glow: true,
+                              glowColor: Theme.of(context).primaryColor,
+                              initialRating: 0,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              //  allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Theme.of(context).primaryColor,
+                                size: 15,
                               ),
-                              child: Container(
-                                  child: _image == null
-                                      ? const Icon(
-                                          Iconsax.image,
-                                          size: 40,
-                                        )
-                                      : Image.file(File(_image!.path)))),
-                        ),
-                        smallSpace,
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).splashColor,
+                              onRatingUpdate: (rating) {
+                                setState(() {
+                                  ratingOn = rating;
+                                });
+                                print(ratingOn);
+                              },
+                              itemSize: 30,
                             ),
-                            borderRadius: BorderRadius.circular(20),
                           ),
-                          height: 60,
-                          width: Get.width,
-                          child: TextFormField(
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            expands: true,
-                            style: TextStyle(
-                                color: Theme.of(context).indicatorColor),
-                            controller: detailsController,
-                            decoration: InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context).primaryColorLight),
-                                hintText: 'Write review',
-                                // prefixIcon: Icon(
-                                //   Icons.home,
-                                //   color: Colors.grey,
-                                // ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                border: InputBorder.none),
+                          InkWell(
+                            onTap: () {
+                              _pickImage();
+                              setState(() {});
+                            },
+                            child: Container(
+                                width: 80,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  // border: Border.all(),
+                                  color: Theme.of(context).splashColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Container(
+                                    child: _image == null
+                                        ? const Icon(
+                                            Iconsax.image,
+                                            size: 40,
+                                          )
+                                        : Image.file(File(_image!.path)))),
                           ),
-                        ),
-                      ],
+                          smallSpace,
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).splashColor,
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            height: 60,
+                            width: Get.width,
+                            child: TextFormField(
+                              textInputAction: TextInputAction.next,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                              expands: true,
+                              style: TextStyle(
+                                  color: Theme.of(context).indicatorColor),
+                              controller: detailsController,
+                              decoration: InputDecoration(
+                                  hintStyle: TextStyle(
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                  hintText: 'Write review',
+                                  // prefixIcon: Icon(
+                                  //   Icons.home,
+                                  //   color: Colors.grey,
+                                  // ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  border: InputBorder.none),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     actions: <Widget>[
                       TextButton(

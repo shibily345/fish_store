@@ -3,20 +3,20 @@ import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/buttons.dart';
 import 'package:betta_store/features/Pages/domain/controller/order_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
+import 'package:betta_store/features/Pages/presentation/my_shop/add_page.dart';
 
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
-import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/loading.dart';
-import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/withdraw_page.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/create_shop_page.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/order/shop_orders_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class MyShop extends StatefulWidget {
   const MyShop({super.key});
@@ -57,7 +57,7 @@ class _MyShopState extends State<MyShop> {
                         padding: const EdgeInsets.all(10),
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Container(
                               width: Get.width,
                               height: 60,
@@ -124,188 +124,32 @@ class _MyShopState extends State<MyShop> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                bottom: 18.0.h,
-                                left: 8.w,
-                                right: 7.w,
-                                top: 18.h),
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(AppRouts.getAddBettaPage(4));
-                                  },
-                                  child: BlurImageContainer(
-                                      image: "assets/ui_elementsbgon/b2.png",
-                                      width: Get.width * 0.47,
-                                      height: 200.h,
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            smallwidth,
-                                            const Icon(
-                                              Iconsax.add_circle,
-                                              color: Colors.white,
-                                              size: 26,
-                                            ),
-                                            textWidget(
-                                                text: "Betta Fish",
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
-                                            smallwidth,
-                                          ],
-                                        ),
-                                      )),
+                          ListTile(
+                            onTap: () {
+                              Get.to(() => const ProductAddPage());
+                            },
+                            title: Center(
+                              child: Container(
+                                width: Get.width,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Theme.of(context).splashColor),
+                                child: Center(
+                                  child: textWidget(
+                                      text: "Add Products ",
+                                      color: Theme.of(context).indicatorColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
                                 ),
-                                smallwidth,
-                                Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(
-                                            AppRouts.getAddBettaPage(6));
-                                      },
-                                      child: BlurImageContainer(
-                                          image:
-                                              "assets/ui_elementsbgon/koisfishes.jpeg",
-                                          width: Get.width * 0.4,
-                                          height: 100.h,
-                                          child: Container(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                smallwidth,
-                                                const Icon(
-                                                  Iconsax.add_circle,
-                                                  color: Colors.white,
-                                                  size: 26,
-                                                ),
-                                                textWidget(
-                                                    text: "Other Fishes",
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                smallwidth,
-                                              ],
-                                            ),
-                                          )),
-                                    ),
-                                    smallSpace,
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(
-                                            AppRouts.getAddOthersPage(5));
-                                      },
-                                      child: BlurImageContainer(
-                                          image:
-                                              "assets/ui_elementsbgon/aquaplants.jpeg",
-                                          width: Get.width * 0.4,
-                                          height: 90.h,
-                                          child: Container(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                smallwidth,
-                                                const Icon(
-                                                  Iconsax.add_circle,
-                                                  color: Colors.white,
-                                                  size: 26,
-                                                ),
-                                                textWidget(
-                                                    text: "Aqua plants",
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                smallwidth,
-                                              ],
-                                            ),
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              bottom: 18.0.h,
-                              left: 8.w,
-                              right: 7.w,
-                            ),
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(AppRouts.getAddOthersPage(7));
-                                  },
-                                  child: BlurImageContainer(
-                                      image: "assets/ui_elementsbgon/tank1.jpg",
-                                      width: Get.width * 0.47,
-                                      height: 60.h,
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            smallwidth,
-                                            const Icon(
-                                              Iconsax.add_circle,
-                                              color: Colors.white,
-                                              size: 26,
-                                            ),
-                                            textWidget(
-                                                text: "Aqua Items",
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
-                                            smallwidth,
-                                          ],
-                                        ),
-                                      )),
-                                ),
-                                smallwidth,
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(AppRouts.getAddOthersPage(8));
-                                  },
-                                  child: BlurImageContainer(
-                                      image:
-                                          "assets/ui_elementsbgon/feedsof.jpg",
-                                      width: Get.width * 0.4,
-                                      height: 60.h,
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            smallwidth,
-                                            const Icon(
-                                              Iconsax.add_circle,
-                                              color: Colors.white,
-                                              size: 26,
-                                            ),
-                                            textWidget(
-                                                text: "Fish feeds",
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
-                                            smallwidth,
-                                          ],
-                                        ),
-                                      )),
-                                ),
-                                smallSpace,
-                              ],
-                            ),
-                          ),
+                          kIsWeb
+                              ? const SizedBox()
+                              : BannerAdWId(
+                                  unitIdAndroid:
+                                      "ca-app-pub-1634533782017400/3914305606"),
                           Padding(
                             padding: EdgeInsets.only(
                                 bottom: 18.0.h,
@@ -388,7 +232,12 @@ class _MyShopState extends State<MyShop> {
                                     )),
                               );
                             },
-                          )
+                          ),
+                          kIsWeb
+                              ? const SizedBox()
+                              : BannerAdWId(
+                                  unitIdAndroid:
+                                      "ca-app-pub-1634533782017400/3914305606"),
                         ]
                             .animate(interval: 100.ms)
                             .fade()

@@ -1,8 +1,10 @@
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/Pages/presentation/auth/reset_password.dart';
 import 'package:betta_store/features/Pages/presentation/contact_about/about_us_page.dart';
 import 'package:betta_store/features/Pages/presentation/contact_about/tos_pp_page.dart';
 import 'package:betta_store/features/Pages/presentation/profile/edit_profile_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -26,6 +28,10 @@ class _SettingsPageState extends State<SettingsPage> {
             fontSize: 16,
             text: 'Settings'),
       ),
+      bottomNavigationBar: kIsWeb
+          ? const SizedBox()
+          : BannerAdWId(
+              unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
       body: ListView(
         children: [
           ListTile(
@@ -93,6 +99,8 @@ class _SettingsPageState extends State<SettingsPage> {
               Get.to(() => const AboutUsPage());
             },
           ),
+          // SizedBox(
+          //     height: 400, width: Get.width, child: NativeTemplateExample())
         ].animate(interval: 100.ms).fade().fadeIn(curve: Curves.easeInOut),
       ),
     );

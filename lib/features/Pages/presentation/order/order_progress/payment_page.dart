@@ -6,7 +6,6 @@ import 'package:betta_store/features/Pages/domain/controller/user_Info_controlle
 import 'package:betta_store/features/Pages/domain/models/user_model.dart';
 import 'package:betta_store/features/Pages/presentation/booking/placed_page.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/order/widgets/product_detail.dart';
-import 'package:easy_upi_payment/easy_upi_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -29,31 +28,17 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  TransactionDetailModel? res;
-  @override
-  void initState() {
-    super.initState();
-    if (res != null) {
-      print(
-          "---------------${res!.responseCode}-====-=-==========================------------------------==========-=-===-=-");
-    }
-  }
-
   late Razorpay _razorpay;
 
   Future<void> makePay() async {
-    res = await EasyUpiPaymentPlatform.instance.startPayment(
-      EasyUpiPaymentModel(
-        payeeVpa: '8943047476@paytm',
-        payeeName: 'Betta Store',
-        amount: widget.order.deliveryCharge + widget.order.orderAmount,
-        description: 'Testing payment',
-      ),
-    );
-    print(
-        "---------------${res!.responseCode}-====-=-==========================------------------------==========-=-===-=-");
-    // TODO: add your success logic here
-    print(res);
+    // res = await EasyUpiPaymentPlatform.instance.startPayment(
+    //   EasyUpiPaymentModel(
+    //     payeeVpa: '8943047476@paytm',
+    //     payeeName: 'Betta Store',
+    //     amount: widget.order.deliveryCharge + widget.order.orderAmount,
+    //     description: 'Testing payment',
+    //   ),
+    // );
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {

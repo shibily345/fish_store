@@ -1,6 +1,7 @@
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/ad_controller.dart';
 import 'package:betta_store/features/Pages/presentation/order/order_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -47,6 +48,7 @@ class _OrderPlacedState extends State<OrderPlaced> {
                   minWidth: 150,
                   onPressed: () {
                     Get.toNamed(AppRouts.getinitial());
+                    Get.find<IntsAdController>().showInterstitialAd();
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
@@ -61,6 +63,7 @@ class _OrderPlacedState extends State<OrderPlaced> {
                   minWidth: 150,
                   onPressed: () {
                     Get.to(() => const MyOrders());
+                    Get.find<IntsAdController>().showInterstitialAd();
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),

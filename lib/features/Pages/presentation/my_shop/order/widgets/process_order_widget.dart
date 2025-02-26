@@ -134,19 +134,15 @@ class _ProcessOrderWidgetState extends State<ProcessOrderWidget> {
                               (user) => user.id == widget.order.userId,
                             );
 
-                    if (breedersList != null) {
-                      if (user != null && user.fcmToken != null) {
-                        String token = user.fcmToken!;
-                        NotificationHelper.sendPushNotification(
-                            token,
-                            "Your Order redy to ship and it delivered on${dateWidget(selectedDate.toString())}",
-                            "Order packed");
-                      } else {
-                        print(
-                            "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                      }
+                    if (user != null && user.fcmToken != null) {
+                      String token = user.fcmToken!;
+                      NotificationHelper.sendPushNotification(
+                          token,
+                          "Your Order redy to ship and it delivered on${dateWidget(selectedDate.toString())}",
+                          "Order packed");
                     } else {
-                      // Handle the case where breedersList is null
+                      print(
+                          "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                     }
                     // Handle the entered details (detailsController.text)
                     widget.orderController.processOrder(

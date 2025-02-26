@@ -1,7 +1,7 @@
 class AppConstents {
   static const String APP_NAME = "BettaStore";
   static const int APP_VERSION = 1;
-  static const String BASE_URL = "http://192.168.100.30:8000";
+  static const String BASE_URL = "http://192.168.1.3:8000";
   static const String PRODUCT_URI = "/api/v1/products/popular";
   static const String allProductUri = "/api/v1/products/all";
   static const String Betta_Fish_URI = "/api/v1/products/betta";
@@ -36,3 +36,4 @@ class AppConstents {
   static const String Cart_list = "cart-list";
   static const String Cart_history_list = "cart-history-list";
 }
+// php artisan serve --host=192.168.1.3 --port=8000

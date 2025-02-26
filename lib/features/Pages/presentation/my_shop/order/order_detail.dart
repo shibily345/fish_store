@@ -1,4 +1,5 @@
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 
 import 'package:betta_store/core/utils/widgets/spaces.dart';
@@ -11,6 +12,7 @@ import 'package:betta_store/features/Pages/presentation/my_shop/order/widgets/or
 import 'package:betta_store/features/Pages/presentation/my_shop/order/widgets/process_order_widget.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/order/widgets/product_detail.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/order/widgets/send_order_widget.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +45,10 @@ class _ShopsOrderPageState extends State<ShopsOrderPage> {
     return order.canceled == null
         ? Scaffold(
             appBar: AppBar(),
+            bottomNavigationBar: kIsWeb
+                ? const SizedBox()
+                : BannerAdWId(
+                    unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
             body: GetBuilder<OrderController>(builder: (orderController) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),

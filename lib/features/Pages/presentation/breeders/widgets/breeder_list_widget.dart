@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
@@ -7,11 +5,11 @@ import 'package:betta_store/core/utils/widgets/text.dart';
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BreederListWidget extends StatefulWidget {
@@ -22,14 +20,6 @@ class BreederListWidget extends StatefulWidget {
 }
 
 class _BreederListWidgetState extends State<BreederListWidget> {
-  BannerAd? _bannerAd;
-  bool _bannerAdIsLoaded = false;
-
-  AdManagerBannerAd? _adManagerBannerAd;
-  bool _adManagerBannerAdIsLoaded = false;
-
-  NativeAd? _nativeAd;
-  bool _nativeAdIsLoaded = false;
   @override
   void initState() {
     Get.find<UserInfoController>().getBreedersList();
@@ -58,7 +48,14 @@ class _BreederListWidgetState extends State<BreederListWidget> {
                     .length, // Replace with the number of items you have
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 2) {
-                    return BannerAdWId();
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: kIsWeb
+                          ? const SizedBox()
+                          : BannerAdWId(
+                              unitIdAndroid:
+                                  "ca-app-pub-1634533782017400/8869446281"),
+                    );
                   }
 
                   // Replace this with your grid item widget

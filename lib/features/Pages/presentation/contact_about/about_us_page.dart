@@ -2,7 +2,7 @@ import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:iconly/iconly.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUsPage extends StatelessWidget {
@@ -94,7 +94,7 @@ class AboutUsPage extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    const Icon(Iconsax.instagram),
+                    const Icon(IconlyBroken.info_circle),
                     smallwidth,
                     Text(
                       '- Follow us on Instagram',

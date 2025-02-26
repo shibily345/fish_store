@@ -1,5 +1,7 @@
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,12 +41,16 @@ Widget emptyWid({
         child: Center(
           child: Image.asset(
             image,
-            color: Colors.white.withOpacity(0.4),
+            color: Colors.grey.withOpacity(0.4),
           ),
         ),
       ),
-      textWidget(text: text, color: Colors.white.withOpacity(0.3)),
+      textWidget(text: text, color: Colors.grey.withOpacity(0.3)),
       bigSpace,
+      kIsWeb
+          ? const SizedBox()
+          : BannerAdWId(
+              unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
     ],
   ));
 }

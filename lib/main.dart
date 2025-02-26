@@ -1,21 +1,21 @@
+import 'package:betta_store/core/dependencies.dart' as dep;
 import 'package:betta_store/core/helper/notification.dart';
 import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
+import 'package:betta_store/core/utils/theme/light_theme.dart';
 import 'package:betta_store/features/Pages/domain/controller/ad_list_controller.dart';
+import 'package:betta_store/features/Pages/domain/controller/cart_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/order_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
-import 'package:betta_store/features/Pages/domain/controller/cart_controller.dart';
-
-import 'package:google_mobile_ads/google_mobile_ads.dart' as ad;
-import 'package:betta_store/core/dependencies.dart' as dep;
-import 'package:betta_store/core/utils/theme/light_theme.dart';
+import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart' as ad;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/utils/theme/dark_theme.dart';
@@ -47,7 +47,13 @@ Future<void> main() async {
   } catch (e) {
     debugPrint(e.toString());
   }
-  runApp(const MyApp());
+  runApp(DevicePreview(
+      enabled: false,
+      tools: const [
+        ...DevicePreview.defaultTools,
+        // CustomPlugin(),
+      ],
+      builder: (context) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -56,6 +62,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.find<CartController>().getCartData();
+
     return ScreenUtilInit(
         designSize: const Size(411.4, 843.4),
         builder: (_, child) {
@@ -67,7 +74,6 @@ class MyApp extends StatelessWidget {
             return GetMaterialApp(
               themeMode: ThemeMode.system,
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
               theme: lightTheme(context),
               darkTheme: darkTheme(context),
               initialRoute: AppRouts.getSplash(),

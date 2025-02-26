@@ -30,51 +30,45 @@ class _PlantsHorizontalGridState extends State<PlantsHorizontalGrid> {
       List<dynamic> plants = productInfo.productInfoList
           .where((product) => product.typeId == 5)
           .toList();
-      return productInfo.productInfoList.isNotEmpty
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                smallSpace,
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    height: 30.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        textWidget(
-                            text: "Plants",
-                            color: Theme.of(context)
-                                .indicatorColor
-                                .withOpacity(0.6),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => const PlantsPage());
-                          },
-                          child: textWidget(
-                              text: "See all >",
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          smallSpace,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              height: 30.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  textWidget(
+                      text: "Plants",
+                      color: Theme.of(context).indicatorColor.withOpacity(0.6),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const PlantsPage());
+                    },
+                    child: textWidget(
+                        text: "See all >",
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
                   ),
-                ),
-                !productInfo.isLoaded
-                    ? ProductTileLoading()
-                    : ProductTileHor(productInfoList: plants),
-              ],
-            )
-          : Center(
-              child: Container(),
-            );
+                ],
+              ),
+            ),
+          ),
+          productInfo.productInfoList.isEmpty
+              ? const ProductTileLoading()
+              : ProductTileHor(productInfoList: plants),
+        ],
+      );
     });
   }
 }

@@ -49,7 +49,7 @@ class AppRouter {
       case initial:
         return MaterialPageRoute(
           //  settings: ,
-          builder: (_) => Skeleton(),
+          builder: (_) => const Skeleton(),
         );
       default:
         throw const RouteException('Route not found!');

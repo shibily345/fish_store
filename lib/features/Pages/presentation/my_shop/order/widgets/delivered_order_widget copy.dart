@@ -88,19 +88,15 @@ class DeliveredOrderWidget extends StatelessWidget {
                               (user) => user.id == order.userId,
                             );
 
-                    if (breedersList != null) {
-                      if (user != null && user.fcmToken != null) {
-                        String token = user.fcmToken!;
-                        NotificationHelper.sendPushNotification(
-                            token,
-                            "Your order succesfully arrived near you ",
-                            "Order delivered");
-                      } else {
-                        print(
-                            "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                      }
+                    if (user != null && user.fcmToken != null) {
+                      String token = user.fcmToken!;
+                      NotificationHelper.sendPushNotification(
+                          token,
+                          "Your order succesfully arrived near you ",
+                          "Order delivered");
                     } else {
-                      // Handle the case where breedersList is null
+                      print(
+                          "its nulll not workingOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                     }
                     orderController.deliveredCoriour(
                       order.id,

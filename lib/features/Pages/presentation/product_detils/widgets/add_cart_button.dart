@@ -1,15 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:betta_store/core/routs/rout_helper.dart';
-import 'package:betta_store/features/Pages/domain/models/products_model.dart';
-import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
+import 'dart:io';
+
+import 'package:betta_store/features/Pages/presentation/ads/ad_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/theme/constants.dart';
+import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/domain/models/products_model.dart';
+import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 
 class AddToCartButton extends StatefulWidget {
   ProductModel thisProduct;
@@ -61,7 +65,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 // height: _expanded ? 280.0.h : 50.0,
-                width: _expanded ? 210.0.w : 210.0.w,
+                width: _expanded ? 210.0 : 210.0,
                 decoration: BoxDecoration(
                     boxShadow: const [
                       BoxShadow(
@@ -71,7 +75,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                         // shadow direction: bottom right
                       )
                     ],
-                    color: theme.primaryColorLight,
+                    color: theme.highlightColor,
                     borderRadius: BorderRadius.circular(40.h)),
                 child: _expanded
                     ? ListView(
@@ -84,19 +88,19 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 12.0.w),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
                                   child: widget.thisProduct.typeId == 4 ||
                                           widget.thisProduct.typeId == 6
                                       ? textWidget(
                                           text: "Pair",
                                           fontSize: 12,
-                                          color: theme.primaryColor,
+                                          color: theme.primaryColorDark,
                                           fontWeight: FontWeight.w600)
                                       : textWidget(
                                           text: widget.thisProduct.video!,
                                           fontSize: 12,
-                                          color: theme.primaryColor,
+                                          color: theme.primaryColorDark,
                                           fontWeight: FontWeight.w600),
                                 ),
                                 const SizedBox(
@@ -142,11 +146,11 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                         child: textWidget(
                                             text: "Male",
                                             fontSize: 12,
-                                            color: theme.primaryColor,
+                                            color: theme.primaryColorDark,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      SizedBox(
-                                        width: 15.w,
+                                      const SizedBox(
+                                        width: 15,
                                       ),
                                       IconButton(
                                         onPressed: () {
@@ -189,7 +193,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                         child: textWidget(
                                             text: "Female",
                                             fontSize: 12,
-                                            color: theme.primaryColor,
+                                            color: theme.primaryColorDark,
                                             fontWeight: FontWeight.w600),
                                       ),
                                       IconButton(
@@ -232,7 +236,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                   CircleAvatar(
                                     radius: 25,
                                     child: FloatingActionButton(
-                                        backgroundColor: theme.primaryColor,
+                                        backgroundColor: theme.indicatorColor,
                                         onPressed: () {
                                           print(productInfo.exist);
                                           if (totel != 0) {
@@ -241,6 +245,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                           setState(() {
                                             productInfo.addItem(
                                                 widget.thisProduct, totel);
+                                            Get.find<IntsAdController>()
+                                                .showInterstitialAd();
                                           });
 
                                           productInfo.exist
@@ -248,7 +254,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                               : _toggleExpanded();
                                         },
                                         child: Icon(
-                                          color: theme.splashColor,
+                                          color: theme.primaryColorDark,
                                           Iconsax.login_1,
                                           size: 30,
                                         )),
@@ -266,7 +272,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                         child: Padding(
                         padding: const EdgeInsets.all(14.0),
                         child: textWidget(
-                            color: theme.primaryColor,
+                            color: theme.primaryColorDark,
                             text: productInfo.exist || _added
                                 ? "Check it out "
                                 : "Put in bag",

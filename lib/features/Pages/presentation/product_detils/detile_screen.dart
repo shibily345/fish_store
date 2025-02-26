@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:betta_store/core/helper/notification.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
 import 'package:betta_store/features/Pages/domain/models/products_model.dart';
 import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
@@ -13,19 +11,17 @@ import 'package:betta_store/features/products/presentation/controller/product_in
 
 import 'package:betta_store/features/Pages/domain/controller/cart_controller.dart';
 import 'package:betta_store/features/Pages/domain/controller/review_controller.dart';
-import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
 
 import 'package:betta_store/features/Pages/presentation/product_detils/widgets/detile_slides.dart';
 import 'package:betta_store/features/Pages/presentation/product_detils/widgets/review_box.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 import 'package:betta_store/core/utils/widgets/text.dart';
-import 'package:betta_store/core/utils/theme/constants.dart';
 
 class FishDetilsPage extends StatefulWidget {
   int pageId;
@@ -270,6 +266,11 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                       SizedBox(
                         height: 20.w,
                       ),
+                      kIsWeb
+                          ? const SizedBox()
+                          : BannerAdWId(
+                              unitIdAndroid:
+                                  "ca-app-pub-1634533782017400/4085939186"),
                       bigSpace,
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 18.0.w),
@@ -305,12 +306,14 @@ class _FishDetilsPageState extends State<FishDetilsPage> {
                         child: ReviweBoxWidget(id: widget.pageId),
                       ),
                       bigSpace,
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 18.0.w),
-                        child: BannerAdWId(),
-                      ),
+                      kIsWeb ? const SizedBox() : BannerAdWId(),
                       const RecommendedProductsHorizontalGrid(),
                       const BettaFishHorizontalGrid(),
+                      kIsWeb
+                          ? const SizedBox()
+                          : BannerAdWId(
+                              unitIdAndroid:
+                                  "ca-app-pub-1634533782017400/4085939186"),
                       bigSpace,
                       bigSpace
                     ]

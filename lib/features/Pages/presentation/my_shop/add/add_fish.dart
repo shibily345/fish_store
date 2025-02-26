@@ -14,16 +14,15 @@ import 'package:betta_store/features/Pages/domain/models/products_model.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/add/suucess_add_page.dart';
 import 'package:betta_store/features/Pages/presentation/my_shop/add/widgets/add_fields_widget.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_thumbnail_video/video_thumbnail.dart' as vid;
 import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AddBettaPage extends StatefulWidget {
   const AddBettaPage({super.key, required this.pageId});
@@ -73,24 +72,9 @@ class _AddBettaPageState extends State<AddBettaPage> {
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(
         sourcePath: imgFile.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.ratio16x9
-              ]
-            : [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio5x3,
-                CropAspectRatioPreset.ratio5x4,
-                CropAspectRatioPreset.ratio7x5,
-                CropAspectRatioPreset.ratio16x9
-              ],
+        aspectRatio: Platform.isAndroid
+            ? const CropAspectRatio(ratioX: 4, ratioY: 3)
+            : const CropAspectRatio(ratioX: 4, ratioY: 3),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "Crop Image ",
@@ -115,16 +99,15 @@ class _AddBettaPageState extends State<AddBettaPage> {
     final pickedFile =
         await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
-      final thumbnailPath = await VideoThumbnail.thumbnailFile(
+      final thumbnailPath = await vid.VideoThumbnail.thumbnailFile(
         video: pickedFile.path,
         thumbnailPath: (await getTemporaryDirectory()).path,
-        imageFormat: ImageFormat.JPEG,
         maxHeight: 100,
         quality: 50,
       );
 
       setState(() {
-        _thumbnailPath = thumbnailPath!;
+        _thumbnailPath = thumbnailPath.path;
         _video = pickedFile;
         print(_video);
         print("------------------");

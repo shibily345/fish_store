@@ -29,52 +29,45 @@ class _AllProductsHorizontalGridState extends State<AllProductsHorizontalGrid> {
     return GetBuilder<ProductInfoController>(builder: (
       productInfo,
     ) {
-      return productInfo.isLoaded
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                smallSpace,
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    height: 30.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        textWidget(
-                            text: "All Products",
-                            color: Theme.of(context)
-                                .indicatorColor
-                                .withOpacity(0.6),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => const AllProductsPage());
-                          },
-                          child: textWidget(
-                              text: "See all >",
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          smallSpace,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              height: 30.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  textWidget(
+                      text: "All Products",
+                      color: Theme.of(context).indicatorColor.withOpacity(0.6),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const AllProductsPage());
+                    },
+                    child: textWidget(
+                        text: "See all >",
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
                   ),
-                ),
-                !productInfo.isLoaded
-                    ? ProductTileLoading()
-                    : ProductTileHor(
-                        productInfoList: productInfo.productInfoList),
-              ],
-            )
-          : Center(
-              child: Container(),
-            );
+                ],
+              ),
+            ),
+          ),
+          productInfo.productInfoList.isEmpty
+              ? const ProductTileLoading()
+              : ProductTileHor(productInfoList: productInfo.productInfoList),
+        ],
+      );
     });
   }
 }

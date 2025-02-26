@@ -131,6 +131,18 @@ class ProductInfoController extends GetxController {
     update();
   }
 
+  void buyItem(ProductModel product, double priceInTotal) {
+    if (_totelQuantity > 0) {
+      _cart.addItem(product, _totelQuantity, _quantity, _maleQuantity,
+          _feQuantity, priceInTotal);
+      _resetQuantities();
+      _printCartItems();
+    } else {
+      Get.snackbar("Attention", 'No quantity selected');
+    }
+    update();
+  }
+
   void _printCartItems() {
     _cart.items.forEach((key, value) {
       print(

@@ -1,19 +1,15 @@
-import 'package:betta_store/core/constents.dart';
 import 'package:betta_store/core/dependencies.dart';
-import 'package:betta_store/core/routs/rout_helper.dart';
 import 'package:betta_store/core/utils/widgets/containers.dart';
 import 'package:betta_store/core/utils/widgets/spaces.dart';
-import 'package:betta_store/core/utils/widgets/text.dart';
+import 'package:betta_store/features/Pages/presentation/ads/google_ads.dart';
 import 'package:betta_store/features/products/presentation/controller/product_info_controller.dart';
 
 import 'package:betta_store/features/Pages/domain/controller/user_Info_controller.dart';
 import 'package:betta_store/features/Pages/presentation/breeders/widgets/breeder_details.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 class BreederDetailsPage extends StatefulWidget {
   final int pageId;
@@ -53,6 +49,10 @@ class _BreederDetailsPageState extends State<BreederDetailsPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
       ),
+      bottomNavigationBar: kIsWeb
+          ? const SizedBox()
+          : BannerAdWId(
+              unitIdAndroid: "ca-app-pub-1634533782017400/3914305606"),
       body: RefreshIndicator(
         onRefresh: loadResources,
         child: Column(
@@ -63,20 +63,8 @@ class _BreederDetailsPageState extends State<BreederDetailsPage> {
             Expanded(
               flex: 15,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-                child: GridView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: productInfo.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 2 / 2.5, // Number of columns
-                  ),
-                  itemBuilder: (context, index) {
-                    return ProductTileGrid(
-                        productInfoList: productInfo, index: index);
-                  },
-                ),
-              ),
+                  padding: EdgeInsets.symmetric(horizontal: 15.0.w),
+                  child: ProductTileGrid(productInfoList: productInfo)),
             ),
           ],
         ),

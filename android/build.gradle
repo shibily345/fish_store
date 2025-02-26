@@ -1,34 +1,16 @@
-buildscript {
-    ext.kotlin_version = '1.9.21'
-    repositories {
-        google()
-        mavenCentral() 
-    }
-
-    dependencies {
-        classpath 'com.google.gms:google-services:4.3.13' 
-        classpath 'com.android.tools.build:gradle:7.3.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 allprojects {
     repositories {
         google()
         mavenCentral()
-       
-        maven {
-            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
-        }
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {
