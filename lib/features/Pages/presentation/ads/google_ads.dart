@@ -1,9 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io' show Platform;
 
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 class BannerAdWId extends StatefulWidget {
+  String? unitIdAndroid;
+  String? unitIdIos;
+
+  BannerAdWId({
+    Key? key,
+    this.unitIdAndroid,
+    this.unitIdIos,
+  }) : super(key: key);
   @override
   _BannerAdWIdState createState() => _BannerAdWIdState();
 }
@@ -17,7 +27,7 @@ class _BannerAdWIdState extends State<BannerAdWId> {
     final BannerAd? bannerAd = _bannerAd;
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: _bannerAdIsLoaded && bannerAd != null
+        child: _bannerAdIsLoaded && bannerAd != null && !kIsWeb
             ? Container(
                 height: bannerAd.size.height.toDouble(),
                 width: bannerAd.size.width.toDouble(),
@@ -32,8 +42,8 @@ class _BannerAdWIdState extends State<BannerAdWId> {
     _bannerAd = BannerAd(
         size: AdSize.banner,
         adUnitId: Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/6300978111'
-            : 'ca-app-pub-1634533782017400/5219648413',
+            ? widget.unitIdAndroid ?? 'ca-app-pub-1634533782017400/7939507990'
+            : widget.unitIdIos ?? 'ca-app-pub-1634533782017400/5219648413',
         listener: BannerAdListener(
           onAdLoaded: (Ad ad) {
             print('$BannerAd loaded.');
@@ -42,7 +52,8 @@ class _BannerAdWIdState extends State<BannerAdWId> {
             });
           },
           onAdFailedToLoad: (Ad ad, LoadAdError error) {
-            print('$BannerAd failedToLoad: $error');
+            print(
+                '$BannerAd failedToLoad: $error ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;');
             ad.dispose();
           },
           onAdOpened: (Ad ad) => print('$BannerAd onAdOpened.'),
